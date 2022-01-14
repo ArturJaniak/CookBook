@@ -53,10 +53,11 @@ export class LoginComponent implements OnInit {
       this.showError = true;
     })
   }
-  
   public logout = () => {
     this._authService.logout();
     this._router.navigate(["/"]);
   }
+  
+
   
 }

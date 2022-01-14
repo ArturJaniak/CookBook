@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'
+import { AboutComponent } from './about/about.component';
 import { RegisterUserComponent } from './authentication/register-user/register-user.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component'
 import { HomeComponent } from './home/home.component'
@@ -13,6 +14,8 @@ children: [
 ]},
     { path: '404', component : NotFoundComponent},
     { path: 'login', component: LoginComponent},
+    { path: 'login', component: HomeComponent},
+    { path: 'about', component: AboutComponent},
     { path: 'authentication/register', component: RegisterUserComponent},
     { path: '**', redirectTo: '/404', pathMatch: 'full'},
 ];
