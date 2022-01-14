@@ -15,6 +15,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { AboutComponent } from './about/about.component';
+import { MyRecipesComponent } from './my-recipes/my-recipes.component';
+import { RandomRecipeComponent } from './random-recipe/random-recipe.component';
+import { BestRecipesComponent } from './best-recipes/best-recipes.component';
+import { MatGridListModule } from '@angular/material/grid-list'; 
+import {MatExpansionModule} from '@angular/material/expansion'; 
+import {MatListModule} from '@angular/material/list'; 
 
 @NgModule({
   declarations: [
@@ -25,6 +31,9 @@ import { AboutComponent } from './about/about.component';
     LoginComponent,
     RegisterUserComponent,
     AboutComponent,
+    MyRecipesComponent,
+    RandomRecipeComponent,
+    BestRecipesComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -37,6 +46,9 @@ import { AboutComponent } from './about/about.component';
     MatMenuModule,
     MatButtonModule,
     MatIconModule,
+    MatGridListModule,
+    MatExpansionModule,
+    MatListModule
 
     
    

@@ -2,16 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent } from './home.component';
+import { BestRecipesComponent } from './best-recipes.component';
 import { MatMenuModule } from '@angular/material/menu';
-import { MyRecipesComponent } from '../my-recipes/my-recipes.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full'},
-    { path: 'home', component: HomeComponent },
-    { path: 'myrecipes', component: MyRecipesComponent},
-    { path: '**', redirectTo: 'home'},
-
+    { path: '', redirectTo: 'bestRecipes', pathMatch: 'full'},
+    { path: 'bestRecipes', component: BestRecipesComponent },
+    { path: '**', redirectTo: 'myrecipes'}
 ]
 
 @NgModule({  
@@ -24,4 +21,4 @@ const routes: Routes = [
   exports: [RouterModule],
   declarations: []  
 })
-export class HomeModule { }
+export class BestRecipe { }

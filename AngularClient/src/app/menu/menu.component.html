@@ -1,6 +1,25 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item class="nav-link" [routerLink]="['/myRecipes']" routerLinkActive="active">
+      <mat-icon>favorite</mat-icon>
+      <span>Moje przepisy</span>
+    </button>
+    <button mat-menu-item class="nav-link" [routerLink]="['/randomRecipe']" routerLinkActive="active">
+      <mat-icon>fastfood</mat-icon>
+      <span>Losowy przepis</span>
+    </button>
+    <button mat-menu-item class="nav-link" [routerLink]="['/bestRecipes']" routerLinkActive="active">
+      <mat-icon>local_dining</mat-icon>
+      <span>Najlepsze w ostatnim miesiącu</span>
+    </button>
+
+  </mat-menu>
+  
   <a class="navbar-brand" [routerLink]="['/home']" routerLinkActive="active" 
-  [routerLinkActiveOptions]="{exact: true}">Account-Owner Home</a>
+  >Account-Owner Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
   aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
