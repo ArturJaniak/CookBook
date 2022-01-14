@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Inżynier\\Web Api\\CompanyEmployees\\Contracts\\Contracts.csproj": {}
+    "C:\\Users\\Tomek\\Documents\\GitHub\\CookBook\\Web Api\\CompanyEmployees\\Contracts\\Contracts.csproj": {}
   },
   "projects": {
-    "D:\\Inżynier\\Web Api\\CompanyEmployees\\Contracts\\Contracts.csproj": {
+    "C:\\Users\\Tomek\\Documents\\GitHub\\CookBook\\Web Api\\CompanyEmployees\\Contracts\\Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Inżynier\\Web Api\\CompanyEmployees\\Contracts\\Contracts.csproj",
+        "projectUniqueName": "C:\\Users\\Tomek\\Documents\\GitHub\\CookBook\\Web Api\\CompanyEmployees\\Contracts\\Contracts.csproj",
         "projectName": "Contracts",
-        "projectPath": "D:\\Inżynier\\Web Api\\CompanyEmployees\\Contracts\\Contracts.csproj",
-        "packagesPath": "C:\\Users\\48608\\.nuget\\packages\\",
-        "outputPath": "D:\\Inżynier\\Web Api\\CompanyEmployees\\Contracts\\obj\\",
+        "projectPath": "C:\\Users\\Tomek\\Documents\\GitHub\\CookBook\\Web Api\\CompanyEmployees\\Contracts\\Contracts.csproj",
+        "packagesPath": "C:\\Users\\Tomek\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Tomek\\Documents\\GitHub\\CookBook\\Web Api\\CompanyEmployees\\Contracts\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\48608\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Tomek\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +32,8 @@
           "net6.0": {
             "targetAlias": "netcoreapp6.0",
             "projectReferences": {
-              "D:\\Inżynier\\Web Api\\CompanyEmployees\\Entities\\Entities.csproj": {
-                "projectPath": "D:\\Inżynier\\Web Api\\CompanyEmployees\\Entities\\Entities.csproj"
+              "C:\\Users\\Tomek\\Documents\\GitHub\\CookBook\\Web Api\\CompanyEmployees\\Entities\\Entities.csproj": {
+                "projectPath": "C:\\Users\\Tomek\\Documents\\GitHub\\CookBook\\Web Api\\CompanyEmployees\\Entities\\Entities.csproj"
               }
             }
           }
@@ -43,30 +47,6 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "netcoreapp6.0",
-          "dependencies": {
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
-            "Microsoft.Extensions.Logging.Debug": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -77,26 +57,25 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Inżynier\\Web Api\\CompanyEmployees\\Entities\\Entities.csproj": {
+    "C:\\Users\\Tomek\\Documents\\GitHub\\CookBook\\Web Api\\CompanyEmployees\\Entities\\Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Inżynier\\Web Api\\CompanyEmployees\\Entities\\Entities.csproj",
+        "projectUniqueName": "C:\\Users\\Tomek\\Documents\\GitHub\\CookBook\\Web Api\\CompanyEmployees\\Entities\\Entities.csproj",
         "projectName": "Entities",
-        "projectPath": "D:\\Inżynier\\Web Api\\CompanyEmployees\\Entities\\Entities.csproj",
-        "packagesPath": "C:\\Users\\48608\\.nuget\\packages\\",
-        "outputPath": "D:\\Inżynier\\Web Api\\CompanyEmployees\\Entities\\obj\\",
+        "projectPath": "C:\\Users\\Tomek\\Documents\\GitHub\\CookBook\\Web Api\\CompanyEmployees\\Entities\\Entities.csproj",
+        "packagesPath": "C:\\Users\\Tomek\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Tomek\\Documents\\GitHub\\CookBook\\Web Api\\CompanyEmployees\\Entities\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\48608\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Tomek\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -121,30 +100,6 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "netcoreapp6.0",
-          "dependencies": {
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
-            "Microsoft.Extensions.Logging.Debug": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -155,12 +110,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }
