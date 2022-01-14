@@ -12,5 +12,9 @@ namespace Entities.Models
         [ForeignKey(nameof(Recipes))]
         public Guid RecipeId { get; set; }
         public Recipes Recipes { get; set; }
+
+        [ForeignKey(nameof(User))]
+        public Guid UserId { get; set; }
+        public User User { get; set; }
     }
 }
