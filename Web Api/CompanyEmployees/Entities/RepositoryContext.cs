@@ -22,5 +22,15 @@ namespace Entities
 
         public DbSet<Company> Companies { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Allergens> Allergens { get; set; }
+
+        public DbSet<Tags> Tags { get; set; }
+
+        public DbSet<Ratings> Ratings { get; set; }
+
+        public DbSet<Ingredients> Ingredients { get; set; }
+        public DbSet<Recipes> Recipes { get; set; }
+
+        public DbSet<RecipeList> RecipeList { get; set; }
     }
 }
