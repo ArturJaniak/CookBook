@@ -11,3 +11,7 @@ Web Api/CompanyEmployees/Repository/obj/Debug/netcoreapp6.0/Repository.assets.ca
 Web Api/CompanyEmployees/Repository/obj/Debug/netcoreapp6.0/Repository.csprojAssemblyReference.cache
 Web Api/CompanyEmployees/CompanyEmployees/obj/Debug/netcoreapp6.0/CompanyEmployees.assets.cache
 *.cache
+Web Api/CompanyEmployees/.vs/CompanyEmployees/DesignTimeBuild/.dtbcache.v2
+Web Api/CompanyEmployees/.vs/CompanyEmployees/v17/.futdcache.v1
+Web Api/CompanyEmployees/.vs/CompanyEmployees/v17/.suo
+*.cache
