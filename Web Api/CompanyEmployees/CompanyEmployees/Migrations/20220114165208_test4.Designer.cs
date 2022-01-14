@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyEmployees.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20220114153032_test4")]
+    [Migration("20220114165208_test4")]
     partial class test4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -547,7 +547,7 @@ namespace CompanyEmployees.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Models.User", null)
+                    b.HasOne("Entities.Models.User", "User")
                         .WithMany("RecipeList")
                         .HasForeignKey("UserId");
                 });
