@@ -15,7 +15,7 @@ namespace Entities.Models
 
         public Boolean IfPublic { get; set; }
 
-        public int RatingCounter { get; set; }
+        //public int RatingCounter { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -27,9 +27,9 @@ namespace Entities.Models
         public Guid IngredientId { get; set; }
         public Ingredients Ingredients { get; set; }
         //----------------------------------------
-        [ForeignKey(nameof(Ratings))]
-        public Guid RatingId { get; set; }
-        public Ratings Ratings { get; set; }
+        //[ForeignKey(nameof(Ratings))]
+        //public Guid RatingId { get; set; }
+        //public Ratings Ratings { get; set; }
         //----------------------------------------
         [ForeignKey(nameof(Tags))]
         public Guid TagId { get; set; }
@@ -37,7 +37,11 @@ namespace Entities.Models
         //----------------------------------------
         public ICollection<RecipeList> RecipeList { get; set; }
 
+        public ICollection<Ratings> Ratings { get; set; }
 
+        //1 do 1
+        public string UserId { get; set; }
+        public User User { get; set; }
 
 
     }

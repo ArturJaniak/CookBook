@@ -15,7 +15,14 @@ namespace Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Recipes)
+                .WithOne(u => u.User)
+                .HasForeignKey<Recipes>(u => u.UserId);
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Ratings)
+                .WithOne(u => u.User)
+                .HasForeignKey<Ratings>(u => u.UserId);
             modelBuilder.ApplyConfiguration(new CompanyConfiguration());
             modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
         }
