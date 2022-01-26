@@ -2,6 +2,7 @@
 using Entities.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Entities
 {
@@ -27,8 +28,12 @@ namespace Entities
             modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
         }
 
+        
+
         public DbSet<Company> Companies { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Subs> Subs { get; set; }
+
         public DbSet<Allergens> Allergens { get; set; }
 
         public DbSet<Tags> Tags { get; set; }

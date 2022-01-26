@@ -9,6 +9,7 @@ namespace Entities.Models
     {
         [Column("RecipesId")]
         public Guid Id { get; set; }
+        public string RecipeName { get; set; }
         public string Photo { get; set; }
         
         public string Instruction { get; set; }
@@ -23,9 +24,9 @@ namespace Entities.Models
         public Guid AllergenId { get; set; }
         public Allergens Allergens { get; set; }
         //----------------------------------------
-        [ForeignKey(nameof(Ingredients))]
-        public Guid IngredientId { get; set; }
-        public Ingredients Ingredients { get; set; }
+        //[ForeignKey(nameof(Ingredients))]
+        //public Guid IngredientId { get; set; }
+        //public Ingredients Ingredients { get; set; }
         //----------------------------------------
         //[ForeignKey(nameof(Ratings))]
         //public Guid RatingId { get; set; }
@@ -38,6 +39,8 @@ namespace Entities.Models
         public ICollection<RecipeList> RecipeList { get; set; }
 
         public ICollection<Ratings> Ratings { get; set; }
+        public ICollection<Ingredients> Ingredients { get; set; }
+
 
         //1 do 1
         public string UserId { get; set; }

@@ -1,6 +1,7 @@
 using AutoMapper;
 using CompanyEmployees.Extensions;
 using CompanyEmployees.JwtFeatures;
+using Contracts;
 using Entities;
 using Entities.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -8,11 +9,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using NLog;
+using Repository;
 using System.IO;
 using System.Text;
 
@@ -31,6 +34,15 @@ namespace CompanyEmployees
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // komêta¿ ¿e dodane nie jestem pewien co robi, prawdopodobnie mo¿na wywaliæ 
+            //services.AddSingleton<IRecipe, RecipRepository>();
+
+        //    services.AddDbContext<RepositoryContext>(
+        //options => options.UseSqlServer(
+        //     @"Server = TOMEK-KOMPUTER\SQLDEV; Database = Cauldron; Trusted_Connection = True",
+        //    providerOptions => providerOptions.EnableRetryOnFailure()));
+
+
             services.ConfigureCors();
             services.ConfigureIISIntegration();
             services.ConfigureLoggerService();
