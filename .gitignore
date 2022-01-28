@@ -396,3 +396,13 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+Web Api/CompanyEmployees/.vs/CompanyEmployees/DesignTimeBuild/.dtbcache.v2
+Web Api/CompanyEmployees/CompanyEmployees/bin/Debug/netcoreapp6.0/CompanyEmployees.deps.json
+Web Api/CompanyEmployees/CompanyEmployees/obj/CompanyEmployees.csproj.nuget.dgspec.json
+Web Api/CompanyEmployees/CompanyEmployees/obj/CompanyEmployees.csproj.nuget.g.props
+Web Api/CompanyEmployees/CompanyEmployees/obj/CompanyEmployees.csproj.nuget.g.targets
+Web Api/CompanyEmployees/CompanyEmployees/obj/Debug/netcoreapp6.0/CompanyEmployees.assets.cache
+Web Api/CompanyEmployees/CompanyEmployees/obj/Debug/netcoreapp6.0/CompanyEmployees.csproj.FileListAbsolute.txt
+Web Api/CompanyEmployees/CompanyEmployees/obj/project.assets.json
+Web Api/CompanyEmployees/CompanyEmployees/obj/project.nuget.cache
+Web Api/CompanyEmployees/Entities/obj/Debug/netcoreapp6.0/Entities.csproj.FileListAbsolute.txt
