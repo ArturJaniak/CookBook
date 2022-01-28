@@ -1,4 +1,4 @@
-using AutoMapper;
+ï»¿using AutoMapper;
 using CompanyEmployees.Extensions;
 using CompanyEmployees.JwtFeatures;
 using Contracts;
@@ -34,7 +34,7 @@ namespace CompanyEmployees
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // komêta¿ ¿e dodane nie jestem pewien co robi, prawdopodobnie mo¿na wywaliæ 
+            // komÃªtaÂ¿ Â¿e dodane nie jestem pewien co robi, prawdopodobnie moÂ¿na wywaliÃ¦ 
             //services.AddSingleton<IRecipe, RecipRepository>();
 
         //    services.AddDbContext<RepositoryContext>(
@@ -72,6 +72,9 @@ namespace CompanyEmployees
             });
             services.AddScoped<JwtHandler>();
             services.AddControllers();
+
+            //Rejestrowanie usÅ‚ug swaggera
+            services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,18 +91,21 @@ namespace CompanyEmployees
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseCors("CorsPolicy");
-
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.All
             });
+            //Rejestracja Swaggera i Swagger UI middlewares
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
