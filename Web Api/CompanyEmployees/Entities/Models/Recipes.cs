@@ -38,11 +38,12 @@ namespace Entities.Models
         //----------------------------------------
         public ICollection<RecipeList> RecipeList { get; set; }
 
-        public ICollection<Ratings> Ratings { get; set; }
+        
         public ICollection<Ingredients> Ingredients { get; set; }
 
 
         //1 do 1
+        [ForeignKey(nameof(User))]
         public string UserId { get; set; }
         public User User { get; set; }
 

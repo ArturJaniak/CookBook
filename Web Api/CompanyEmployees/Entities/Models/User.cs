@@ -11,10 +11,12 @@ namespace Entities.Models
         public string LastName { get; set; }
 
         public ICollection<RecipeList> RecipeList { get; set; }
-        
 
-        public Recipes Recipes { get; set; }
-        public Ratings Ratings { get; set; }
+        public ICollection<Recipes> Recipes { get; set; }
+
+        public ICollection<Subs> Subs { get; set; }
+
+
 
 
     }

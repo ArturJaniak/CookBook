@@ -9,6 +9,11 @@ namespace Entities.Models
         [Column("RecipeListId")]
         public Guid Id { get; set; }
 
+        [Range(1, 5, ErrorMessage = "Out of range 1-5")]
+        public int Rating { get; set; }
+        public bool ifInList { get; set; }
+
+
         [ForeignKey(nameof(Recipes))]
         public Guid RecipeId { get; set; }
         public Recipes Recipes { get; set; }

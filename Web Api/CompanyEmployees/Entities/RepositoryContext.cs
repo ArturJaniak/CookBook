@@ -16,14 +16,8 @@ namespace Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Recipes)
-                .WithOne(u => u.User)
-                .HasForeignKey<Recipes>(u => u.UserId);
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Ratings)
-                .WithOne(u => u.User)
-                .HasForeignKey<Ratings>(u => u.UserId);
+           
+            
             modelBuilder.ApplyConfiguration(new CompanyConfiguration());
             modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
         }
@@ -38,7 +32,7 @@ namespace Entities
 
         public DbSet<Tags> Tags { get; set; }
 
-        public DbSet<Ratings> Ratings { get; set; }
+        //public DbSet<Ratings> Ratings { get; set; }
 
         public DbSet<Ingredients> Ingredients { get; set; }
         public DbSet<Recipes> Recipes { get; set; }

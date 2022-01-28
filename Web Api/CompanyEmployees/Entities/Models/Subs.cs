@@ -11,11 +11,6 @@ namespace Entities.Models
     {
         public Guid Id { get; set; }
 
-        [ForeignKey(nameof(User))]
-        public string UserId { get; set; }
-        public User User { get; set; }
-
-
         [ForeignKey(nameof(Sub))]
         public string SubId { get; set; }
         public User Sub { get; set; }
