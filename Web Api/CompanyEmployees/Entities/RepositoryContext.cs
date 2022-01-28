@@ -31,6 +31,10 @@ namespace Entities
         public DbSet<Allergens> Allergens { get; set; }
 
         public DbSet<Tags> Tags { get; set; }
+        public DbSet<ImageList> ImageList { get; set; }
+
+        public DbSet<Image> Image { get; set; }
+
 
         //public DbSet<Ratings> Ratings { get; set; }
 
