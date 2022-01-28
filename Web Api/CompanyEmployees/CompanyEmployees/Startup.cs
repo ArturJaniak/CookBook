@@ -75,6 +75,7 @@ namespace CompanyEmployees
 
             //Rejestrowanie usług swaggera
             services.AddSwaggerDocument();
+            //
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,7 +100,7 @@ namespace CompanyEmployees
             //Rejestracja Swaggera i Swagger UI middlewares
             app.UseOpenApi();
             app.UseSwaggerUi3();
-
+            //
 
             app.UseRouting();
 
