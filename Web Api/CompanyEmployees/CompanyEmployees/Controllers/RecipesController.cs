@@ -2,12 +2,17 @@
 using Entities;
 using Entities.DTO;
 using Entities.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repository;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace CompanyEmployees.Controllers
 {
@@ -17,11 +22,14 @@ namespace CompanyEmployees.Controllers
     {
         
         public RepositoryContext _db;
-        public RecipesController( RepositoryContext db)
+        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly CompanyEmployees.MappingProfile _mappingProfile;
+        public RecipesController( RepositoryContext db,
+                                  IHostingEnvironment hostingEnvironment)
         {
             
             _db = db;
-            
+            this.hostingEnvironment = hostingEnvironment;
         }
 
         
@@ -56,7 +64,7 @@ namespace CompanyEmployees.Controllers
             var newID = Guid.NewGuid();
             //----------------------------------
             var myAllergens = new Allergens();
-            myAllergens.Id = newID;
+            myAllergens.Id = newID;  
 
             myAllergens.CELERY = false;
             myAllergens.EGGS = false;
@@ -112,6 +120,43 @@ namespace CompanyEmployees.Controllers
             _db.SaveChanges();
             return Ok();
         }
+        [HttpPost("upload")]
+        public  ActionResult UploadMultiples(IFormFile file)
+        {
+
+           var _ = file.FileName.ToString();
+
+            
+
+
+
+            string uniqueFileName = null;
+            if (file != null)
+            {
+                //pobranie pełnej ścieżki
+                string fullPath = Path.GetFullPath(@"Imagines");
+                //przypisanie unikalnej nazwy
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName.ToString();
+                //stwożenie pełnej ścieżki do zdjęcia
+                string filePath = Path.Combine(fullPath, uniqueFileName);
+                //stwożenie zdjęcia w danym folderze
+                file.CopyTo(new FileStream(filePath, FileMode.Create));
+
+
+                //przypisanie wartości do bazy
+                var myImage = new Image();
+                myImage.Id =Guid.NewGuid();
+                myImage.ImageName = uniqueFileName;
+                _db.Image.Add(myImage);
+                _db.SaveChanges();
+
+            }
+            return Ok();
+        }
+
+
+       
+
 
     }
 }
