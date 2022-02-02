@@ -12,6 +12,7 @@ namespace Entities.Models
         [Column("ImageId")]
         public Guid Id { get; set; }
         public string ImageName { get; set; }
+       // public byte[] ImageData { get; set; }
         public ICollection<ImageList> ImageList { get; set; }
     }
 }

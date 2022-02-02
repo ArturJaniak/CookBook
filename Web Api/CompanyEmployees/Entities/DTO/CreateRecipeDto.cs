@@ -10,6 +10,6 @@ namespace Entities.DTO
     public class CreateRecipeDto
     {
         public string Id { get; set; }
-        //public HttpPostedFileBase Image { get; set; }
+        
     }
 }
