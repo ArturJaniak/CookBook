@@ -35,7 +35,16 @@ namespace Entities.DTO
         public Boolean Vege { get; set; }
         //------------------------------------------
         //Zdjęcie
-        public string Photo { get; set; }
+        public string Photo { get; set; }//przerobić na liste
+        // Składniki
+        public List<IndigrentsForRecipeDto> Ingredients { get; set; }//przerobić na liste
+
+    }
+    public class IndigrentsForRecipeDto
+    {
+        public Guid RecipeId { get; set; }//id recepty
+
+        public string Ingredient { get; set; }//przerobić na liste
 
     }
 }
