@@ -129,17 +129,28 @@ namespace CompanyEmployees.Controllers
                                    Vegan = objTags.Vegan,
                                    Vege = objTags.Vege,
 
-                                   Ingredients = _db.Ingredients.Select(model => new IndigrentsForRecipeDto()//do poprawy żeby wypisywało tylko własne składniki
-                                   {
-                                       RecipeId = model.RecipeId,
-                                       Ingredient = model.Ingredient
-                                   }).ToList()
+                                   //Ingredients = _db.Ingredients.Select(model => new IndigrentsForRecipeDto()//do poprawy żeby wypisywało tylko własne składniki
+                                   //{
+                                   //    RecipeId = model.RecipeId,
+                                   //    Ingredient = model.Ingredient
+                                   //}).ToList()
                                }
                                ).ToList();
-            
-            RecipeDto recipe = listaRecept.First(model=>model.Id==id);
+
+            var indigrientsList = (from objRecipe in _db.Recipes
+                                   join objIngredients in _db.Ingredients on
+                                   objRecipe.Id equals objIngredients.RecipeId
+                                   select new IndigrentsForRecipeDto
+                                   {
+                                       Ingredient=objIngredients.Ingredient,
+                                       RecipeId=objIngredients.RecipeId
+                                   }).Where(x=>x.RecipeId==id).ToList();
+
            
-            return recipe ;
+
+            RecipeDto recipe = listaRecept.First(model=>model.Id==id);
+            recipe.Ingredients = indigrientsList;
+            return recipe;
             
         }
         //------------------------------------------------------------------------------------------------------------------------------------
@@ -233,12 +244,13 @@ namespace CompanyEmployees.Controllers
             //ImageList imageList = _db.ImageList.Single(model => model.RecipeId==id);//dorobić usuwanie listy
             //Image image = _db.Image.Find(imageList.ImageId);
             //_db.Image.Remove(image);
-
+            string fullPath = Path.GetFullPath(@"Imagines");//ścieżka do zdjęć
             var imageList3 = _db.ImageList.Where(model => model.RecipeId == id).ToList();//stworzenie listy gdzie występuje id recepty
             foreach (var image2 in imageList3) //dla karzdego elem w liście 
             {
                 Image i = _db.Image.Find(image2.ImageId);//znajdzi pojedyncze zdjęcie
-
+                if (i.ImageName != "new.png")
+                Directory.Delete(Path.Combine(fullPath, i.ImageName));//usunięcie zdjęcia z folderu
                 _db.Image.Remove(i); // usuń zdjęcie
                 _db.ImageList.Remove(image2);// usuń przypisanie do listy
             }
@@ -303,9 +315,8 @@ namespace CompanyEmployees.Controllers
             [ModelBinder(BinderType = typeof(JsonModelBinder))]
              UpdateRecipe updateRecipe, IList<IFormFile> file)
         {
-
             var x = updateRecipe.Ingredients2.Count;
-            if (file != null)
+            if (file.Count>0)
             {
                 //usunięcie i stwożenie na nowo tabeli lista zdjęć i tabeli zdjęć gdzie idRecepty == id Recepty
                 var imageList = _db.ImageList.Where(model => model.RecipeId == updateRecipe.Id).ToList();
@@ -341,30 +352,23 @@ namespace CompanyEmployees.Controllers
                     //stwożenie zdjęcia w danym fold
                     image.CopyTo(new FileStream(filePath, FileMode.Create));
                     //------------------------------------------             
-                    //przypisanie wartości do bazy
-                    //RecipeDto recipe = listaRecept.Single(model => model.Id == id);
 
                     //twożenie pojedyńczego zdjęcia w bazie 
                     myImage.Id = Guid.NewGuid();
                     myImage.ImageName = uniqueFileName;
 
                     //dopisanie zdjęcia do listy
-                    //znalezienie istniejącego zdjęcia i przypisanie na jego miejsce nowego
-                   
+                    //znalezienie istniejącego zdjęcia i przypisanie na jego miejsce nowego                  
                     myImageList.ImageId = myImage.Id;
                     myImageList.Id= Guid.NewGuid();
                     myImageList.RecipeId = updateRecipe.Id;
                     _db.ImageList.Add(myImageList);
 
-                    
-
-
                     _db.Image.Add(myImage);
                     _db.SaveChanges();
-
                 }
-
             }
+            //przypisanie starych/nowych danych do recepty
             Recipes recipe = _db.Recipes.Find(updateRecipe.Id);
             recipe.Instruction = updateRecipe.Instruction;
             recipe.RecipeName = updateRecipe.RecipeName;
@@ -373,7 +377,7 @@ namespace CompanyEmployees.Controllers
                 _db.Recipes.Update(recipe);
             
 
-            //pętla aktualizacji istniejących tabel
+            //usunięcie indigrentów
             var ingredientList = _db.Ingredients.Where(model => model.RecipeId == updateRecipe.Id).ToList(); // dorobic pętle
             foreach (var ingredient in ingredientList)
             {
@@ -381,7 +385,7 @@ namespace CompanyEmployees.Controllers
                 _db.SaveChanges();
 
             }
-
+            //stwożenie na nowo indigrentów
             for (int i = 0; i < updateRecipe.Ingredients2.Count; i++)
             {
                 var myIndigrent = new Ingredients();
@@ -392,26 +396,8 @@ namespace CompanyEmployees.Controllers
                 _db.Ingredients.Add(myIndigrent);
                 _db.SaveChanges();
             }
-            //foreach (var ingredient in updateRecipe.Ingredients2)
-            //{
-            //    var myIndigrent = new Ingredients();
-            //    myIndigrent.Id = Guid.NewGuid();
-            //    myIndigrent.RecipeId = updateRecipe.Id;
-            //    myIndigrent.Ingredient = ingredient.Ingredient;
-            //    _db.Ingredients.Add(myIndigrent);
-            //    _db.SaveChanges();
-
-            //}
-            //for (int i = 0; i < updateRecipe.Ingredients2.Count; i++)//Baza.count do sprawdzenia
-            //{
-            //    var ingredientBaza = Baza[i];//pojedynczy id z bazy
-            //    var daneNieZBazy = updateRecipe.Ingredients2[i]; // pojedynczy składnik z listy
-            //    ingredientBaza.Ingredient = daneNieZBazy.Ingredient;
-            //    _db.Ingredients.Update(Baza[i]);
-            //    //dorobić zmniejszenie usunięcie składnika
-            //    // dodać stwożenie extra id bazy gdy wyjdzie poza zasięg
-            //}
-
+           
+            //aktualizacja alergenów
             Allergens allergens = _db.Allergens.Single(model => model.Id == recipe.AllergenId);
             allergens.FISH = updateRecipe.FISH;
             allergens.CELERY = updateRecipe.CELERY;
@@ -427,7 +413,7 @@ namespace CompanyEmployees.Controllers
             allergens.SOY = updateRecipe.SOY;
             allergens.SULPHUR_DIOXIDE = updateRecipe.SULPHUR_DIOXIDE;
             _db.Allergens.Update(allergens);
-
+            //aktualizacja Tagów
             Tags tags = _db.Tags.Single(model => model.Id == recipe.TagId); 
             tags.Vege = updateRecipe.Vege;
             tags.Vegan = updateRecipe.Vegan;
@@ -444,27 +430,25 @@ namespace CompanyEmployees.Controllers
         [HttpPost("rate")]
         public ActionResult RateRecipe(RateRecipeDto rateRecipe)
         {
-            //RecipeList recipeList = _db.RecipeList.Single(model => model.UserId == rateRecipe.UserId && model.RecipeId == rateRecipe.RecipeId);
-
-            ////tylko w sytuacji gdy nie ma wystawionej oceny
-            //if (recipeList == null)
-            //{
-                
-            //}
-            //else
-            //{
-            //    recipeList.RecipeId = rateRecipe.RecipeId;
-            //    _db.RecipeList.Update(recipeList);
-
-            //}
-
-            var myRecipeList = new RecipeList();
-            myRecipeList.Id = Guid.NewGuid();
-            myRecipeList.Rating = rateRecipe.Rating;
-            myRecipeList.ifInList = false;
-            myRecipeList.RecipeId = rateRecipe.RecipeId;
-            myRecipeList.UserId = rateRecipe.UserId;
-            _db.RecipeList.Add(myRecipeList);
+            var recipeList2 = _db.RecipeList.Where(model => model.UserId == rateRecipe.UserId && model.RecipeId == rateRecipe.RecipeId).ToList().Count;
+  
+            if (recipeList2==0)
+            {
+                var myRecipeList = new RecipeList();
+                myRecipeList.Id = Guid.NewGuid();
+                myRecipeList.Rating = rateRecipe.Rating;
+                myRecipeList.ifInList = false;
+                myRecipeList.RecipeId = rateRecipe.RecipeId;
+                myRecipeList.UserId = rateRecipe.UserId;
+                _db.RecipeList.Add(myRecipeList);
+            }
+            else
+            {
+                var recipeList = _db.RecipeList.Single(model => model.UserId == rateRecipe.UserId && model.RecipeId == rateRecipe.RecipeId);
+                recipeList.RecipeId = rateRecipe.RecipeId;
+                _db.RecipeList.Update(recipeList);
+            }
+           
             _db.SaveChanges();
             return Ok();
         }
@@ -473,11 +457,9 @@ namespace CompanyEmployees.Controllers
         [HttpPost("addToMyList")]
         public ActionResult AddToMyList(Guid recipeId, string userId)
         {
+            var recipeList2 = _db.RecipeList.Where(model => model.UserId == userId && model.RecipeId == recipeId).ToList().Count;
 
-            RecipeList recipeList = _db.RecipeList.Single(model=>model.UserId==userId&&model.RecipeId==recipeId);
-
-            
-            if (recipeList==null)
+            if (recipeList2==0)
             {
                 var myRecipeList = new RecipeList();
                 myRecipeList.Id = Guid.NewGuid();
@@ -486,16 +468,15 @@ namespace CompanyEmployees.Controllers
                 myRecipeList.RecipeId = recipeId;
                 myRecipeList.UserId = userId;
                 _db.RecipeList.Add(myRecipeList);
-                _db.SaveChanges();
             }
             else
             {
+                var recipeList = _db.RecipeList.Single(model => model.UserId == userId && model.RecipeId == recipeId);
                 recipeList.ifInList = true;
                 _db.RecipeList.Update(recipeList);
-                _db.SaveChanges();
             }
 
-            //------------------------------------------------
+            _db.SaveChanges();
             return Ok();
         }
         //------------------------------------------------------------------------------------------------------------------------------------
