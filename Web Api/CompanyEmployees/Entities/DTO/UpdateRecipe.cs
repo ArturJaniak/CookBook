@@ -11,7 +11,7 @@ namespace Entities.DTO
     {
 
         //recepta
-        
+        public string token { get; set; }
         public Guid Id { get; set; }//id recepty
         public string RecipeName { get; set; }
         public string Instruction { get; set; }

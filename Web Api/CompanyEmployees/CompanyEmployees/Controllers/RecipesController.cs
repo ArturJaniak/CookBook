@@ -12,6 +12,7 @@ using Repository;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -108,6 +109,7 @@ namespace CompanyEmployees.Controllers
                                select new RecipeDto
                                {
                                    Id = objRecipeList.RecipeId,
+                                   UserId = objRecipe.UserId,
                                    RecipeName = objRecipe.RecipeName,
                                    Instruction = objRecipe.Instruction,
                                    Date = objRecipe.Date,
@@ -154,332 +156,73 @@ namespace CompanyEmployees.Controllers
             
         }
         //------------------------------------------------------------------------------------------------------------------------------------
-
-        [HttpPost]
-        public ActionResult CreateRecipe(CreateRecipeDto createRecipeDto)
+        [HttpGet("Random")]
+        public ActionResult<RecipeDto> GetRandomRecipe()
         {
-            var newID = Guid.NewGuid();
-            //------------------------------------------
-            var myAllergens = new Allergens();
-            myAllergens.Id = newID;
+            var listaRecept = (from objRecipe in _db.Recipes
+                               join objRecipeList in _db.RecipeList on
+                               objRecipe.Id equals objRecipeList.RecipeId
+                               join objImageList in _db.ImageList on
+                               objRecipe.Id equals objImageList.RecipeId
+                               join objImage in _db.Image on
+                               objImageList.ImageId equals objImage.Id
+                               join objIngredients in _db.Ingredients on
+                               objRecipe.Id equals objIngredients.RecipeId
+                               join objAllergens in _db.Allergens on
+                               objRecipe.AllergenId equals objAllergens.Id
+                               join objTags in _db.Tags on
+                               objRecipe.TagId equals objTags.Id
+                               select new RecipeDto
+                               {
+                                   Id = objRecipeList.RecipeId,
+                                   RecipeName = objRecipe.RecipeName,
+                                   Instruction = objRecipe.Instruction,
+                                   Date = objRecipe.Date,
+                                   Rating = objRecipeList.Rating,
+                                   Photo = objImage.ImageName,//zrobić liste
+                                   GLUTEN = objAllergens.GLUTEN,
+                                   SHELLFISH = objAllergens.SHELLFISH,
+                                   EGGS = objAllergens.EGGS,
+                                   FISH = objAllergens.FISH,
+                                   PEANUTS = objAllergens.PEANUTS,
+                                   SOY = objAllergens.SOY,
+                                   Lactose = objAllergens.Lactose,
+                                   CELERY = objAllergens.CELERY,
+                                   MUSTARD = objAllergens.MUSTARD,
+                                   SESAME = objAllergens.SESAME,
+                                   SULPHUR_DIOXIDE = objAllergens.SULPHUR_DIOXIDE,
+                                   LUPINE = objAllergens.LUPINE,
+                                   MUSCLES = objAllergens.MUSCLES,
+                                   Vegan = objTags.Vegan,
+                                   Vege = objTags.Vege,
 
-            myAllergens.CELERY = false;
-            myAllergens.EGGS = false;
-            myAllergens.FISH = false;
-            myAllergens.GLUTEN = false;
-            myAllergens.Lactose = false;
-            myAllergens.LUPINE = false;
-            myAllergens.MUSCLES = false;
-            myAllergens.MUSTARD = false;
-            myAllergens.PEANUTS = false;
-            myAllergens.PEANUTS = false;
-            myAllergens.SESAME = false;
-            myAllergens.SHELLFISH = false;
-            myAllergens.SOY = false;
-            myAllergens.SULPHUR_DIOXIDE = false;
-            //------------------------------------------
-            var myTags = new Tags();
-            myTags.Id = newID;
-
-            myTags.Vege = false;
-            myTags.Vegan = false;
-            //------------------------------------------
-            var myRecipe = new Recipes();
-            myRecipe.Id = newID;
-            myRecipe.RecipeName = "New Recipe";
-            //myRecipe.Photo = null;          
-            myRecipe.Instruction = "Your Instruction";
-            myRecipe.IfPublic = false;
-            myRecipe.Date = DateTime.Now;
-            myRecipe.AllergenId = newID;
-            myRecipe.TagId = newID;
-            myRecipe.UserId = createRecipeDto.Id;
-            //------------------------------------------
-            var myPhoto = new Image();
-            Guid photoId = Guid.NewGuid();
-            myPhoto.Id = photoId;
-            myPhoto.ImageName = "new.png";
-            //------------------------------------------
-            var myPhotoList = new ImageList();
-            myPhotoList.Id = Guid.NewGuid();
-            myPhotoList.ImageId = photoId;
-            myPhotoList.RecipeId = newID;
-            //------------------------------------------
-            var myRecipeList = new RecipeList();
-            myRecipeList.Id = Guid.NewGuid();
-            myRecipeList.Rating = 0;
-            myRecipeList.ifInList = true;
-            myRecipeList.RecipeId = newID;
-            myRecipeList.UserId = createRecipeDto.Id;
-            //------------------------------------------
-            var myIngredientsList = new Ingredients();
-            myIngredientsList.Id = Guid.NewGuid();
-            myIngredientsList.Ingredient = "New Ingredient";
-            myIngredientsList.RecipeId = newID;
-
-
-            _db.Allergens.Add(myAllergens);
-            _db.Tags.Add(myTags);
-            _db.Recipes.Add(myRecipe);
-            _db.Image.Add(myPhoto);
-            _db.ImageList.Add(myPhotoList);
-            _db.RecipeList.Add(myRecipeList);
-            _db.Ingredients.Add(myIngredientsList);
-            _db.SaveChanges();  
-            return Ok();
-        }
-        //------------------------------------------------------------------------------------------------------------------------------------
-
-        [HttpPost("delete")]
-        public ActionResult DeleteConfirmed(DeleteRecipeDto deleteRecipeDto)
-        {
-            var id = deleteRecipeDto.RecipId;
-
-            var ingredients = _db.Ingredients.Where(x => x.RecipeId == id).ToList();
-            foreach (var ingredient in ingredients)
-            {
-                _db.Ingredients.Remove(ingredient);
-            }
-            //------------------------------------------
-            //ImageList imageList = _db.ImageList.Single(model => model.RecipeId==id);//dorobić usuwanie listy
-            //Image image = _db.Image.Find(imageList.ImageId);
-            //_db.Image.Remove(image);
-            string fullPath = Path.GetFullPath(@"Imagines");//ścieżka do zdjęć
-            var imageList3 = _db.ImageList.Where(model => model.RecipeId == id).ToList();//stworzenie listy gdzie występuje id recepty
-            foreach (var image2 in imageList3) //dla karzdego elem w liście 
-            {
-                Image i = _db.Image.Find(image2.ImageId);//znajdzi pojedyncze zdjęcie
-                if (i.ImageName != "new.png")
-                Directory.Delete(Path.Combine(fullPath, i.ImageName));//usunięcie zdjęcia z folderu
-                _db.Image.Remove(i); // usuń zdjęcie
-                _db.ImageList.Remove(image2);// usuń przypisanie do listy
-            }
-            //------------------------------------------
-            //ImageList imageList2 = _db.ImageList.Find(imageList.Id);
-            //_db.ImageList.Remove(imageList2);
-            //------------------------------------------
-            var recipeList = _db.RecipeList.Where(model => model.RecipeId == id).ToList();
-            foreach (var item in recipeList)
-            {
-                _db.RecipeList.Remove(item);
-
-            }
-            //------------------------------------------
-            Recipes recipe = _db.Recipes.Find(id);
-            _db.Recipes.Remove(recipe);
-            //------------------------------------------
-            Allergens allergens = _db.Allergens.Find(id);
-            _db.Allergens.Remove(allergens);
-            //------------------------------------------
-            Tags tags = _db.Tags.Find(id);
-            _db.Tags.Remove(tags);
-            //------------------------------------------
-            _db.SaveChanges();
-            //------------------------------------------
-            return Ok();
-        }
-        //------------------------------------------------------------------------------------------------------------------------------------
-
-        public class JsonModelBinder : IModelBinder
-        {
-            public Task BindModelAsync(ModelBindingContext bindingContext)
-            {
-                if (bindingContext == null)
-                {
-                    throw new ArgumentNullException(nameof(bindingContext));
-                }
-
-                // Check the value sent in
-                var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
-                if (valueProviderResult != ValueProviderResult.None)
-                {
-                    bindingContext.ModelState.SetModelValue(bindingContext.ModelName, valueProviderResult);
-
-                    // Attempt to convert the input value
-                    var valueAsString = valueProviderResult.FirstValue;
-                    var result = Newtonsoft.Json.JsonConvert.DeserializeObject(valueAsString, bindingContext.ModelType);
-                    if (result != null)
-                    {
-                        bindingContext.Result = ModelBindingResult.Success(result);
-                        return Task.CompletedTask;
-                    }
-                }
-
-                return Task.CompletedTask;
-            }
-        }
-        //------------------------------------------------------------------------------------------------------------------------------------
-
-        [HttpPost("upload")]
-        public IActionResult UploadMultiples(
-            [ModelBinder(BinderType = typeof(JsonModelBinder))]
-             UpdateRecipe updateRecipe, IList<IFormFile> file)
-        {
-            var x = updateRecipe.Ingredients2.Count;
-            if (file.Count>0)
-            {
-                //usunięcie i stwożenie na nowo tabeli lista zdjęć i tabeli zdjęć gdzie idRecepty == id Recepty
-                var imageList = _db.ImageList.Where(model => model.RecipeId == updateRecipe.Id).ToList();
-                foreach (var item in imageList)
-                {
-
-                    Image img = _db.Image.Find(item.ImageId);
-                    if (img.ImageName != "new.png")
-                    {
-                        _db.Image.Remove(img);
-
-                    }
-                    _db.ImageList.Remove(item);
-                    _db.SaveChanges();
-
-                }
-
-                string uniqueFileName = null;
-                var myImage = new Image();
-                var myImageList = new ImageList();
-
-                foreach (var image in file)
-                {
-                    //pobranie pełnej ścieżki
-                    string fullPath = Path.GetFullPath(@"Imagines");
-                    //------------------------------------------
-                    //przypisanie unikalnej nazwy
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName.ToString();
-                    //------------------------------------------
-                    //stwożenie pełnej ścieżki do zdjęcia
-                    string filePath = Path.Combine(fullPath, uniqueFileName);
-                    //------------------------------------------
-                    //stwożenie zdjęcia w danym fold
-                    image.CopyTo(new FileStream(filePath, FileMode.Create));
-                    //------------------------------------------             
-
-                    //twożenie pojedyńczego zdjęcia w bazie 
-                    myImage.Id = Guid.NewGuid();
-                    myImage.ImageName = uniqueFileName;
-
-                    //dopisanie zdjęcia do listy
-                    //znalezienie istniejącego zdjęcia i przypisanie na jego miejsce nowego                  
-                    myImageList.ImageId = myImage.Id;
-                    myImageList.Id= Guid.NewGuid();
-                    myImageList.RecipeId = updateRecipe.Id;
-                    _db.ImageList.Add(myImageList);
-
-                    _db.Image.Add(myImage);
-                    _db.SaveChanges();
-                }
-            }
-            //przypisanie starych/nowych danych do recepty
-            Recipes recipe = _db.Recipes.Find(updateRecipe.Id);
-            recipe.Instruction = updateRecipe.Instruction;
-            recipe.RecipeName = updateRecipe.RecipeName;
-            recipe.IfPublic = updateRecipe.IfPublic;
-            recipe.Date = DateTime.Now;
-                _db.Recipes.Update(recipe);
-            
-
-            //usunięcie indigrentów
-            var ingredientList = _db.Ingredients.Where(model => model.RecipeId == updateRecipe.Id).ToList(); // dorobic pętle
-            foreach (var ingredient in ingredientList)
-            {
-                _db.Ingredients.Remove(ingredient);
-                _db.SaveChanges();
-
-            }
-            //stwożenie na nowo indigrentów
-            for (int i = 0; i < updateRecipe.Ingredients2.Count; i++)
-            {
-                var myIndigrent = new Ingredients();
-
-                myIndigrent.Id = Guid.NewGuid();
-                myIndigrent.RecipeId = updateRecipe.Id;
-                myIndigrent.Ingredient = updateRecipe.Ingredients2[i].Ingredient;
-                _db.Ingredients.Add(myIndigrent);
-                _db.SaveChanges();
-            }
-           
-            //aktualizacja alergenów
-            Allergens allergens = _db.Allergens.Single(model => model.Id == recipe.AllergenId);
-            allergens.FISH = updateRecipe.FISH;
-            allergens.CELERY = updateRecipe.CELERY;
-            allergens.EGGS = updateRecipe.EGGS;
-            allergens.GLUTEN = updateRecipe.GLUTEN;
-            allergens.Lactose = updateRecipe.Lactose;
-            allergens.LUPINE = updateRecipe.LUPINE;
-            allergens.MUSCLES = updateRecipe.MUSCLES;
-            allergens.MUSTARD = updateRecipe.MUSTARD;
-            allergens.PEANUTS = updateRecipe.PEANUTS;
-            allergens.SESAME = updateRecipe.SESAME;
-            allergens.SHELLFISH = updateRecipe.SHELLFISH;
-            allergens.SOY = updateRecipe.SOY;
-            allergens.SULPHUR_DIOXIDE = updateRecipe.SULPHUR_DIOXIDE;
-            _db.Allergens.Update(allergens);
-            //aktualizacja Tagów
-            Tags tags = _db.Tags.Single(model => model.Id == recipe.TagId); 
-            tags.Vege = updateRecipe.Vege;
-            tags.Vegan = updateRecipe.Vegan;
-            _db.Tags.Update(tags);
+                                   //Ingredients = _db.Ingredients.Select(model => new IndigrentsForRecipeDto()//do poprawy żeby wypisywało tylko własne składniki
+                                   //{
+                                   //    RecipeId = model.RecipeId,
+                                   //    Ingredient = model.Ingredient
+                                   //}).ToList()
+                               }
+                               ).ToList();
+            Random r = new Random();
+            int rInt = r.Next(0, listaRecept.Count);
+            var randomRecipe = listaRecept.ElementAt(rInt);
+            var indigrientsList = (from objRecipe in _db.Recipes
+                                   join objIngredients in _db.Ingredients on
+                                   objRecipe.Id equals objIngredients.RecipeId
+                                   select new IndigrentsForRecipeDto
+                                   {
+                                       Ingredient = objIngredients.Ingredient,
+                                       RecipeId = objIngredients.RecipeId
+                                   }).Where(x => x.RecipeId == randomRecipe.Id).ToList();
 
 
 
-            _db.SaveChanges();
+            RecipeDto recipe = listaRecept.First(model => model.Id == randomRecipe.Id);
+            recipe.Ingredients = indigrientsList;
+            return recipe;
 
-            return Ok();
         }
 
-        //------------------------------------------------------------------------------------------------------------------------------------
-        [HttpPost("rate")]
-        public ActionResult RateRecipe(RateRecipeDto rateRecipe)
-        {
-            var recipeList2 = _db.RecipeList.Where(model => model.UserId == rateRecipe.UserId && model.RecipeId == rateRecipe.RecipeId).ToList().Count;
-  
-            if (recipeList2==0)
-            {
-                var myRecipeList = new RecipeList();
-                myRecipeList.Id = Guid.NewGuid();
-                myRecipeList.Rating = rateRecipe.Rating;
-                myRecipeList.ifInList = false;
-                myRecipeList.RecipeId = rateRecipe.RecipeId;
-                myRecipeList.UserId = rateRecipe.UserId;
-                _db.RecipeList.Add(myRecipeList);
-            }
-            else
-            {
-                var recipeList = _db.RecipeList.Single(model => model.UserId == rateRecipe.UserId && model.RecipeId == rateRecipe.RecipeId);
-                recipeList.RecipeId = rateRecipe.RecipeId;
-                _db.RecipeList.Update(recipeList);
-            }
-           
-            _db.SaveChanges();
-            return Ok();
-        }
-        //------------------------------------------------------------------------------------------------------------------------------------
-
-        [HttpPost("addToMyList")]
-        public ActionResult AddToMyList(Guid recipeId, string userId)
-        {
-            var recipeList2 = _db.RecipeList.Where(model => model.UserId == userId && model.RecipeId == recipeId).ToList().Count;
-
-            if (recipeList2==0)
-            {
-                var myRecipeList = new RecipeList();
-                myRecipeList.Id = Guid.NewGuid();
-                myRecipeList.Rating = 0;
-                myRecipeList.ifInList = true;
-                myRecipeList.RecipeId = recipeId;
-                myRecipeList.UserId = userId;
-                _db.RecipeList.Add(myRecipeList);
-            }
-            else
-            {
-                var recipeList = _db.RecipeList.Single(model => model.UserId == userId && model.RecipeId == recipeId);
-                recipeList.ifInList = true;
-                _db.RecipeList.Update(recipeList);
-            }
-
-            _db.SaveChanges();
-            return Ok();
-        }
-        //------------------------------------------------------------------------------------------------------------------------------------
 
     }
 }

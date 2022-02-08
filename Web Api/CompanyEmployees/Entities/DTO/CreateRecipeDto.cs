@@ -9,7 +9,8 @@ namespace Entities.DTO
 {
     public class CreateRecipeDto
     {
-        public string Id { get; set; }
-        
+        //public string Id { get; set; }
+        public string token { get; set; }
+
     }
 }

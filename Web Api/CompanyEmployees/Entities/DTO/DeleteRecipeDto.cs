@@ -9,5 +9,7 @@ namespace Entities.DTO
     public class DeleteRecipeDto
     {
         public Guid RecipId { get; set; }
+        public string token { get; set; }
+
     }
 }

@@ -8,6 +8,7 @@ namespace Entities.DTO
 {
     public class RateRecipeDto
     {
+        public string token { get; set; }
         public string UserId { get; set; }
         public Guid RecipeId { get; set; }
         public int Rating { get; set; }
