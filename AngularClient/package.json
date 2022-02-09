@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "importapi": "copy ..\\WebApi\\CompanyEmployees\\CompanyEmployees\\ApiClient.ts src\\app\\api\\ApiClient.ts",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

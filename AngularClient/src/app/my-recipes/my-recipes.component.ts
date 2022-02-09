@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { RecipeLogedViewClient, RecipePublicListDto } from '../api/ApiClient';
+import { MyRecipesService } from '../shared/services/my-recipes.service';
 
 @Component({
   selector: 'app-my-recipes',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyRecipesComponent implements OnInit {
 
-  constructor() { }
+ 
+
+  constructor(private recipesService: MyRecipesService, private http: HttpClient, recipeLogedViewClient: RecipeLogedViewClient) { 
+    
+  }
+  recipes : RecipePublicListDto[];
+  token: string;
   typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
-  ngOnInit(): void {
+  ngOnInit() {
+    this.recipesService.getRecipes().subscribe(res=>(this.recipes = res));
+    
   }
 
 }
+
+

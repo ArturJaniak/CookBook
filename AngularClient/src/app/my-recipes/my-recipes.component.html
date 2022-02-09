@@ -24,5 +24,30 @@
     <mat-grid-tile>2</mat-grid-tile>
     <mat-grid-tile>3</mat-grid-tile>
     <mat-grid-tile>4</mat-grid-tile>
-  </mat-grid-list>
+</mat-grid-list>
+<div class="container">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>RecipeName</th>
+        <th>Date</th>
+        <th>Rating</th>
+        <th>Photo</th>
+        <th>UserId</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let recipe of recipes"> -->
+        <td><span>{{recipe.id}}</span></td>
+        <td><span>{{recipe.recipeName}}</span></td>
+        <td><span>{{recipe.date}}</span></td>
+        <td><span>{{recipe.rating}}</span></td>
+        <td><span>{{recipe.photo}}</span></td>
+        <td><span>{{recipe.userId}}</span></td>
+     </tr>
+    </tbody>
+  </table>
+</div>
+
   
