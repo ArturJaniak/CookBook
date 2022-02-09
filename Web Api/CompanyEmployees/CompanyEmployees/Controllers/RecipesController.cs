@@ -35,11 +35,85 @@ namespace CompanyEmployees.Controllers
             //_authResponse=authResponse;
         }
         //------------------------------------------------------------------------------------------------------------------------------------
+        //TO NA RAZIĘ NIE DZIAŁA
+        #region FILER()
+        //public List<RecipeForFilterDto> Filter(FiltersDto filtersDto, List<RecipeForFilterDto>query)
+        //{
+
+        //    if (filtersDto.GLUTEN == true)
+        //    {
+        //        query = query.Where(x => x.GLUTEN == false).ToList();
+        //    }
+        //    if (filtersDto.SHELLFISH == true)
+        //    {
+        //        query = query.Where(x => x.SHELLFISH == false).ToList();
+        //    }
+        //    if (filtersDto.EGGS == true)
+        //    {
+        //        query = query.Where(x => x.EGGS == false).ToList();
+        //    }
+        //    if (filtersDto.FISH == true)
+        //    {
+        //        query = query.Where(x => x.FISH == false).ToList();
+        //    }
+        //    if (filtersDto.PEANUTS == true)
+        //    {
+        //        query = query.Where(x => x.PEANUTS == false).ToList();
+        //    }
+        //    if (filtersDto.SOY == true)
+        //    {
+        //        query = query.Where(x => x.SOY == false).ToList();
+        //    }
+        //    if (filtersDto.Lactose == true)
+        //    {
+        //        query = query.Where(x => x.Lactose == false).ToList();
+        //    }
+        //    if (filtersDto.CELERY == true)
+        //    {
+        //        query = query.Where(x => x.CELERY == false).ToList();
+        //    }
+        //    if (filtersDto.MUSTARD == true)
+        //    {
+        //        query = query.Where(x => x.MUSTARD == false).ToList();
+        //    }
+        //    if (filtersDto.SESAME == true)
+        //    {
+        //        query = query.Where(x => x.SESAME == false).ToList();
+        //    }
+        //    if (filtersDto.SULPHUR_DIOXIDE == true)
+        //    {
+        //        query = query.Where(x => x.SULPHUR_DIOXIDE == false).ToList();
+        //    }
+        //    if (filtersDto.LUPINE == true)
+        //    {
+        //        query = query.Where(x => x.LUPINE == false).ToList();
+        //    }
+        //    if (filtersDto.MUSCLES == true)
+        //    {
+        //        query = query.Where(x => x.MUSCLES == false).ToList();
+        //    }
+        //    if (filtersDto.Vegan == true)
+        //    {
+        //        query = query.Where(x => x.Vegan == false).ToList();
+        //    }
+        //    if (filtersDto.Vege == true)
+        //    {
+        //        query = query.Where(x => x.Vege == false).ToList();
+        //    }
+
+        //    return query;
+        //}
+        #endregion
 
         [HttpGet]// pobranie wszystkich recept
-        public ActionResult<IEnumerable<RecipePublicListDto>> GetRecipes()
+        public ActionResult<IEnumerable<RecipePublicListDto>> GetRecipes(bool GLUTEN, bool SHELLFISH, bool EGGS, bool FISH,
+                                                                        bool PEANUTS, bool SOY, bool Lactose, bool CELERY, bool MUSTARD,
+                                                                        bool SESAME, bool SULPHUR_DIOXIDE, bool LUPINE, bool MUSCLES, bool Vegan,
+                                                                        bool Vege)
         {
+
             //stwożenie listy
+            #region TWOZENIE LISTY
             var query = (from objRecipe in _db.Recipes
                         join objRecipeList in _db.RecipeList on
                         objRecipe.Id equals objRecipeList.RecipeId
@@ -47,24 +121,113 @@ namespace CompanyEmployees.Controllers
                         objRecipe.Id equals objImageList.RecipeId
                         join objImage in _db.Image on
                         objImageList.ImageId equals objImage.Id
-                        select new RecipePublicListDto
+                        join objAllergens in _db.Allergens on
+                        objRecipe.AllergenId equals objAllergens.Id
+                        join objTags in _db.Tags on
+                        objRecipe.TagId equals objTags.Id
+                         select new RecipeForFilterDto
                         {
                             Id = objRecipeList.RecipeId,
                             RecipeName = objRecipe.RecipeName,
                             Date = objRecipe.Date,
                             Rating = objRecipeList.Rating,
-                            Photo = objImage.ImageName
-                        }).ToList();
+                             IfPublic = objRecipe.IfPublic,
+                             Photo = objImage.ImageName,
+                             GLUTEN = objAllergens.GLUTEN,
+                             SHELLFISH = objAllergens.SHELLFISH,
+                             EGGS = objAllergens.EGGS,
+                             FISH = objAllergens.FISH,
+                             PEANUTS = objAllergens.PEANUTS,
+                             SOY = objAllergens.SOY,
+                             Lactose = objAllergens.Lactose,
+                             CELERY = objAllergens.CELERY,
+                             MUSTARD = objAllergens.MUSTARD,
+                             SESAME = objAllergens.SESAME,
+                             SULPHUR_DIOXIDE = objAllergens.SULPHUR_DIOXIDE,
+                             LUPINE = objAllergens.LUPINE,
+                             MUSCLES = objAllergens.MUSCLES,
+                             Vegan = objTags.Vegan,
+                             Vege = objTags.Vege
+                         }).ToList();//.Where(model=>model.IfPublic==true)
+            #endregion
+
+            //Filtry
+            #region FILTRY
+            if (GLUTEN == true)
+            {
+                query = query.Where(x => x.GLUTEN == false).ToList();
+            }
+            if (SHELLFISH == true)
+            {
+                query = query.Where(x => x.SHELLFISH == false).ToList();
+            }
+            if (EGGS == true)
+            {
+                query = query.Where(x => x.EGGS == false).ToList();
+            }
+            if (FISH == true)
+            {
+                query = query.Where(x => x.FISH == false).ToList();
+            }
+            if (PEANUTS == true)
+            {
+                query = query.Where(x => x.PEANUTS == false).ToList();
+            }
+            if (SOY == true)
+            {
+                query = query.Where(x => x.SOY == false).ToList();
+            }
+            if (Lactose == true)
+            {
+                query = query.Where(x => x.Lactose == false).ToList();
+            }
+            if (CELERY == true)
+            {
+                query = query.Where(x => x.CELERY == false).ToList();
+            }
+            if (MUSTARD == true)
+            {
+                query = query.Where(x => x.MUSTARD == false).ToList();
+            }
+            if (SESAME == true)
+            {
+                query = query.Where(x => x.SESAME == false).ToList();
+            }
+            if (SULPHUR_DIOXIDE == true)
+            {
+                query = query.Where(x => x.SULPHUR_DIOXIDE == false).ToList();
+            }
+            if (LUPINE == true)
+            {
+                query = query.Where(x => x.LUPINE == false).ToList();
+            }
+            if (MUSCLES == true)
+            {
+                query = query.Where(x => x.MUSCLES == false).ToList();
+            }
+            if (Vegan == true)
+            {
+                query = query.Where(x => x.Vegan == false).ToList();
+            }
+            if (Vege == true)
+            {
+                query = query.Where(x => x.Vege == false).ToList();
+            }
+            //query=Filter(filtersDto, query);
+#endregion
+
             //zgupowanie po id
             var group = query.GroupBy(x => x.Id);
-
+            
             List<RecipePublicListDto> recipePublicListDto = new List<RecipePublicListDto>();
             int j = 0;
             int counter = 0;
             int ratingSum = 0;
+
             //pozbycię się powturek + wyliczenie oceny
+            #region OBLICZENIE RATINGU
             foreach (var item in group)
-            {
+            {               
                 recipePublicListDto.Add(new RecipePublicListDto());
                 foreach (var item2 in item)
                 {                  
@@ -84,15 +247,19 @@ namespace CompanyEmployees.Controllers
                 counter = 0;
                 ratingSum = 0;
             }
+            #endregion
+            
+
 
             return recipePublicListDto;//listaRecept;
         }
         //------------------------------------------------------------------------------------------------------------------------------------
 
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]//????????????????????????????
         [HttpGet("{id}")]//pobranie jednej recepty 
         public ActionResult<RecipeDto> GetRecipe(Guid id)
         {
+            //stwożenie listy
+            #region TWOZENIE LISTY
             var listaRecept = (from objRecipe in _db.Recipes
                                join objRecipeList in _db.RecipeList on
                                objRecipe.Id equals objRecipeList.RecipeId
@@ -131,14 +298,11 @@ namespace CompanyEmployees.Controllers
                                    Vegan = objTags.Vegan,
                                    Vege = objTags.Vege,
 
-                                   //Ingredients = _db.Ingredients.Select(model => new IndigrentsForRecipeDto()//do poprawy żeby wypisywało tylko własne składniki
-                                   //{
-                                   //    RecipeId = model.RecipeId,
-                                   //    Ingredient = model.Ingredient
-                                   //}).ToList()
                                }
                                ).ToList();
-
+            #endregion
+            //Przypisanie listy sładników do recept
+            #region LISTA SKŁADNIKÓW
             var indigrientsList = (from objRecipe in _db.Recipes
                                    join objIngredients in _db.Ingredients on
                                    objRecipe.Id equals objIngredients.RecipeId
@@ -147,10 +311,11 @@ namespace CompanyEmployees.Controllers
                                        Ingredient=objIngredients.Ingredient,
                                        RecipeId=objIngredients.RecipeId
                                    }).Where(x=>x.RecipeId==id).ToList();
+            #endregion
 
-           
-
+            //Znalezienie konkretnej recepty
             RecipeDto recipe = listaRecept.First(model=>model.Id==id);
+            //przypisanie listy składników do recepty
             recipe.Ingredients = indigrientsList;
             return recipe;
             
@@ -159,6 +324,8 @@ namespace CompanyEmployees.Controllers
         [HttpGet("Random")]
         public ActionResult<RecipeDto> GetRandomRecipe()
         {
+            //stwożenie listy
+            #region TWOZENIE LISTY
             var listaRecept = (from objRecipe in _db.Recipes
                                join objRecipeList in _db.RecipeList on
                                objRecipe.Id equals objRecipeList.RecipeId
@@ -196,16 +363,15 @@ namespace CompanyEmployees.Controllers
                                    Vegan = objTags.Vegan,
                                    Vege = objTags.Vege,
 
-                                   //Ingredients = _db.Ingredients.Select(model => new IndigrentsForRecipeDto()//do poprawy żeby wypisywało tylko własne składniki
-                                   //{
-                                   //    RecipeId = model.RecipeId,
-                                   //    Ingredient = model.Ingredient
-                                   //}).ToList()
                                }
                                ).ToList();
+            #endregion
+            //Pobranie randomowego ele z listy
             Random r = new Random();
             int rInt = r.Next(0, listaRecept.Count);
             var randomRecipe = listaRecept.ElementAt(rInt);
+            //Stwożenie listy składników dla wylosowanej recepty
+            #region LISTA SKŁADNIKÓW
             var indigrientsList = (from objRecipe in _db.Recipes
                                    join objIngredients in _db.Ingredients on
                                    objRecipe.Id equals objIngredients.RecipeId
@@ -214,12 +380,14 @@ namespace CompanyEmployees.Controllers
                                        Ingredient = objIngredients.Ingredient,
                                        RecipeId = objIngredients.RecipeId
                                    }).Where(x => x.RecipeId == randomRecipe.Id).ToList();
+            #endregion
 
 
+            //RecipeDto recipe = listaRecept.First(model => model.Id == randomRecipe.Id);
 
-            RecipeDto recipe = listaRecept.First(model => model.Id == randomRecipe.Id);
-            recipe.Ingredients = indigrientsList;
-            return recipe;
+            //przypisanie listy składników do recepty
+            randomRecipe.Ingredients = indigrientsList;
+            return randomRecipe;
 
         }
 

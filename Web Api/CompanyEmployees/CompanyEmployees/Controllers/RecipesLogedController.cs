@@ -26,14 +26,13 @@ namespace CompanyEmployees.Controllers
 
         public RecipesLogedController(RepositoryContext db)
         {
-            _db = db;
-            //_authResponse=authResponse;
+            _db = db;           
         }
 
         [HttpPost("Add")]
         public ActionResult CreateRecipe(CreateRecipeDto createRecipeDto)
         {
-            if (createRecipeDto.token.Length>0)
+            if (createRecipeDto.token!=null)
             {
                 //dekoder tokena
                 var stream = createRecipeDto.token;
@@ -48,8 +47,8 @@ namespace CompanyEmployees.Controllers
                 var newID = Guid.NewGuid();
                 //------------------------------------------
                 var myAllergens = new Allergens();
+                #region STWOENIE ALERGENÓW
                 myAllergens.Id = newID;
-
                 myAllergens.CELERY = false;
                 myAllergens.EGGS = false;
                 myAllergens.FISH = false;
@@ -64,14 +63,17 @@ namespace CompanyEmployees.Controllers
                 myAllergens.SHELLFISH = false;
                 myAllergens.SOY = false;
                 myAllergens.SULPHUR_DIOXIDE = false;
+                #endregion
                 //------------------------------------------
                 var myTags = new Tags();
+                #region STWOZENIE TAGÓW
                 myTags.Id = newID;
-
                 myTags.Vege = false;
                 myTags.Vegan = false;
+                #endregion
                 //------------------------------------------
                 var myRecipe = new Recipes();
+                #region STWOENIE RECEPTY
                 myRecipe.Id = newID;
                 myRecipe.RecipeName = "New Recipe";
                 //myRecipe.Photo = null;          
@@ -81,30 +83,39 @@ namespace CompanyEmployees.Controllers
                 myRecipe.AllergenId = newID;
                 myRecipe.TagId = newID;
                 myRecipe.UserId = user.Id;
+                #endregion
                 //------------------------------------------
                 var myPhoto = new Image();
+                #region PRZYPISANIE ZDJĘCIA
                 Guid photoId = Guid.NewGuid();
                 myPhoto.Id = photoId;
                 myPhoto.ImageName = "new.png";
+                #endregion
                 //------------------------------------------
                 var myPhotoList = new ImageList();
+                #region PRZYPISANIE ZDJĘCIA I RECEPTY DO LISTY ZDJĘĆ
                 myPhotoList.Id = Guid.NewGuid();
                 myPhotoList.ImageId = photoId;
                 myPhotoList.RecipeId = newID;
+                #endregion
                 //------------------------------------------
                 var myRecipeList = new RecipeList();
+                #region PRZYPISANIE USERA I RECEPTY DO LISTY RECEPT
                 myRecipeList.Id = Guid.NewGuid();
                 myRecipeList.Rating = 0;
                 myRecipeList.ifInList = true;
                 myRecipeList.RecipeId = newID;
                 myRecipeList.UserId = user.Id;
+                #endregion
                 //------------------------------------------
                 var myIngredientsList = new Ingredients();
+                #region STWOZENIE SKŁADNIKA
                 myIngredientsList.Id = Guid.NewGuid();
                 myIngredientsList.Ingredient = "New Ingredient";
                 myIngredientsList.RecipeId = newID;
+                #endregion
 
-
+                //dodanie stwożonych ele do bazy
                 _db.Allergens.Add(myAllergens);
                 _db.Tags.Add(myTags);
                 _db.Recipes.Add(myRecipe);
@@ -122,16 +133,19 @@ namespace CompanyEmployees.Controllers
         [HttpPost("delete")]
         public ActionResult DeleteConfirmed(DeleteRecipeDto deleteRecipeDto)
         {
-            if (deleteRecipeDto.token.Length>0)//czy user jest zalogowany
+            if (deleteRecipeDto.token!=null)//czy user jest zalogowany
             {
+                //przypisanie podanego id do zmiennej
                 var id = deleteRecipeDto.RecipId;
 
                 //dekoder tokena
+                #region DEKODOWANIE TOKENA
                 var stream = deleteRecipeDto.token;
                 var handler = new JwtSecurityTokenHandler();
                 var jsonToken = handler.ReadToken(stream);
                 var tokenS = jsonToken as JwtSecurityToken;
                 var x = tokenS.Claims.ElementAt(0).Value;
+                #endregion
                 //znalezienie usera na podstawie emaila z dekodera
                 var userTokenID = _db.Users.Single(model => model.UserName == x);
                 Recipes recipe2 = _db.Recipes.Find(id);
@@ -139,15 +153,17 @@ namespace CompanyEmployees.Controllers
                 //sprawdzenie czy user jest właścicielem recepty
                 if (recipe2.UserId == userTokenID.Id)
                 {
-
+                    //stwożenie listy składników które należą do recepty
                     var ingredients = _db.Ingredients.Where(x => x.RecipeId == id).ToList();
                     foreach (var ingredient in ingredients)
                     {
+                        //usunięcie składników z bazy
                         _db.Ingredients.Remove(ingredient);
                     }
                     //------------------------------------------
 
-                    string fullPath = Path.GetFullPath(@"Imagines");//ścieżka do zdjęć
+                    //ścieżka do zdjęć
+                    string fullPath = Path.GetFullPath(@"Imagines");
                     var imageList3 = _db.ImageList.Where(model => model.RecipeId == id).ToList();//stworzenie listy gdzie występuje id recepty
                     foreach (var image2 in imageList3) //dla karzdego elem w liście 
                     {
@@ -157,6 +173,7 @@ namespace CompanyEmployees.Controllers
                         _db.ImageList.Remove(image2);// usuń przypisanie do listy
                     }
                     //------------------------------------------
+                    //usunięcie Recipe list wszędzie tam gdzie występuję recepta
                     var recipeList = _db.RecipeList.Where(model => model.RecipeId == id).ToList();
                     foreach (var item in recipeList)
                     {
@@ -218,25 +235,29 @@ namespace CompanyEmployees.Controllers
              UpdateRecipe updateRecipe, IList<IFormFile> file)
         {
 
-            if (updateRecipe.token.Length>0)
+            if (updateRecipe.token!=null)
             {
                 //dekoder tokena
+                #region DEKODER TOKENA
                 var stream = updateRecipe.token;
                 var handler = new JwtSecurityTokenHandler();
                 var jsonToken = handler.ReadToken(stream);
                 var tokenS = jsonToken as JwtSecurityToken;
+                #endregion
                 //znalezienie elem mail
                 var userMail = tokenS.Claims.ElementAt(0).Value;
                 //wyszukanie odpowiedniego usera
                 var user = _db.Users.Single(model => model.UserName == userMail);
-
-                if (user.Id==updateRecipe.Id.ToString())
+                Recipes r = _db.Recipes.Find(updateRecipe.Id);//znajdzi pojedyncze zdjęcie
+                if (user.Id == r.UserId)
                 {
+
                     var x = updateRecipe.Ingredients2.Count;
                     if (file.Count > 0)
                     {
-                        //usunięcie i stwożenie na nowo tabeli lista zdjęć i tabeli zdjęć gdzie idRecepty == id Recepty
+                        //usunięcie i tabeli lista zdjęć i tabeli zdjęć gdzie idRecepty == id Recepty
                         var imageList = _db.ImageList.Where(model => model.RecipeId == updateRecipe.Id).ToList();
+                        #region USUNIĘCIE ZDJĘĆ
                         foreach (var item in imageList)
                         {
 
@@ -250,10 +271,13 @@ namespace CompanyEmployees.Controllers
                             _db.SaveChanges();
 
                         }
+                        #endregion
+
                         string uniqueFileName = null;
                         var myImage = new Image();
                         var myImageList = new ImageList();
-
+                        //stwożenie na nowo zdjęć 
+                        #region STOWENIE ZDJĘĆ
                         foreach (var image in file)
                         {
                             //pobranie pełnej ścieżki
@@ -283,17 +307,20 @@ namespace CompanyEmployees.Controllers
                             _db.Image.Add(myImage);
                             _db.SaveChanges();
                         }
+                        #endregion
                     }
                     //przypisanie starych/nowych danych do recepty
+                    #region AKTUALIZACJA DANYCH W RECEPCIE
                     Recipes recipe = _db.Recipes.Find(updateRecipe.Id);
                     recipe.Instruction = updateRecipe.Instruction;
                     recipe.RecipeName = updateRecipe.RecipeName;
                     recipe.IfPublic = updateRecipe.IfPublic;
                     recipe.Date = DateTime.Now;
                     _db.Recipes.Update(recipe);
-
+                    #endregion
 
                     //usunięcie indigrentów
+                    #region USUNIĘCIE SKŁADNIKÓW
                     var ingredientList = _db.Ingredients.Where(model => model.RecipeId == updateRecipe.Id).ToList(); // dorobic pętle
                     foreach (var ingredient in ingredientList)
                     {
@@ -301,7 +328,10 @@ namespace CompanyEmployees.Controllers
                         _db.SaveChanges();
 
                     }
+                    #endregion
+
                     //stwożenie na nowo indigrentów
+                    #region STWOENIE SKŁADNIKÓW
                     for (int i = 0; i < updateRecipe.Ingredients2.Count; i++)
                     {
                         var myIndigrent = new Ingredients();
@@ -312,8 +342,10 @@ namespace CompanyEmployees.Controllers
                         _db.Ingredients.Add(myIndigrent);
                         _db.SaveChanges();
                     }
+                    #endregion
 
                     //aktualizacja alergenów
+                    #region AKTUALIZACJA ALERGENÓW
                     Allergens allergens = _db.Allergens.Single(model => model.Id == recipe.AllergenId);
                     allergens.FISH = updateRecipe.FISH;
                     allergens.CELERY = updateRecipe.CELERY;
@@ -329,45 +361,55 @@ namespace CompanyEmployees.Controllers
                     allergens.SOY = updateRecipe.SOY;
                     allergens.SULPHUR_DIOXIDE = updateRecipe.SULPHUR_DIOXIDE;
                     _db.Allergens.Update(allergens);
+                    #endregion
+
                     //aktualizacja Tagów
+                    #region AKTUALIZACJA TAGÓW
                     Tags tags = _db.Tags.Single(model => model.Id == recipe.TagId);
                     tags.Vege = updateRecipe.Vege;
                     tags.Vegan = updateRecipe.Vegan;
                     _db.Tags.Update(tags);
-
+                    #endregion
 
 
                     _db.SaveChanges();
 
                     return Ok();
                 }
+                return BadRequest();
 
-                
+
             }
-           return BadRequest();
+            return BadRequest();
         }
 
         //------------------------------------------------------------------------------------------------------------------------------------
         [HttpPost("rate")]
         public ActionResult RateRecipe(RateRecipeDto rateRecipe)
         {
-            if (rateRecipe.token.Length>0)
+            if (rateRecipe.token!=null)
             {
                 //dekoder tokena
+                #region DEKODER TOKENA
                 var stream = rateRecipe.token;
                 var handler = new JwtSecurityTokenHandler();
                 var jsonToken = handler.ReadToken(stream);
                 var tokenS = jsonToken as JwtSecurityToken;
+                #endregion
+
                 //znalezienie elem mail
                 var userMail = tokenS.Claims.ElementAt(0).Value;
+
                 //wyszukanie odpowiedniego usera
                 var user = _db.Users.Single(model => model.UserName == userMail);
-                
+
+                //zliczenie ilości list gdzie jest taki sam UserId i RecipeId
                 var recipeList2 = _db.RecipeList.Where(model => model.UserId == user.Id && model.RecipeId == rateRecipe.RecipeId).ToList().Count;
-                
-                    
+
+                //sprawdzenie czy dana lista/obiekt istnieje                  
                 if (recipeList2 == 0)
                 {
+                    //jeżeli nie to stwóż nowy obiekt w recipe list
                     var myRecipeList = new RecipeList();
                     myRecipeList.Id = Guid.NewGuid();
                     myRecipeList.Rating = rateRecipe.Rating;
@@ -375,14 +417,17 @@ namespace CompanyEmployees.Controllers
                     myRecipeList.RecipeId = rateRecipe.RecipeId;
                     myRecipeList.UserId = user.Id;
                     _db.RecipeList.Add(myRecipeList);
+                    _db.SaveChanges();
                 }
                 else
                 {
+                    //jeżeli tak to aktualizuj recipe list
                     var recipeList = _db.RecipeList.Single(model => model.UserId == user.Id && model.RecipeId == rateRecipe.RecipeId);
-                    recipeList.RecipeId = rateRecipe.RecipeId;
+                    recipeList.Rating = rateRecipe.Rating;
                     _db.RecipeList.Update(recipeList);
-                }
+                    _db.SaveChanges();
 
+                }
                 _db.SaveChanges();
                 return Ok();
             }
@@ -394,22 +439,29 @@ namespace CompanyEmployees.Controllers
         public ActionResult AddToMyList(Guid recipeId,string token)
         {
 
-            if (token.Length>0)
+            if (token!=null)
             {
                 //dekoder tokena
+                #region DEKODER TOKENA
                 var stream = token;
                 var handler = new JwtSecurityTokenHandler();
                 var jsonToken = handler.ReadToken(stream);
                 var tokenS = jsonToken as JwtSecurityToken;
+                #endregion
+
                 //znalezienie elem mail
                 var userMail = tokenS.Claims.ElementAt(0).Value;
+
                 //wyszukanie odpowiedniego usera
                 var user = _db.Users.Single(model => model.UserName == userMail);
 
+                //zliczenie ilości list gdzie jest taki sam UserId i RecipeId
                 var recipeList2 = _db.RecipeList.Where(model => model.UserId == user.Id && model.RecipeId == recipeId).ToList().Count;
 
+                //sprawdzenie czy dana lista/obiekt istnieje                  
                 if (recipeList2 == 0)
                 {
+                    //jeżeli nie to stwóż nowy obiekt w recipe list
                     var myRecipeList = new RecipeList();
                     myRecipeList.Id = Guid.NewGuid();
                     myRecipeList.Rating = 0;
@@ -420,6 +472,7 @@ namespace CompanyEmployees.Controllers
                 }
                 else
                 {
+                    //jeżeli tak to aktualizuj recipe list
                     var recipeList = _db.RecipeList.Single(model => model.UserId == user.Id && model.RecipeId == recipeId);
                     recipeList.ifInList = true;
                     _db.RecipeList.Update(recipeList);
