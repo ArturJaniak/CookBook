@@ -8,20 +8,20 @@
         Kliknij by wyświetlić filtry
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <mat-selection-list #shoes>
-        <mat-list-option *ngFor="let shoe of typesOfShoes">
-          {{shoe}}
-        </mat-list-option>
-      </mat-selection-list>
-      
-      <p>
-        Options selected: {{shoes.selectedOptions.selected.length}}
-      </p>
+
       
   </mat-expansion-panel>
-<mat-grid-list cols="2" rowHeight="2:1">
-    <mat-grid-tile>1</mat-grid-tile>
-    <mat-grid-tile>2</mat-grid-tile>
-    <mat-grid-tile>3</mat-grid-tile>
-    <mat-grid-tile>4</mat-grid-tile>
+
+  <mat-grid-list cols="4" rowHeight="3:1" >
+    <ng-container>
+      <mat-grid-tile *ngFor ="let recipe of recipes">
+        <!-- <div>{{recipe.id}}</div> -->
+        <div> <img src="images/img_girl.jpg" alt="Girl in a jacket" style="width:48px;height:48px;"> </div>
+        <div>{{recipe.recipeName}}</div>
+        <!-- <div>{{recipe.date}}</div> -->
+        <div>{{recipe.rating}}</div>
+        
+        <div>{{recipe.userId}}</div>  
+      </mat-grid-tile>
+    </ng-container>
   </mat-grid-list>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RecipeDto, RecipePublicListDto } from '../api/ApiClient';
+import { RecipesService } from '../shared/services/recipes.service';
 
 @Component({
   selector: 'app-best-recipes',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BestRecipesComponent implements OnInit {
 
-  constructor() { }
-  typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
-  ngOnInit(): void {
-  }
+  constructor(private recipesClientService: RecipesService) { }
+  recipes : RecipePublicListDto[];
 
+  ngOnInit() {
+    this.recipesClientService.getRecipes().subscribe(res=>(this.recipes = res));
+  }
 }
+

@@ -12,7 +12,7 @@ export class MyRecipesComponent implements OnInit {
 
  
 
-  constructor(private recipesService: MyRecipesService, private http: HttpClient, recipeLogedViewClient: RecipeLogedViewClient) { 
+  constructor(private recipesService: MyRecipesService) { 
     
   }
   recipes : RecipePublicListDto[];
