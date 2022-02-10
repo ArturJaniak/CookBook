@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RecipeDto, RecipePublicListDto } from '../api/ApiClient';
+import { RecipePublicListDto } from '../api/ApiClient';
 import { RecipesService } from '../shared/services/recipes.service';
 
 @Component({

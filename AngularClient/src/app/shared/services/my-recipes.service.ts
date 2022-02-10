@@ -9,6 +9,6 @@ import { RecipeLogedViewClient } from "src/app/api/ApiClient";
       constructor(private recipeLogedViewClient: RecipeLogedViewClient){}
       
       getRecipes(){ 
-          return this.recipeLogedViewClient.getMyList(localStorage.getItem("token"));
+          return this.recipeLogedViewClient.recipeLogedView_GetMyList(localStorage.getItem("token"));
       }
   }

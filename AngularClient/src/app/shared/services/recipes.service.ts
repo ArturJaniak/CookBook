@@ -9,9 +9,9 @@ import {  RecipesClient } from "src/app/api/ApiClient";
       constructor(private recipesClientService: RecipesClient){}
       
       getRandomRecipes(){ 
-          return this.recipesClientService.getRandomRecipe();
+          return this.recipesClientService.recipes_GetRandomRecipe();
       }
       getRecipes(){
-          return this.recipesClientService.getRecipes();
+          return this.recipesClientService.recipes_GetRecipes();
       }
   }

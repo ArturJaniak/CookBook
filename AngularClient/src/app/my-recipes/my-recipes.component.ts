@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { RecipeLogedViewClient, RecipePublicListDto } from '../api/ApiClient';
 import { MyRecipesService } from '../shared/services/my-recipes.service';
