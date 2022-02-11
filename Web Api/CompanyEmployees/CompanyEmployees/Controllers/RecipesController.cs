@@ -256,7 +256,7 @@ namespace CompanyEmployees.Controllers
         //------------------------------------------------------------------------------------------------------------------------------------
 
         [HttpGet("{id}")]//pobranie jednej recepty 
-        public ActionResult<RecipeDto> GetRecipe(Guid id)
+        public ActionResult<RecipeDto> GetRecipe(Guid id, string token)
         {
             //stwożenie listy
             #region TWOZENIE LISTY
@@ -277,6 +277,7 @@ namespace CompanyEmployees.Controllers
                                {
                                    Id = objRecipeList.RecipeId,
                                    UserId = objRecipe.UserId,
+                                   ifPublic= objRecipe.IfPublic,
                                    RecipeName = objRecipe.RecipeName,
                                    Instruction = objRecipe.Instruction,
                                    Date = objRecipe.Date,
@@ -299,7 +300,7 @@ namespace CompanyEmployees.Controllers
                                    Vege = objTags.Vege,
 
                                }
-                               ).ToList();
+                               ).ToList();//.Where(x => x.Id == id) 
             #endregion
             //Przypisanie listy sładników do recept
             #region LISTA SKŁADNIKÓW
@@ -317,6 +318,37 @@ namespace CompanyEmployees.Controllers
             RecipeDto recipe = listaRecept.First(model=>model.Id==id);
             //przypisanie listy składników do recepty
             recipe.Ingredients = indigrientsList;
+
+
+            if (token==null)
+            {
+                if (recipe.ifPublic==true)
+                {
+                    return recipe;
+
+                }
+                return recipe;//zmienić na null
+            }
+            else
+            {
+                #region DEKODOWANIE TOKENA
+                var stream = token;
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(stream);
+                var tokenS = jsonToken as JwtSecurityToken;
+                var x = tokenS.Claims.ElementAt(0).Value;
+                #endregion
+                //znalezienie usera na podstawie emaila z dekodera
+                var userToken = _db.Users.Single(model => model.UserName == x);
+                var r = _db.Recipes.Single(model => model.Id == id);
+                if (r.UserId == userToken.Id)
+                {
+                    return recipe;
+
+                }
+                return recipe;//zmienić na null
+            }
+
             return recipe;
             
         }

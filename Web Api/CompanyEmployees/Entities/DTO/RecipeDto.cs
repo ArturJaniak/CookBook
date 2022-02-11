@@ -13,6 +13,7 @@ namespace Entities.DTO
         public string RecipeName { get; set; }
         public string Instruction { get; set; }
         public string UserId { get; set; }
+        public bool ifPublic { get; set; }
 
         public DateTime Date { get; set; }
         public int Rating { get; set; }

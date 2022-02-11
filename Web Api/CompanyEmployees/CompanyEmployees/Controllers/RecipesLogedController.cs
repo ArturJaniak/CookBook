@@ -30,12 +30,12 @@ namespace CompanyEmployees.Controllers
         }
 
         [HttpPost("Add")]
-        public ActionResult CreateRecipe(CreateRecipeDto createRecipeDto)
+        public ActionResult CreateRecipe(string token)
         {
-            if (createRecipeDto.token!=null)
+            if (token!=null)
             {
                 //dekoder tokena
-                var stream = createRecipeDto.token;
+                var stream = token;
                 var handler = new JwtSecurityTokenHandler();
                 var jsonToken = handler.ReadToken(stream);
                 var tokenS = jsonToken as JwtSecurityToken;
@@ -249,6 +249,7 @@ namespace CompanyEmployees.Controllers
                 //wyszukanie odpowiedniego usera
                 var user = _db.Users.Single(model => model.UserName == userMail);
                 Recipes r = _db.Recipes.Find(updateRecipe.Id);//znajdzi pojedyncze zdjęcie
+                //sprawdzenie czy user jest właścicielem recepty 
                 if (user.Id == r.UserId)
                 {
 
@@ -282,7 +283,7 @@ namespace CompanyEmployees.Controllers
                         {
                             //pobranie pełnej ścieżki
                            
-                            string fullPath = Path.GetFullPath(@"GitHub\CookBook\AngularClient\src\assets");//     CookBook\AngularClient\src\assets
+                            //string fullPath = Path.GetFullPath(@"GitHub\CookBook\AngularClient\src\assets");//     CookBook\AngularClient\src\assets
                             string path = @"AngularClient\src\assets";
                             string newPath = Path.GetFullPath(Path.Combine( @"..\..\..\", path));
                             //------------------------------------------
