@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './login/login.component';
 import { MyRecipesComponent } from './my-recipes/my-recipes.component';
 import { RandomRecipeComponent } from './random-recipe/random-recipe.component';
+import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent,
@@ -20,8 +21,12 @@ children: [
     { path: 'home', component: HomeComponent},
     { path: 'about', component: AboutComponent},
     { path: 'myRecipes', component: MyRecipesComponent},
+    { path: 'detailsRecipe', component: RecipeDetailsComponent, children:[
+        { path: ':id', component: RecipeDetailsComponent},
+    ]},
     { path: 'randomRecipe', component: RandomRecipeComponent},
     { path: 'bestRecipes', component: BestRecipesComponent},
+    
     { path: 'authentication/register', component: RegisterUserComponent},
     { path: '**', redirectTo: '/404', pathMatch: 'full'},
 ];

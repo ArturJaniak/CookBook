@@ -1,16 +1,24 @@
 <p>best-recipes works!</p>
 <mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Filtry
-      </mat-panel-title>
-      <mat-panel-description>
-        Kliknij by wyświetlić filtry
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-
-      
-  </mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Filtry
+    </mat-panel-title>
+    <mat-panel-description>
+      Kliknij by wyświetlić filtry
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <mat-selection-list #shoes>
+      <mat-list-option *ngFor="let shoe of typesOfShoes">
+        {{shoe}}
+      </mat-list-option>
+    </mat-selection-list>
+    
+    <p>
+      Options selected: {{shoes.selectedOptions.selected.length}}
+    </p>
+    
+</mat-expansion-panel>
 
   <mat-grid-list cols="4" rowHeight="3:1" >
     <ng-container>
@@ -20,7 +28,6 @@
         <div>{{recipe.recipeName}}</div>
         <!-- <div>{{recipe.date}}</div> -->
         <div>{{recipe.rating}}</div>
-        
         <div>{{recipe.userId}}</div>  
       </mat-grid-tile>
     </ng-container>

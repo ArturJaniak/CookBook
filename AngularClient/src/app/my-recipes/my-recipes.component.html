@@ -20,7 +20,7 @@
       
   </mat-expansion-panel>
 
-<mat-grid-list cols="4" rowHeight="3:1" >
+<mat-grid-list cols="2" rowHeight="3:1" >
   <ng-container>
     <mat-grid-tile *ngFor ="let recipe of recipes">
       <!-- <div>{{recipe.id}}</div> -->
@@ -29,7 +29,11 @@
       <!-- <div>{{recipe.date}}</div> -->
       <div>{{recipe.rating}}</div>
       
-      <div>{{recipe.userId}}</div>  
+      <div>{{recipe.userId}}</div> 
+      <button type="button" (click)="viewRecipeDetail(recipe.id)">Details</button> 
+      <button type="button" (click)="deleteRecipe(recipe.id)">Delete Me!</button> 
     </mat-grid-tile>
   </ng-container>
 </mat-grid-list>
+<button type="button" (click)="createRecipe()">Click Me!</button>
+    

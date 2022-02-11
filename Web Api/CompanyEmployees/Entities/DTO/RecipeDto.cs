@@ -17,6 +17,7 @@ namespace Entities.DTO
         public DateTime Date { get; set; }
         public int Rating { get; set; }
         //Alergeny
+        //public FiltersDto filter { get; set; }
         public bool GLUTEN { get; set; }
         public bool SHELLFISH { get; set; }
         public bool EGGS { get; set; }

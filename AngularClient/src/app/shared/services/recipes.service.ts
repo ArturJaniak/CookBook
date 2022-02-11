@@ -8,10 +8,35 @@ import {  RecipesClient } from "src/app/api/ApiClient";
 
       constructor(private recipesClientService: RecipesClient){}
       
+      id:any
+
+      recipeDetails(id){
+        return this.recipesClientService.recipes_GetRecipe(id);
+      }
       getRandomRecipes(){ 
           return this.recipesClientService.recipes_GetRandomRecipe();
       }
-      getRecipes(){
-          return this.recipesClientService.recipes_GetRecipes();
+      getRecipes( gluten: true,
+        // shellfish: boolean,
+        // eggs: boolean,
+        // fish: boolean,
+        // peanuts: boolean,
+        // soy: boolean,
+        // lactose: boolean,
+        // celery: boolean,
+        // mustard: boolean,
+        // sesame: boolean,
+        // sulphur_dioxide: boolean,
+        // lupine: boolean,
+        // muscles: boolean
+        ){
+          return this.recipesClientService.recipes_GetRecipes( 
+            gluten, 
+            // shellfish, eggs,fish, peanuts,
+            // soy, lactose, celery, mustard, sesame,
+            // sulphur_dioxide, lupine,muscles
+            );
       }
+
+
   }

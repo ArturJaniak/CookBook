@@ -20,7 +20,8 @@ import { RandomRecipeComponent } from './random-recipe/random-recipe.component';
 import { BestRecipesComponent } from './best-recipes/best-recipes.component';
 import { MatGridListModule } from '@angular/material/grid-list'; 
 import {MatExpansionModule} from '@angular/material/expansion'; 
-import {MatListModule} from '@angular/material/list'; 
+import {MatListModule} from '@angular/material/list';
+import { RecipeDetailsComponent } from './recipe-details/recipe-details.component'; 
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {MatListModule} from '@angular/material/list';
     MyRecipesComponent,
     RandomRecipeComponent,
     BestRecipesComponent,
+    RecipeDetailsComponent,
   ],
   imports: [
     ReactiveFormsModule,
