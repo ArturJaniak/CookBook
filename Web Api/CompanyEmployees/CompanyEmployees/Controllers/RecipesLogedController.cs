@@ -268,7 +268,7 @@ namespace CompanyEmployees.Controllers
 
                             }
                             _db.ImageList.Remove(item);
-                            _db.SaveChanges();
+                            //_db.SaveChanges();
 
                         }
                         #endregion
@@ -281,13 +281,16 @@ namespace CompanyEmployees.Controllers
                         foreach (var image in file)
                         {
                             //pobranie pełnej ścieżki
-                            string fullPath = Path.GetFullPath(@"Imagines");
+                           
+                            string fullPath = Path.GetFullPath(@"GitHub\CookBook\AngularClient\src\assets");//     CookBook\AngularClient\src\assets
+                            string path = @"AngularClient\src\assets";
+                            string newPath = Path.GetFullPath(Path.Combine( @"..\..\..\", path));
                             //------------------------------------------
                             //przypisanie unikalnej nazwy
                             uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName.ToString();
                             //------------------------------------------
                             //stwożenie pełnej ścieżki do zdjęcia
-                            string filePath = Path.Combine(fullPath, uniqueFileName);
+                            string filePath = Path.Combine(newPath, uniqueFileName);//@"C:\Users\Tomek\Documents\GitHub\CookBook\AngularClient\src\assets"
                             //------------------------------------------
                             //stwożenie zdjęcia w danym fold
                             image.CopyTo(new FileStream(filePath, FileMode.Create));
@@ -305,7 +308,7 @@ namespace CompanyEmployees.Controllers
                             _db.ImageList.Add(myImageList);
 
                             _db.Image.Add(myImage);
-                            _db.SaveChanges();
+                            //_db.SaveChanges();
                         }
                         #endregion
                     }
