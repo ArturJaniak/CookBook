@@ -18,23 +18,23 @@ import {  RecipesClient } from "src/app/api/ApiClient";
       }
       getRecipes( gluten: boolean,
          shellfish: boolean,
-        // eggs: boolean,
-        // fish: boolean,
-        // peanuts: boolean,
-        // soy: boolean,
-        // lactose: boolean,
-        // celery: boolean,
-        // mustard: boolean,
-        // sesame: boolean,
-        // sulphur_dioxide: boolean,
-        // lupine: boolean,
-        // muscles: boolean
+         eggs: boolean,
+         fish: boolean,
+         peanuts: boolean,
+         soy: boolean,
+         lactose: boolean,
+         celery: boolean,
+         mustard: boolean,
+         sesame: boolean,
+         sulphur_dioxide: boolean,
+         lupine: boolean,
+         muscles: boolean
         ){
           return this.recipesClientService.recipes_GetRecipes( 
-            gluten,shellfish 
-            // shellfish, eggs,fish, peanuts,
-            // soy, lactose, celery, mustard, sesame,
-            // sulphur_dioxide, lupine,muscles
+            gluten,shellfish, 
+            eggs,fish, peanuts,
+            soy, lactose, celery, mustard, sesame,
+            sulphur_dioxide, lupine,muscles
             );
       }
 
