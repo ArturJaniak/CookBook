@@ -26,13 +26,13 @@ namespace CompanyEmployees.Controllers
 
         public RecipesLogedController(RepositoryContext db)
         {
-            _db = db;           
+            _db = db;
         }
 
         [HttpPost("Add")]
         public ActionResult CreateRecipe(string token)
         {
-            if (token!=null)
+            if (token != null)
             {
                 //dekoder tokena
                 var stream = token;
@@ -126,14 +126,14 @@ namespace CompanyEmployees.Controllers
                 _db.SaveChanges();
                 return Ok();
             }
-           return BadRequest();
+            return BadRequest();
         }
         //------------------------------------------------------------------------------------------------------------------------------------
 
         [HttpPost("delete")]
         public ActionResult DeleteConfirmed(DeleteRecipeDto deleteRecipeDto)
         {
-            if (deleteRecipeDto.token!=null)//czy user jest zalogowany
+            if (deleteRecipeDto.token != null)//czy user jest zalogowany
             {
                 //przypisanie podanego id do zmiennej
                 var id = deleteRecipeDto.RecipId;
@@ -229,9 +229,211 @@ namespace CompanyEmployees.Controllers
         }
         //------------------------------------------------------------------------------------------------------------------------------------
 
+        [HttpPost("updateData")]
+        public ActionResult UpdateData(UpdateRecipe updateRecipe)
+        {
+
+            if (updateRecipe.token != null)
+            {
+                //dekoder tokena
+                #region DEKODER TOKENA
+                var stream = updateRecipe.token;
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(stream);
+                var tokenS = jsonToken as JwtSecurityToken;
+                #endregion
+                //znalezienie elem mail
+                var userMail = tokenS.Claims.ElementAt(0).Value;
+                //wyszukanie odpowiedniego usera
+                var user = _db.Users.Single(model => model.UserName == userMail);
+                Recipes r = _db.Recipes.Find(updateRecipe.Id);//znajdzi pojedyncze zdjęcie
+                //sprawdzenie czy user jest właścicielem recepty 
+                if (user.Id == r.UserId)
+                {
+
+                    //var x = updateRecipe.Ingredients2.Count;
+                    
+                    //przypisanie starych/nowych danych do recepty
+                    #region AKTUALIZACJA DANYCH W RECEPCIE
+                    Recipes recipe = _db.Recipes.Find(updateRecipe.Id);
+                    recipe.Instruction = updateRecipe.Instruction;
+                    recipe.RecipeName = updateRecipe.RecipeName;
+                    recipe.IfPublic = updateRecipe.IfPublic;
+                    recipe.Date = DateTime.Now;
+                    _db.Recipes.Update(recipe);
+                    #endregion
+
+                    //usunięcie indigrentów
+                    #region USUNIĘCIE SKŁADNIKÓW
+                    var ingredientList = _db.Ingredients.Where(model => model.RecipeId == updateRecipe.Id).ToList(); // dorobic pętle
+                    foreach (var ingredient in ingredientList)
+                    {
+                        _db.Ingredients.Remove(ingredient);
+                        _db.SaveChanges();
+
+                    }
+                    #endregion
+
+                    //stwożenie na nowo indigrentów
+                    if (updateRecipe.Ingredients2 !=null)
+                    {
+                        #region STWOENIE SKŁADNIKÓW
+                        for (int i = 0; i < updateRecipe.Ingredients2.Count; i++)
+                        {
+                            var myIndigrent = new Ingredients();
+
+                            myIndigrent.Id = Guid.NewGuid();
+                            myIndigrent.RecipeId = updateRecipe.Id;
+                            myIndigrent.Ingredient = updateRecipe.Ingredients2[i].Ingredient;
+                            _db.Ingredients.Add(myIndigrent);
+                            _db.SaveChanges();
+                        }
+                        #endregion
+                    }
+
+
+                    //aktualizacja alergenów
+                    #region AKTUALIZACJA ALERGENÓW
+                    Allergens allergens = _db.Allergens.Single(model => model.Id == recipe.AllergenId);
+                    allergens.FISH = updateRecipe.FISH;
+                    allergens.CELERY = updateRecipe.CELERY;
+                    allergens.EGGS = updateRecipe.EGGS;
+                    allergens.GLUTEN = updateRecipe.GLUTEN;
+                    allergens.Lactose = updateRecipe.Lactose;
+                    allergens.LUPINE = updateRecipe.LUPINE;
+                    allergens.MUSCLES = updateRecipe.MUSCLES;
+                    allergens.MUSTARD = updateRecipe.MUSTARD;
+                    allergens.PEANUTS = updateRecipe.PEANUTS;
+                    allergens.SESAME = updateRecipe.SESAME;
+                    allergens.SHELLFISH = updateRecipe.SHELLFISH;
+                    allergens.SOY = updateRecipe.SOY;
+                    allergens.SULPHUR_DIOXIDE = updateRecipe.SULPHUR_DIOXIDE;
+                    _db.Allergens.Update(allergens);
+                    #endregion
+
+                    //aktualizacja Tagów
+                    #region AKTUALIZACJA TAGÓW
+                    Tags tags = _db.Tags.Single(model => model.Id == recipe.TagId);
+                    tags.Vege = updateRecipe.Vege;
+                    tags.Vegan = updateRecipe.Vegan;
+                    _db.Tags.Update(tags);
+                    #endregion
+
+
+                    _db.SaveChanges();
+
+                    return Ok();
+                }
+                return BadRequest();
+
+
+            }
+            return BadRequest();
+
+        }
+
+
+
+
+        [HttpPost("UpdatePhoto")]
+        public ActionResult UpdatePhoto(
+             IFormFile file , string token, Guid id)
+        {
+
+            if (token != null)
+            {
+                //dekoder tokena
+                #region DEKODER TOKENA
+                var stream = token;
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(stream);
+                var tokenS = jsonToken as JwtSecurityToken;
+                #endregion
+                //znalezienie elem mail
+                var userMail = tokenS.Claims.ElementAt(0).Value;
+                //wyszukanie odpowiedniego usera
+                var user = _db.Users.Single(model => model.UserName == userMail);
+                Recipes r = _db.Recipes.Find(id);//znajdzi pojedyncze zdjęcie
+                //sprawdzenie czy user jest właścicielem recepty 
+                if (user.Id == r.UserId)
+                {
+
+                    
+                    if (file != null)
+                    {
+                        //usunięcie i tabeli lista zdjęć i tabeli zdjęć gdzie idRecepty == id Recepty
+                        var imageList = _db.ImageList.Where(model => model.RecipeId == id).ToList();
+                        #region USUNIĘCIE ZDJĘĆ
+                        foreach (var item in imageList)
+                        {
+
+                            Image img = _db.Image.Find(item.ImageId);
+                           
+                                _db.Image.Remove(img);
+
+                            
+                            _db.ImageList.Remove(item);
+                            //_db.SaveChanges();
+
+                        }
+                        #endregion
+
+                        string uniqueFileName = null;
+                        var myImage = new Image();
+                        var myImageList = new ImageList();
+                        //stwożenie na nowo zdjęć 
+                        #region STOWENIE ZDJĘĆ
+                        
+                            //pobranie pełnej ścieżki
+
+                            //string fullPath = Path.GetFullPath(@"GitHub\CookBook\AngularClient\src\assets");//     CookBook\AngularClient\src\assets
+                            string path = @"AngularClient\src\assets";
+                            string newPath = Path.GetFullPath(Path.Combine(@"..\..\..\", path));
+                            //------------------------------------------
+                            //przypisanie unikalnej nazwy
+                            uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName.ToString();
+                            //------------------------------------------
+                            //stwożenie pełnej ścieżki do zdjęcia
+                            string filePath = Path.Combine(newPath, uniqueFileName);//@"C:\Users\Tomek\Documents\GitHub\CookBook\AngularClient\src\assets"
+                            //------------------------------------------
+                            //stwożenie zdjęcia w danym fold
+                            file.CopyTo(new FileStream(filePath, FileMode.Create));
+                            //------------------------------------------             
+
+                            //twożenie pojedyńczego zdjęcia w bazie 
+                            myImage.Id = Guid.NewGuid();
+                            myImage.ImageName = uniqueFileName;
+
+                            //dopisanie zdjęcia do listy
+                            //znalezienie istniejącego zdjęcia i przypisanie na jego miejsce nowego                  
+                            myImageList.ImageId = myImage.Id;
+                            myImageList.Id = Guid.NewGuid();
+                            myImageList.RecipeId = id;
+                            _db.ImageList.Add(myImageList);
+
+                            _db.Image.Add(myImage);
+                            //_db.SaveChanges();
+                        
+                        #endregion
+                    }
+                   
+
+                    _db.SaveChanges();
+
+                    return Ok();
+                }
+                return BadRequest();
+
+
+            }
+            return BadRequest();
+        }
+
+
+
         [HttpPost("upload")]
         public IActionResult UploadMultiples(
-            [ModelBinder(BinderType = typeof(JsonModelBinder))]
+            //[ModelBinder(BinderType = typeof(JsonModelBinder))]
              UpdateRecipe updateRecipe, IList<IFormFile> file)
         {
 

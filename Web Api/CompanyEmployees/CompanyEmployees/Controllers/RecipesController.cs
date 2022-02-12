@@ -267,8 +267,8 @@ namespace CompanyEmployees.Controllers
                                objRecipe.Id equals objImageList.RecipeId
                                join objImage in _db.Image on
                                objImageList.ImageId equals objImage.Id
-                               join objIngredients in _db.Ingredients on
-                               objRecipe.Id equals objIngredients.RecipeId
+                               //join objIngredients in _db.Ingredients on
+                               //objRecipe.Id equals objIngredients.RecipeId
                                join objAllergens in _db.Allergens on
                                objRecipe.AllergenId equals objAllergens.Id
                                join objTags in _db.Tags on
