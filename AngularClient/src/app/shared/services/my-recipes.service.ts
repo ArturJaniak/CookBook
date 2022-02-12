@@ -11,5 +11,4 @@ import { RecipeLogedViewClient, RecipesClient, RecipesLogedClient } from "src/ap
       getRecipes(){ 
           return this.recipeLogedViewClient.recipeLogedView_GetMyList(localStorage.getItem("token"));
       }
-
   }

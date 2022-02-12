@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { RecipePublicListDto, RecipesLogedClient } from '../api/ApiClient';
 import { MyRecipesService } from '../shared/services/my-recipes.service';
+import { SharingService } from '../shared/sharing.service';
 
 @Component({
   selector: 'app-my-recipes',
@@ -12,9 +13,12 @@ import { MyRecipesService } from '../shared/services/my-recipes.service';
 })
 export class MyRecipesComponent implements OnInit {
 
- 
 
-  constructor(private router: Router,private recipesService: MyRecipesService, private recipeLogged: RecipesLogedClient, private route:ActivatedRoute) {}
+  constructor(private router: Router,
+    private recipesService: MyRecipesService,
+    private recipeLogged: RecipesLogedClient,
+    private route:ActivatedRoute,
+    private sharingService: SharingService) {}
   recipes$: Observable<any>;
   selectedId: any;
   recipes : RecipePublicListDto[];
@@ -29,11 +33,13 @@ export class MyRecipesComponent implements OnInit {
       return this.recipesService.getRecipes();
     }))
     this.recipesService.getRecipes().subscribe(res=>(this.recipes = res));
-    
+
   }
   viewRecipeDetail(recipe_id : any){
    let url: string = "/detailsRecipe/" + recipe_id
         this.router.navigateByUrl(url);
+        //console.log(recipe_id);
+        this.sharingService.setData(recipe_id);
      }
   createRecipe(){
     alert("dziala");

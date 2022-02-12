@@ -22,6 +22,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {MatListModule} from '@angular/material/list';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component'; 
+import { SharingService } from './shared/sharing.service';
+import { EditRecipeDetailsComponent } from './recipe-details/edit-recipe-details/edit-recipe-details.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { RecipeDetailsComponent } from './recipe-details/recipe-details.componen
     RandomRecipeComponent,
     BestRecipesComponent,
     RecipeDetailsComponent,
+    EditRecipeDetailsComponent,
+    
   ],
   imports: [
     ReactiveFormsModule,
@@ -58,7 +62,7 @@ import { RecipeDetailsComponent } from './recipe-details/recipe-details.componen
    
   ],
   exports: [],
-  providers: [],
+  providers: [SharingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

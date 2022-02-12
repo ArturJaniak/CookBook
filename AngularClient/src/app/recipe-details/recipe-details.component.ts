@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { RecipeDto, RecipesClient } from '../api/ApiClient';
-import { RecipesService } from '../shared/services/recipes.service';
+import { Observable, Subscription } from 'rxjs';
+import { RecipeLogedViewClient, RecipesClient, RecipesLogedClient } from '../api/ApiClient';
+import { SharingService } from '../shared/sharing.service';
 
 @Component({
   selector: 'app-recipe-details',
@@ -11,17 +11,36 @@ import { RecipesService } from '../shared/services/recipes.service';
 })
 export class RecipeDetailsComponent implements OnInit {
 
-  constructor(private recipesClientService: RecipesService, private recipesClient: RecipesClient, private route: ActivatedRoute, private router: Router) { }
+  constructor(private recipesClient: RecipesClient,
+     private sharingService: SharingService,
+     private recipesLogged: RecipesLogedClient,
+     ){}
   recipe$ : Observable<any>;
   id:any;
   recipe:any=[];
+  rateValue:number;
+  rating : number;
+  rate:any
+  newRecipe:any=[];
   ngOnInit(): void {
-    //const recipeId = this.route.snapshot.paramMap.get('id');
-    //this.recipe = this.recipesClient.recipes_GetRecipe('3d59d6d8-62f7-4078-b4ac-56e5b42e1184');
+    this.id =  this.sharingService.getData();
+    //this.route.params.subscribe(params => {
+    this.getThatRecipe();
+    //})
     
-
-    // this.route.queryParams.subscribe(params => {
-    // this.recipe.id = params['id'];})
-    this.recipesClient.recipes_GetRecipe('3d59d6d8-62f7-4078-b4ac-56e5b42e1184').subscribe(res=>(this.recipe = res));
     }
+  rateRecipe(rateValue){
+    //this.id = this.id;
+      this.rateValue = rateValue;
+      console.log("recipe "+ this.recipe + " "+ this.recipe.rating);
+      this.recipesLogged.recipesLoged_RateRecipe(localStorage.getItem("token"), this.id, rateValue).subscribe(res=>(this.recipe.rating) = res);
+      console.log("recipe rating" + this.recipe.rating +" "+ this.id);
+      this.ngOnInit();
+      //this.getThatRecipe();
+    
+  }
+  getThatRecipe(){
+    this.recipesClient.recipes_GetRecipe(this.id).subscribe(res=>(this.recipe = res));
+  }
+  
 }

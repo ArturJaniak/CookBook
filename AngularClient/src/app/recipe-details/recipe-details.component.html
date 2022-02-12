@@ -5,5 +5,26 @@
  <div>{{recipe.date}}</div> 
 <div>{{recipe.rating}}</div>
 
-<div>{{recipe.userId}}</div>  
+<div>Instruction?: {{recipe.instruction}}</div>  
+<div>Gluten?: {{recipe.gluten}}</div>
+<div>Shellfish?: {{recipe.shellfish}}</div>
+<div>Eggs?: {{recipe.eggs}}</div>
+<div>Fish?: {{recipe.fish}}</div>
+<div>Peanuts?: {{recipe.peanuts}}</div>
+<div>Soy?: {{recipe.soy}}</div>
+<div>Lactose?: {{recipe.lactose}}</div>
+<div>Celery?: {{recipe.celery}}</div>
+<div>Mustard?: {{recipe.mustard}}</div>
+<div>Sesame?:{{recipe.sesame}}</div>
+<div>Sulphur_dioxide?:{{recipe.sulphur_dioxide}}</div>
+<div>Lupine?: {{recipe.lupine}}</div>
+<div>Muscles?: {{recipe.muscles}}</div>
+<p>nope</p>
+<!-- {{recipe.ingredients[0].ingredient}} -->
+<li *ngFor="let ingredient of recipe.ingredients">
+    {{ingredient.ingredient}}
+</li>
+
 <!-- </div> -->
+<p><input type="number" #rateValue> Rate me!</p>  
+<button type="submit" (click)="rateRecipe(rateValue.value)">Save Rating</button>

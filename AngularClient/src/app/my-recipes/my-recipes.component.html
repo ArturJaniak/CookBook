@@ -24,10 +24,10 @@
   <ng-container>
     <mat-grid-tile *ngFor ="let recipe of recipes">
       <!-- <div>{{recipe.id}}</div> -->
-      <div> <img src="images/img_girl.jpg" alt="Girl in a jacket" style="width:48px;height:48px;"> </div>
+      <div> <img src="../../assets/img_girl.jpg" alt="Girl in a jacket" style="width:48px;height:48px;"> </div>
       <div>{{recipe.recipeName}}</div>
       <!-- <div>{{recipe.date}}</div> -->
-      <div>{{recipe.rating}}</div>
+      <div><p>{{recipe.rating}}</p></div>
       
       <div>{{recipe.userId}}</div> 
       <button type="button" (click)="viewRecipeDetail(recipe.id)">Details</button> 

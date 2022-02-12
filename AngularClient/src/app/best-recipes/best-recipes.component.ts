@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecipePublicListDto } from '../api/ApiClient';
 import { RecipesService } from '../shared/services/recipes.service';
 
@@ -9,7 +10,7 @@ import { RecipesService } from '../shared/services/recipes.service';
 })
 export class BestRecipesComponent implements OnInit {
 
-  constructor(private recipesClientService: RecipesService) { }
+  constructor(private recipesClientService: RecipesService, private route:ActivatedRoute, private router: Router) { }
   recipes: RecipePublicListDto[]
   gluten: true
   shellfish: false
@@ -43,5 +44,9 @@ export class BestRecipesComponent implements OnInit {
       // this.muscles
       ).subscribe(res=>(this.recipes = res));
   }
+  viewRecipeDetail(recipe_id : any){
+    let url: string = "/detailsRecipe/" + recipe_id
+         this.router.navigateByUrl(url);
+      }
 }
 
