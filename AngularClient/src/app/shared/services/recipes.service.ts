@@ -16,8 +16,8 @@ import {  RecipesClient } from "src/app/api/ApiClient";
       getRandomRecipes(){ 
           return this.recipesClientService.recipes_GetRandomRecipe();
       }
-      getRecipes( gluten: true,
-        // shellfish: boolean,
+      getRecipes( gluten: boolean,
+         shellfish: boolean,
         // eggs: boolean,
         // fish: boolean,
         // peanuts: boolean,
@@ -31,7 +31,7 @@ import {  RecipesClient } from "src/app/api/ApiClient";
         // muscles: boolean
         ){
           return this.recipesClientService.recipes_GetRecipes( 
-            gluten, 
+            gluten,shellfish 
             // shellfish, eggs,fish, peanuts,
             // soy, lactose, celery, mustard, sesame,
             // sulphur_dioxide, lupine,muscles

@@ -10,10 +10,10 @@ import { RecipesService } from '../shared/services/recipes.service';
 })
 export class BestRecipesComponent implements OnInit {
 
-  constructor(private recipesClientService: RecipesService, private route:ActivatedRoute, private router: Router) { }
+  constructor(private recipesClientService: RecipesService, private router: Router) { }
   recipes: RecipePublicListDto[]
-  gluten: true
-  shellfish: false
+  gluten: boolean
+  shellfish: boolean
   eggs: false
   fish: false
   peanuts: false
@@ -25,24 +25,31 @@ export class BestRecipesComponent implements OnInit {
   sulphur_dioxide: false
   lupine: false
   muscles: false
-  typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
+  typesOfShoes: string[] = ['Gluten','Shellfish'];
 
   ngOnInit() {
-    this.recipesClientService.getRecipes( 
-      this.gluten = true
-      // this.shellfish,
-      // this.eggs,
-      // this.fish,
-      // this.peanuts,
-      // this.soy,
-      // this.lactose,
-      // this.celery,
-      // this.mustard,
-      // this.sesame,
-      // this.sulphur_dioxide,
-      // this.lupine,
-      // this.muscles
-      ).subscribe(res=>(this.recipes = res));
+    // this.recipesClientService.getRecipes( 
+    //   this.gluten = false
+    //   // this.shellfish,
+    //   // this.eggs,
+    //   // this.fish,
+    //   // this.peanuts,
+    //   // this.soy,
+    //   // this.lactose,
+    //   // this.celery,
+    //   // this.mustard,
+    //   // this.sesame,
+    //   // this.sulphur_dioxide,
+    //   // this.lupine,
+    //   // this.muscles
+    //   ).subscribe(res=>(this.recipes = res));
+      this.filter(this.gluten,this.shellfish);
+  }
+  filter(gluten:boolean, shellfish:boolean){
+    this.recipesClientService.getRecipes(
+      this.gluten = gluten,
+      this.shellfish = shellfish
+    ).subscribe(res=>(this.recipes = res))
   }
   viewRecipeDetail(recipe_id : any){
     let url: string = "/detailsRecipe/" + recipe_id

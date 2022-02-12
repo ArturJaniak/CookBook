@@ -15,8 +15,8 @@
 <div>Lactose?: {{recipe.lactose}}</div>
 <div>Celery?: {{recipe.celery}}</div>
 <div>Mustard?: {{recipe.mustard}}</div>
-<div>Sesame?:{{recipe.sesame}}</div>
-<div>Sulphur_dioxide?:{{recipe.sulphur_dioxide}}</div>
+<div>Sesame?: {{recipe.sesame}}</div>
+<div>Sulphur_dioxide?: {{recipe.sulphuR_DIOXIDE}}</div>
 <div>Lupine?: {{recipe.lupine}}</div>
 <div>Muscles?: {{recipe.muscles}}</div>
 <p>nope</p>
@@ -27,4 +27,5 @@
 
 <!-- </div> -->
 <p><input type="number" #rateValue> Rate me!</p>  
+<button type="button" (click)="editRecipeDetail(recipe.id)">Edit</button> 
 <button type="submit" (click)="rateRecipe(rateValue.value)">Save Rating</button>

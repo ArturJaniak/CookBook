@@ -432,8 +432,8 @@ namespace CompanyEmployees.Controllers
 
 
         [HttpPost("upload")]
-        public IActionResult UploadMultiples(
-            //[ModelBinder(BinderType = typeof(JsonModelBinder))]
+        public ActionResult UploadMultiples(
+         //   [ModelBinder(BinderType = typeof(JsonModelBinder))]
              UpdateRecipe updateRecipe, IList<IFormFile> file)
         {
 

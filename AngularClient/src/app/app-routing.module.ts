@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './login/login.component';
 import { MyRecipesComponent } from './my-recipes/my-recipes.component';
 import { RandomRecipeComponent } from './random-recipe/random-recipe.component';
+import { EditRecipeDetailsComponent } from './recipe-details/edit-recipe-details/edit-recipe-details.component';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 
 const routes: Routes = [
@@ -23,6 +24,9 @@ children: [
     { path: 'myRecipes', component: MyRecipesComponent},
     { path: 'detailsRecipe', component: RecipeDetailsComponent, children:[
         { path: ':id', component: RecipeDetailsComponent},
+    ]},
+    { path: 'editDetailsRecipe', component: EditRecipeDetailsComponent, children:[
+        { path: ':id', component: EditRecipeDetailsComponent},
     ]},
     { path: 'randomRecipe', component: RandomRecipeComponent},
     { path: 'bestRecipes', component: BestRecipesComponent},
