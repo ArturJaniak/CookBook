@@ -76,7 +76,7 @@ namespace CompanyEmployees.Controllers
                 #region STWOENIE RECEPTY
                 myRecipe.Id = newID;
                 myRecipe.RecipeName = "New Recipe";
-                //myRecipe.Photo = null;          
+                myRecipe.Photo = "new.png";
                 myRecipe.Instruction = "Your Instruction";
                 myRecipe.IfPublic = false;
                 myRecipe.Date = DateTime.Now;
@@ -85,19 +85,19 @@ namespace CompanyEmployees.Controllers
                 myRecipe.UserId = user.Id;
                 #endregion
                 //------------------------------------------
-                var myPhoto = new Image();
-                #region PRZYPISANIE ZDJĘCIA
-                Guid photoId = Guid.NewGuid();
-                myPhoto.Id = photoId;
-                myPhoto.ImageName = "new.png";
-                #endregion
-                //------------------------------------------
-                var myPhotoList = new ImageList();
-                #region PRZYPISANIE ZDJĘCIA I RECEPTY DO LISTY ZDJĘĆ
-                myPhotoList.Id = Guid.NewGuid();
-                myPhotoList.ImageId = photoId;
-                myPhotoList.RecipeId = newID;
-                #endregion
+                //var myPhoto = new Image();
+                //#region PRZYPISANIE ZDJĘCIA
+                //Guid photoId = Guid.NewGuid();
+                //myPhoto.Id = photoId;
+                //myPhoto.ImageName = "new.png";
+                //#endregion
+                ////------------------------------------------
+                //var myPhotoList = new ImageList();
+                //#region PRZYPISANIE ZDJĘCIA I RECEPTY DO LISTY ZDJĘĆ
+                //myPhotoList.Id = Guid.NewGuid();
+                //myPhotoList.ImageId = photoId;
+                //myPhotoList.RecipeId = newID;
+                //#endregion
                 //------------------------------------------
                 var myRecipeList = new RecipeList();
                 #region PRZYPISANIE USERA I RECEPTY DO LISTY RECEPT
@@ -119,8 +119,8 @@ namespace CompanyEmployees.Controllers
                 _db.Allergens.Add(myAllergens);
                 _db.Tags.Add(myTags);
                 _db.Recipes.Add(myRecipe);
-                _db.Image.Add(myPhoto);
-                _db.ImageList.Add(myPhotoList);
+                //_db.Image.Add(myPhoto);
+                //_db.ImageList.Add(myPhotoList);
                 _db.RecipeList.Add(myRecipeList);
                 _db.Ingredients.Add(myIngredientsList);
                 _db.SaveChanges();
@@ -148,8 +148,8 @@ namespace CompanyEmployees.Controllers
                 #endregion
                 //znalezienie usera na podstawie emaila z dekodera
                 var userTokenID = _db.Users.Single(model => model.UserName == x);
-                Recipes recipe2 = _db.Recipes.Find(id);
-
+                var recipe2 = _db.Recipes.Find(id);
+// to do sprawdzanie czy id recipa nie jest nullem
                 //sprawdzenie czy user jest właścicielem recepty
                 if (recipe2.UserId == userTokenID.Id)
                 {
@@ -163,15 +163,15 @@ namespace CompanyEmployees.Controllers
                     //------------------------------------------
 
                     //ścieżka do zdjęć
-                    string fullPath = Path.GetFullPath(@"Imagines");
-                    var imageList3 = _db.ImageList.Where(model => model.RecipeId == id).ToList();//stworzenie listy gdzie występuje id recepty
-                    foreach (var image2 in imageList3) //dla karzdego elem w liście 
-                    {
-                        Image i = _db.Image.Find(image2.ImageId);//znajdzi pojedyncze zdjęcie
+                    //string fullPath = Path.GetFullPath(@"Imagines");
+                    //var imageList3 = _db.ImageList.Where(model => model.RecipeId == id).ToList();//stworzenie listy gdzie występuje id recepty
+                    //foreach (var image2 in imageList3) //dla karzdego elem w liście 
+                    //{
+                    //    Image i = _db.Image.Find(image2.ImageId);//znajdzi pojedyncze zdjęcie
 
-                        _db.Image.Remove(i); // usuń zdjęcie
-                        _db.ImageList.Remove(image2);// usuń przypisanie do listy
-                    }
+                    //    _db.Image.Remove(i); // usuń zdjęcie
+                    //    _db.ImageList.Remove(image2);// usuń przypisanie do listy
+                    //}
                     //------------------------------------------
                     //usunięcie Recipe list wszędzie tam gdzie występuję recepta
                     var recipeList = _db.RecipeList.Where(model => model.RecipeId == id).ToList();
@@ -361,26 +361,27 @@ namespace CompanyEmployees.Controllers
                     
                     if (file != null)
                     {
+                        
                         //usunięcie i tabeli lista zdjęć i tabeli zdjęć gdzie idRecepty == id Recepty
-                        var imageList = _db.ImageList.Where(model => model.RecipeId == id).ToList();
-                        #region USUNIĘCIE ZDJĘĆ
-                        foreach (var item in imageList)
-                        {
+                        //var imageList = _db.ImageList.Where(model => model.RecipeId == id).ToList();
+                        //#region USUNIĘCIE ZDJĘĆ
+                        //foreach (var item in imageList)
+                        //{
 
-                            Image img = _db.Image.Find(item.ImageId);
+                        //    Image img = _db.Image.Find(item.ImageId);
                            
-                                _db.Image.Remove(img);
+                        //        _db.Image.Remove(img);
 
                             
-                            _db.ImageList.Remove(item);
-                            //_db.SaveChanges();
+                        //    _db.ImageList.Remove(item);
+                        //    //_db.SaveChanges();
 
-                        }
-                        #endregion
+                        //}
+                        //#endregion
 
                         string uniqueFileName = null;
-                        var myImage = new Image();
-                        var myImageList = new ImageList();
+                        //var myImage = new Image();
+                        //var myImageList = new ImageList();
                         //stwożenie na nowo zdjęć 
                         #region STOWENIE ZDJĘĆ
                         
@@ -398,25 +399,26 @@ namespace CompanyEmployees.Controllers
                             //------------------------------------------
                             //stwożenie zdjęcia w danym fold
                             file.CopyTo(new FileStream(filePath, FileMode.Create));
-                            //------------------------------------------             
+                        //------------------------------------------             
 
-                            //twożenie pojedyńczego zdjęcia w bazie 
-                            myImage.Id = Guid.NewGuid();
-                            myImage.ImageName = uniqueFileName;
+                        //twożenie pojedyńczego zdjęcia w bazie 
+                        //myImage.Id = Guid.NewGuid();
+                        //myImage.ImageName = uniqueFileName;
 
-                            //dopisanie zdjęcia do listy
-                            //znalezienie istniejącego zdjęcia i przypisanie na jego miejsce nowego                  
-                            myImageList.ImageId = myImage.Id;
-                            myImageList.Id = Guid.NewGuid();
-                            myImageList.RecipeId = id;
-                            _db.ImageList.Add(myImageList);
+                        //dopisanie zdjęcia do listy
+                        //znalezienie istniejącego zdjęcia i przypisanie na jego miejsce nowego                  
+                        //myImageList.ImageId = myImage.Id;
+                        //myImageList.Id = Guid.NewGuid();
+                        //myImageList.RecipeId = id;
+                        //_db.ImageList.Add(myImageList);
 
-                            _db.Image.Add(myImage);
-                            //_db.SaveChanges();
-                        
+                        //_db.Image.Add(myImage);
+                        Recipes recipe = _db.Recipes.Find(id);
+                        recipe.Photo = uniqueFileName;
+                        _db.Recipes.Update(recipe);
                         #endregion
                     }
-                   
+
 
                     _db.SaveChanges();
 
@@ -459,27 +461,27 @@ namespace CompanyEmployees.Controllers
                     if (file.Count > 0)
                     {
                         //usunięcie i tabeli lista zdjęć i tabeli zdjęć gdzie idRecepty == id Recepty
-                        var imageList = _db.ImageList.Where(model => model.RecipeId == updateRecipe.Id).ToList();
-                        #region USUNIĘCIE ZDJĘĆ
-                        foreach (var item in imageList)
-                        {
+                        //var imageList = _db.ImageList.Where(model => model.RecipeId == updateRecipe.Id).ToList();
+                        //#region USUNIĘCIE ZDJĘĆ
+                        //foreach (var item in imageList)
+                        //{
 
-                            Image img = _db.Image.Find(item.ImageId);
-                            if (img.ImageName != "new.png")
-                            {
-                                _db.Image.Remove(img);
+                        //    Image img = _db.Image.Find(item.ImageId);
+                        //    if (img.ImageName != "new.png")
+                        //    {
+                        //        _db.Image.Remove(img);
 
-                            }
-                            _db.ImageList.Remove(item);
-                            //_db.SaveChanges();
+                        //    }
+                        //    _db.ImageList.Remove(item);
+                        //    //_db.SaveChanges();
 
-                        }
-                        #endregion
+                        //}
+                        //#endregion
 
-                        string uniqueFileName = null;
-                        var myImage = new Image();
-                        var myImageList = new ImageList();
-                        //stwożenie na nowo zdjęć 
+                        //string uniqueFileName = null;
+                        //var myImage = new Image();
+                        //var myImageList = new ImageList();
+                        ////stwożenie na nowo zdjęć 
                         #region STOWENIE ZDJĘĆ
                         foreach (var image in file)
                         {
@@ -490,27 +492,27 @@ namespace CompanyEmployees.Controllers
                             string newPath = Path.GetFullPath(Path.Combine( @"..\..\..\", path));
                             //------------------------------------------
                             //przypisanie unikalnej nazwy
-                            uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName.ToString();
+                            //uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName.ToString();
                             //------------------------------------------
                             //stwożenie pełnej ścieżki do zdjęcia
-                            string filePath = Path.Combine(newPath, uniqueFileName);//@"C:\Users\Tomek\Documents\GitHub\CookBook\AngularClient\src\assets"
+                            //string filePath = Path.Combine(newPath, uniqueFileName);//@"C:\Users\Tomek\Documents\GitHub\CookBook\AngularClient\src\assets"
                             //------------------------------------------
                             //stwożenie zdjęcia w danym fold
-                            image.CopyTo(new FileStream(filePath, FileMode.Create));
+                            //image.CopyTo(new FileStream(filePath, FileMode.Create));
                             //------------------------------------------             
 
                             //twożenie pojedyńczego zdjęcia w bazie 
-                            myImage.Id = Guid.NewGuid();
-                            myImage.ImageName = uniqueFileName;
+                            //myImage.Id = Guid.NewGuid();
+                            //myImage.ImageName = uniqueFileName;
 
                             //dopisanie zdjęcia do listy
                             //znalezienie istniejącego zdjęcia i przypisanie na jego miejsce nowego                  
-                            myImageList.ImageId = myImage.Id;
-                            myImageList.Id = Guid.NewGuid();
-                            myImageList.RecipeId = updateRecipe.Id;
-                            _db.ImageList.Add(myImageList);
+                            //myImageList.ImageId = myImage.Id;
+                            //myImageList.Id = Guid.NewGuid();
+                            //myImageList.RecipeId = updateRecipe.Id;
+                            //_db.ImageList.Add(myImageList);
 
-                            _db.Image.Add(myImage);
+                            //_db.Image.Add(myImage);
                             //_db.SaveChanges();
                         }
                         #endregion

@@ -41,7 +41,7 @@ namespace Entities.Models
         
         public ICollection<Ingredients> Ingredients { get; set; }
 
-        public ICollection<ImageList> ImageList { get; set; }
+        //public ICollection<ImageList> ImageList { get; set; }
 
         //1 do 1
         [ForeignKey(nameof(User))]

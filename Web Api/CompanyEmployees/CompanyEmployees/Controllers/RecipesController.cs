@@ -117,10 +117,10 @@ namespace CompanyEmployees.Controllers
             var query = (from objRecipe in _db.Recipes
                         join objRecipeList in _db.RecipeList on
                         objRecipe.Id equals objRecipeList.RecipeId
-                        join objImageList in _db.ImageList on
-                        objRecipe.Id equals objImageList.RecipeId
-                        join objImage in _db.Image on
-                        objImageList.ImageId equals objImage.Id
+                        //join objImageList in _db.ImageList on
+                        //objRecipe.Id equals objImageList.RecipeId
+                        //join objImage in _db.Image on
+                        //objImageList.ImageId equals objImage.Id
                         join objAllergens in _db.Allergens on
                         objRecipe.AllergenId equals objAllergens.Id
                         join objTags in _db.Tags on
@@ -132,7 +132,8 @@ namespace CompanyEmployees.Controllers
                             Date = objRecipe.Date,
                             Rating = objRecipeList.Rating,
                              IfPublic = objRecipe.IfPublic,
-                             Photo = objImage.ImageName,
+                             Photo = objRecipe.Photo,
+                             //Photo = objImage.ImageName,
                              GLUTEN = objAllergens.GLUTEN,
                              SHELLFISH = objAllergens.SHELLFISH,
                              EGGS = objAllergens.EGGS,
@@ -263,10 +264,10 @@ namespace CompanyEmployees.Controllers
             var listaRecept = (from objRecipe in _db.Recipes
                                join objRecipeList in _db.RecipeList on
                                objRecipe.Id equals objRecipeList.RecipeId
-                               join objImageList in _db.ImageList on
-                               objRecipe.Id equals objImageList.RecipeId
-                               join objImage in _db.Image on
-                               objImageList.ImageId equals objImage.Id
+                               //join objImageList in _db.ImageList on
+                               //objRecipe.Id equals objImageList.RecipeId
+                               //join objImage in _db.Image on
+                               //objImageList.ImageId equals objImage.Id
                                //join objIngredients in _db.Ingredients on
                                //objRecipe.Id equals objIngredients.RecipeId
                                join objAllergens in _db.Allergens on
@@ -282,7 +283,8 @@ namespace CompanyEmployees.Controllers
                                    Instruction = objRecipe.Instruction,
                                    Date = objRecipe.Date,
                                    Rating = objRecipeList.Rating,
-                                   Photo = objImage.ImageName,//zrobić liste
+                                   Photo = objRecipe.Photo,
+                                   //Photo = objImage.ImageName,
                                    GLUTEN = objAllergens.GLUTEN,
                                    SHELLFISH = objAllergens.SHELLFISH,
                                    EGGS = objAllergens.EGGS,
@@ -361,10 +363,10 @@ namespace CompanyEmployees.Controllers
             var listaRecept = (from objRecipe in _db.Recipes
                                join objRecipeList in _db.RecipeList on
                                objRecipe.Id equals objRecipeList.RecipeId
-                               join objImageList in _db.ImageList on
-                               objRecipe.Id equals objImageList.RecipeId
-                               join objImage in _db.Image on
-                               objImageList.ImageId equals objImage.Id
+                               //join objImageList in _db.ImageList on
+                               //objRecipe.Id equals objImageList.RecipeId
+                               //join objImage in _db.Image on
+                               //objImageList.ImageId equals objImage.Id
                                join objIngredients in _db.Ingredients on
                                objRecipe.Id equals objIngredients.RecipeId
                                join objAllergens in _db.Allergens on
@@ -378,7 +380,8 @@ namespace CompanyEmployees.Controllers
                                    Instruction = objRecipe.Instruction,
                                    Date = objRecipe.Date,
                                    Rating = objRecipeList.Rating,
-                                   Photo = objImage.ImageName,//zrobić liste
+                                   Photo = objRecipe.Photo,
+                                   //Photo = objImage.ImageName,
                                    GLUTEN = objAllergens.GLUTEN,
                                    SHELLFISH = objAllergens.SHELLFISH,
                                    EGGS = objAllergens.EGGS,
