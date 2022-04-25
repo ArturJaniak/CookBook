@@ -15,8 +15,8 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IAccountsClient {
-    registerUser(userForRegistration: UserForRegistrationDto): Observable<FileResponse | null>;
-    login(userForAuthentication: UserForAuthenticationDto): Observable<FileResponse | null>;
+    accounts_RegisterUser(userForRegistration: UserForRegistrationDto): Observable<FileResponse | null>;
+    accounts_Login(userForAuthentication: UserForAuthenticationDto): Observable<FileResponse | null>;
 }
 
 @Injectable({
@@ -32,7 +32,7 @@ export class AccountsClient implements IAccountsClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:5001";
     }
 
-    registerUser(userForRegistration: UserForRegistrationDto): Observable<FileResponse | null> {
+    accounts_RegisterUser(userForRegistration: UserForRegistrationDto): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/accounts/Registration";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -49,11 +49,11 @@ export class AccountsClient implements IAccountsClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processRegisterUser(response_);
+            return this.processAccounts_RegisterUser(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processRegisterUser(<any>response_);
+                    return this.processAccounts_RegisterUser(<any>response_);
                 } catch (e) {
                     return <Observable<FileResponse | null>><any>_observableThrow(e);
                 }
@@ -62,7 +62,7 @@ export class AccountsClient implements IAccountsClient {
         }));
     }
 
-    protected processRegisterUser(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processAccounts_RegisterUser(response: HttpResponseBase): Observable<FileResponse | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -75,14 +75,14 @@ export class AccountsClient implements IAccountsClient {
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse | null>(<any>null);
+        return _observableOf(<any>null);
     }
 
-    login(userForAuthentication: UserForAuthenticationDto): Observable<FileResponse | null> {
+    accounts_Login(userForAuthentication: UserForAuthenticationDto): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/accounts/Login";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -99,11 +99,11 @@ export class AccountsClient implements IAccountsClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processLogin(response_);
+            return this.processAccounts_Login(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processLogin(<any>response_);
+                    return this.processAccounts_Login(<any>response_);
                 } catch (e) {
                     return <Observable<FileResponse | null>><any>_observableThrow(e);
                 }
@@ -112,7 +112,7 @@ export class AccountsClient implements IAccountsClient {
         }));
     }
 
-    protected processLogin(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processAccounts_Login(response: HttpResponseBase): Observable<FileResponse | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -125,16 +125,16 @@ export class AccountsClient implements IAccountsClient {
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse | null>(<any>null);
+        return _observableOf(<any>null);
     }
 }
 
 export interface ICompaniesClient {
-    getCompanies(): Observable<FileResponse | null>;
+    companies_GetCompanies(): Observable<FileResponse | null>;
 }
 
 @Injectable({
@@ -150,7 +150,7 @@ export class CompaniesClient implements ICompaniesClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:5001";
     }
 
-    getCompanies(): Observable<FileResponse | null> {
+    companies_GetCompanies(): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/companies";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -163,11 +163,11 @@ export class CompaniesClient implements ICompaniesClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetCompanies(response_);
+            return this.processCompanies_GetCompanies(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetCompanies(<any>response_);
+                    return this.processCompanies_GetCompanies(<any>response_);
                 } catch (e) {
                     return <Observable<FileResponse | null>><any>_observableThrow(e);
                 }
@@ -176,7 +176,7 @@ export class CompaniesClient implements ICompaniesClient {
         }));
     }
 
-    protected processGetCompanies(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processCompanies_GetCompanies(response: HttpResponseBase): Observable<FileResponse | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -189,17 +189,17 @@ export class CompaniesClient implements ICompaniesClient {
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse | null>(<any>null);
+        return _observableOf(<any>null);
     }
 }
 
 export interface IRecipeLogedViewClient {
-    getMyList(token: string | null | undefined): Observable<RecipePublicListDto[]>;
-    getSomeoneList(id: string | null | undefined): Observable<RecipePublicListDto[]>;
+    recipeLogedView_GetMyList(token?: string | null | undefined, gLUTEN?: boolean | undefined, sHELLFISH?: boolean | undefined, eGGS?: boolean | undefined, fISH?: boolean | undefined, pEANUTS?: boolean | undefined, sOY?: boolean | undefined, lactose?: boolean | undefined, cELERY?: boolean | undefined, mUSTARD?: boolean | undefined, sESAME?: boolean | undefined, sULPHUR_DIOXIDE?: boolean | undefined, lUPINE?: boolean | undefined, mUSCLES?: boolean | undefined, vegan?: boolean | undefined, vege?: boolean | undefined): Observable<RecipePublicListDto[]>;
+    recipeLogedView_GetSomeoneList(id?: string | null | undefined, gLUTEN?: boolean | undefined, sHELLFISH?: boolean | undefined, eGGS?: boolean | undefined, fISH?: boolean | undefined, pEANUTS?: boolean | undefined, sOY?: boolean | undefined, lactose?: boolean | undefined, cELERY?: boolean | undefined, mUSTARD?: boolean | undefined, sESAME?: boolean | undefined, sULPHUR_DIOXIDE?: boolean | undefined, lUPINE?: boolean | undefined, mUSCLES?: boolean | undefined, vegan?: boolean | undefined, vege?: boolean | undefined): Observable<RecipePublicListDto[]>;
 }
 
 @Injectable({
@@ -215,10 +215,70 @@ export class RecipeLogedViewClient implements IRecipeLogedViewClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:5001";
     }
 
-    getMyList(token: string | null | undefined): Observable<RecipePublicListDto[]> {
+    recipeLogedView_GetMyList(token?: string | null | undefined, gLUTEN?: boolean | undefined, sHELLFISH?: boolean | undefined, eGGS?: boolean | undefined, fISH?: boolean | undefined, pEANUTS?: boolean | undefined, sOY?: boolean | undefined, lactose?: boolean | undefined, cELERY?: boolean | undefined, mUSTARD?: boolean | undefined, sESAME?: boolean | undefined, sULPHUR_DIOXIDE?: boolean | undefined, lUPINE?: boolean | undefined, mUSCLES?: boolean | undefined, vegan?: boolean | undefined, vege?: boolean | undefined): Observable<RecipePublicListDto[]> {
         let url_ = this.baseUrl + "/GetMyList?";
         if (token !== undefined && token !== null)
             url_ += "token=" + encodeURIComponent("" + token) + "&";
+        if (gLUTEN === null)
+            throw new Error("The parameter 'gLUTEN' cannot be null.");
+        else if (gLUTEN !== undefined)
+            url_ += "GLUTEN=" + encodeURIComponent("" + gLUTEN) + "&";
+        if (sHELLFISH === null)
+            throw new Error("The parameter 'sHELLFISH' cannot be null.");
+        else if (sHELLFISH !== undefined)
+            url_ += "SHELLFISH=" + encodeURIComponent("" + sHELLFISH) + "&";
+        if (eGGS === null)
+            throw new Error("The parameter 'eGGS' cannot be null.");
+        else if (eGGS !== undefined)
+            url_ += "EGGS=" + encodeURIComponent("" + eGGS) + "&";
+        if (fISH === null)
+            throw new Error("The parameter 'fISH' cannot be null.");
+        else if (fISH !== undefined)
+            url_ += "FISH=" + encodeURIComponent("" + fISH) + "&";
+        if (pEANUTS === null)
+            throw new Error("The parameter 'pEANUTS' cannot be null.");
+        else if (pEANUTS !== undefined)
+            url_ += "PEANUTS=" + encodeURIComponent("" + pEANUTS) + "&";
+        if (sOY === null)
+            throw new Error("The parameter 'sOY' cannot be null.");
+        else if (sOY !== undefined)
+            url_ += "SOY=" + encodeURIComponent("" + sOY) + "&";
+        if (lactose === null)
+            throw new Error("The parameter 'lactose' cannot be null.");
+        else if (lactose !== undefined)
+            url_ += "Lactose=" + encodeURIComponent("" + lactose) + "&";
+        if (cELERY === null)
+            throw new Error("The parameter 'cELERY' cannot be null.");
+        else if (cELERY !== undefined)
+            url_ += "CELERY=" + encodeURIComponent("" + cELERY) + "&";
+        if (mUSTARD === null)
+            throw new Error("The parameter 'mUSTARD' cannot be null.");
+        else if (mUSTARD !== undefined)
+            url_ += "MUSTARD=" + encodeURIComponent("" + mUSTARD) + "&";
+        if (sESAME === null)
+            throw new Error("The parameter 'sESAME' cannot be null.");
+        else if (sESAME !== undefined)
+            url_ += "SESAME=" + encodeURIComponent("" + sESAME) + "&";
+        if (sULPHUR_DIOXIDE === null)
+            throw new Error("The parameter 'sULPHUR_DIOXIDE' cannot be null.");
+        else if (sULPHUR_DIOXIDE !== undefined)
+            url_ += "SULPHUR_DIOXIDE=" + encodeURIComponent("" + sULPHUR_DIOXIDE) + "&";
+        if (lUPINE === null)
+            throw new Error("The parameter 'lUPINE' cannot be null.");
+        else if (lUPINE !== undefined)
+            url_ += "LUPINE=" + encodeURIComponent("" + lUPINE) + "&";
+        if (mUSCLES === null)
+            throw new Error("The parameter 'mUSCLES' cannot be null.");
+        else if (mUSCLES !== undefined)
+            url_ += "MUSCLES=" + encodeURIComponent("" + mUSCLES) + "&";
+        if (vegan === null)
+            throw new Error("The parameter 'vegan' cannot be null.");
+        else if (vegan !== undefined)
+            url_ += "Vegan=" + encodeURIComponent("" + vegan) + "&";
+        if (vege === null)
+            throw new Error("The parameter 'vege' cannot be null.");
+        else if (vege !== undefined)
+            url_ += "Vege=" + encodeURIComponent("" + vege) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -230,11 +290,11 @@ export class RecipeLogedViewClient implements IRecipeLogedViewClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetMyList(response_);
+            return this.processRecipeLogedView_GetMyList(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetMyList(<any>response_);
+                    return this.processRecipeLogedView_GetMyList(<any>response_);
                 } catch (e) {
                     return <Observable<RecipePublicListDto[]>><any>_observableThrow(e);
                 }
@@ -243,7 +303,7 @@ export class RecipeLogedViewClient implements IRecipeLogedViewClient {
         }));
     }
 
-    protected processGetMyList(response: HttpResponseBase): Observable<RecipePublicListDto[]> {
+    protected processRecipeLogedView_GetMyList(response: HttpResponseBase): Observable<RecipePublicListDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -251,7 +311,7 @@ export class RecipeLogedViewClient implements IRecipeLogedViewClient {
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             if (Array.isArray(resultData200)) {
@@ -265,17 +325,77 @@ export class RecipeLogedViewClient implements IRecipeLogedViewClient {
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<RecipePublicListDto[]>(<any>null);
+        return _observableOf(<any>null);
     }
 
-    getSomeoneList(id: string | null | undefined): Observable<RecipePublicListDto[]> {
+    recipeLogedView_GetSomeoneList(id?: string | null | undefined, gLUTEN?: boolean | undefined, sHELLFISH?: boolean | undefined, eGGS?: boolean | undefined, fISH?: boolean | undefined, pEANUTS?: boolean | undefined, sOY?: boolean | undefined, lactose?: boolean | undefined, cELERY?: boolean | undefined, mUSTARD?: boolean | undefined, sESAME?: boolean | undefined, sULPHUR_DIOXIDE?: boolean | undefined, lUPINE?: boolean | undefined, mUSCLES?: boolean | undefined, vegan?: boolean | undefined, vege?: boolean | undefined): Observable<RecipePublicListDto[]> {
         let url_ = this.baseUrl + "/GetSomeoneList?";
         if (id !== undefined && id !== null)
             url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (gLUTEN === null)
+            throw new Error("The parameter 'gLUTEN' cannot be null.");
+        else if (gLUTEN !== undefined)
+            url_ += "GLUTEN=" + encodeURIComponent("" + gLUTEN) + "&";
+        if (sHELLFISH === null)
+            throw new Error("The parameter 'sHELLFISH' cannot be null.");
+        else if (sHELLFISH !== undefined)
+            url_ += "SHELLFISH=" + encodeURIComponent("" + sHELLFISH) + "&";
+        if (eGGS === null)
+            throw new Error("The parameter 'eGGS' cannot be null.");
+        else if (eGGS !== undefined)
+            url_ += "EGGS=" + encodeURIComponent("" + eGGS) + "&";
+        if (fISH === null)
+            throw new Error("The parameter 'fISH' cannot be null.");
+        else if (fISH !== undefined)
+            url_ += "FISH=" + encodeURIComponent("" + fISH) + "&";
+        if (pEANUTS === null)
+            throw new Error("The parameter 'pEANUTS' cannot be null.");
+        else if (pEANUTS !== undefined)
+            url_ += "PEANUTS=" + encodeURIComponent("" + pEANUTS) + "&";
+        if (sOY === null)
+            throw new Error("The parameter 'sOY' cannot be null.");
+        else if (sOY !== undefined)
+            url_ += "SOY=" + encodeURIComponent("" + sOY) + "&";
+        if (lactose === null)
+            throw new Error("The parameter 'lactose' cannot be null.");
+        else if (lactose !== undefined)
+            url_ += "Lactose=" + encodeURIComponent("" + lactose) + "&";
+        if (cELERY === null)
+            throw new Error("The parameter 'cELERY' cannot be null.");
+        else if (cELERY !== undefined)
+            url_ += "CELERY=" + encodeURIComponent("" + cELERY) + "&";
+        if (mUSTARD === null)
+            throw new Error("The parameter 'mUSTARD' cannot be null.");
+        else if (mUSTARD !== undefined)
+            url_ += "MUSTARD=" + encodeURIComponent("" + mUSTARD) + "&";
+        if (sESAME === null)
+            throw new Error("The parameter 'sESAME' cannot be null.");
+        else if (sESAME !== undefined)
+            url_ += "SESAME=" + encodeURIComponent("" + sESAME) + "&";
+        if (sULPHUR_DIOXIDE === null)
+            throw new Error("The parameter 'sULPHUR_DIOXIDE' cannot be null.");
+        else if (sULPHUR_DIOXIDE !== undefined)
+            url_ += "SULPHUR_DIOXIDE=" + encodeURIComponent("" + sULPHUR_DIOXIDE) + "&";
+        if (lUPINE === null)
+            throw new Error("The parameter 'lUPINE' cannot be null.");
+        else if (lUPINE !== undefined)
+            url_ += "LUPINE=" + encodeURIComponent("" + lUPINE) + "&";
+        if (mUSCLES === null)
+            throw new Error("The parameter 'mUSCLES' cannot be null.");
+        else if (mUSCLES !== undefined)
+            url_ += "MUSCLES=" + encodeURIComponent("" + mUSCLES) + "&";
+        if (vegan === null)
+            throw new Error("The parameter 'vegan' cannot be null.");
+        else if (vegan !== undefined)
+            url_ += "Vegan=" + encodeURIComponent("" + vegan) + "&";
+        if (vege === null)
+            throw new Error("The parameter 'vege' cannot be null.");
+        else if (vege !== undefined)
+            url_ += "Vege=" + encodeURIComponent("" + vege) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -287,11 +407,11 @@ export class RecipeLogedViewClient implements IRecipeLogedViewClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSomeoneList(response_);
+            return this.processRecipeLogedView_GetSomeoneList(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetSomeoneList(<any>response_);
+                    return this.processRecipeLogedView_GetSomeoneList(<any>response_);
                 } catch (e) {
                     return <Observable<RecipePublicListDto[]>><any>_observableThrow(e);
                 }
@@ -300,7 +420,7 @@ export class RecipeLogedViewClient implements IRecipeLogedViewClient {
         }));
     }
 
-    protected processGetSomeoneList(response: HttpResponseBase): Observable<RecipePublicListDto[]> {
+    protected processRecipeLogedView_GetSomeoneList(response: HttpResponseBase): Observable<RecipePublicListDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -308,7 +428,7 @@ export class RecipeLogedViewClient implements IRecipeLogedViewClient {
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             if (Array.isArray(resultData200)) {
@@ -322,18 +442,18 @@ export class RecipeLogedViewClient implements IRecipeLogedViewClient {
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<RecipePublicListDto[]>(<any>null);
+        return _observableOf(<any>null);
     }
 }
 
 export interface IRecipesClient {
-    getRecipes(): Observable<RecipePublicListDto[]>;
-    getRecipe(id: string): Observable<RecipeDto>;
-    getRandomRecipe(): Observable<RecipeDto>;
+    recipes_GetRecipes(gLUTEN?: boolean | undefined, sHELLFISH?: boolean | undefined, eGGS?: boolean | undefined, fISH?: boolean | undefined, pEANUTS?: boolean | undefined, sOY?: boolean | undefined, lactose?: boolean | undefined, cELERY?: boolean | undefined, mUSTARD?: boolean | undefined, sESAME?: boolean | undefined, sULPHUR_DIOXIDE?: boolean | undefined, lUPINE?: boolean | undefined, mUSCLES?: boolean | undefined, vegan?: boolean | undefined, vege?: boolean | undefined): Observable<RecipePublicListDto[]>;
+    recipes_GetRecipe(id: string, token?: string | null | undefined): Observable<RecipeDto>;
+    recipes_GetRandomRecipe(): Observable<RecipeDto>;
 }
 
 @Injectable({
@@ -349,8 +469,68 @@ export class RecipesClient implements IRecipesClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:5001";
     }
 
-    getRecipes(): Observable<RecipePublicListDto[]> {
-        let url_ = this.baseUrl + "/api/recips";
+    recipes_GetRecipes(gLUTEN?: boolean | undefined, sHELLFISH?: boolean | undefined, eGGS?: boolean | undefined, fISH?: boolean | undefined, pEANUTS?: boolean | undefined, sOY?: boolean | undefined, lactose?: boolean | undefined, cELERY?: boolean | undefined, mUSTARD?: boolean | undefined, sESAME?: boolean | undefined, sULPHUR_DIOXIDE?: boolean | undefined, lUPINE?: boolean | undefined, mUSCLES?: boolean | undefined, vegan?: boolean | undefined, vege?: boolean | undefined): Observable<RecipePublicListDto[]> {
+        let url_ = this.baseUrl + "/api/recips?";
+        if (gLUTEN === null)
+            throw new Error("The parameter 'gLUTEN' cannot be null.");
+        else if (gLUTEN !== undefined)
+            url_ += "GLUTEN=" + encodeURIComponent("" + gLUTEN) + "&";
+        if (sHELLFISH === null)
+            throw new Error("The parameter 'sHELLFISH' cannot be null.");
+        else if (sHELLFISH !== undefined)
+            url_ += "SHELLFISH=" + encodeURIComponent("" + sHELLFISH) + "&";
+        if (eGGS === null)
+            throw new Error("The parameter 'eGGS' cannot be null.");
+        else if (eGGS !== undefined)
+            url_ += "EGGS=" + encodeURIComponent("" + eGGS) + "&";
+        if (fISH === null)
+            throw new Error("The parameter 'fISH' cannot be null.");
+        else if (fISH !== undefined)
+            url_ += "FISH=" + encodeURIComponent("" + fISH) + "&";
+        if (pEANUTS === null)
+            throw new Error("The parameter 'pEANUTS' cannot be null.");
+        else if (pEANUTS !== undefined)
+            url_ += "PEANUTS=" + encodeURIComponent("" + pEANUTS) + "&";
+        if (sOY === null)
+            throw new Error("The parameter 'sOY' cannot be null.");
+        else if (sOY !== undefined)
+            url_ += "SOY=" + encodeURIComponent("" + sOY) + "&";
+        if (lactose === null)
+            throw new Error("The parameter 'lactose' cannot be null.");
+        else if (lactose !== undefined)
+            url_ += "Lactose=" + encodeURIComponent("" + lactose) + "&";
+        if (cELERY === null)
+            throw new Error("The parameter 'cELERY' cannot be null.");
+        else if (cELERY !== undefined)
+            url_ += "CELERY=" + encodeURIComponent("" + cELERY) + "&";
+        if (mUSTARD === null)
+            throw new Error("The parameter 'mUSTARD' cannot be null.");
+        else if (mUSTARD !== undefined)
+            url_ += "MUSTARD=" + encodeURIComponent("" + mUSTARD) + "&";
+        if (sESAME === null)
+            throw new Error("The parameter 'sESAME' cannot be null.");
+        else if (sESAME !== undefined)
+            url_ += "SESAME=" + encodeURIComponent("" + sESAME) + "&";
+        if (sULPHUR_DIOXIDE === null)
+            throw new Error("The parameter 'sULPHUR_DIOXIDE' cannot be null.");
+        else if (sULPHUR_DIOXIDE !== undefined)
+            url_ += "SULPHUR_DIOXIDE=" + encodeURIComponent("" + sULPHUR_DIOXIDE) + "&";
+        if (lUPINE === null)
+            throw new Error("The parameter 'lUPINE' cannot be null.");
+        else if (lUPINE !== undefined)
+            url_ += "LUPINE=" + encodeURIComponent("" + lUPINE) + "&";
+        if (mUSCLES === null)
+            throw new Error("The parameter 'mUSCLES' cannot be null.");
+        else if (mUSCLES !== undefined)
+            url_ += "MUSCLES=" + encodeURIComponent("" + mUSCLES) + "&";
+        if (vegan === null)
+            throw new Error("The parameter 'vegan' cannot be null.");
+        else if (vegan !== undefined)
+            url_ += "Vegan=" + encodeURIComponent("" + vegan) + "&";
+        if (vege === null)
+            throw new Error("The parameter 'vege' cannot be null.");
+        else if (vege !== undefined)
+            url_ += "Vege=" + encodeURIComponent("" + vege) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -362,11 +542,11 @@ export class RecipesClient implements IRecipesClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetRecipes(response_);
+            return this.processRecipes_GetRecipes(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetRecipes(<any>response_);
+                    return this.processRecipes_GetRecipes(<any>response_);
                 } catch (e) {
                     return <Observable<RecipePublicListDto[]>><any>_observableThrow(e);
                 }
@@ -375,7 +555,7 @@ export class RecipesClient implements IRecipesClient {
         }));
     }
 
-    protected processGetRecipes(response: HttpResponseBase): Observable<RecipePublicListDto[]> {
+    protected processRecipes_GetRecipes(response: HttpResponseBase): Observable<RecipePublicListDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -383,7 +563,7 @@ export class RecipesClient implements IRecipesClient {
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             if (Array.isArray(resultData200)) {
@@ -397,18 +577,20 @@ export class RecipesClient implements IRecipesClient {
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<RecipePublicListDto[]>(<any>null);
+        return _observableOf(<any>null);
     }
 
-    getRecipe(id: string): Observable<RecipeDto> {
-        let url_ = this.baseUrl + "/api/recips/{id}";
+    recipes_GetRecipe(id: string, token?: string | null | undefined): Observable<RecipeDto> {
+        let url_ = this.baseUrl + "/api/recips/{id}?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        if (token !== undefined && token !== null)
+            url_ += "token=" + encodeURIComponent("" + token) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -420,11 +602,11 @@ export class RecipesClient implements IRecipesClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetRecipe(response_);
+            return this.processRecipes_GetRecipe(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetRecipe(<any>response_);
+                    return this.processRecipes_GetRecipe(<any>response_);
                 } catch (e) {
                     return <Observable<RecipeDto>><any>_observableThrow(e);
                 }
@@ -433,7 +615,7 @@ export class RecipesClient implements IRecipesClient {
         }));
     }
 
-    protected processGetRecipe(response: HttpResponseBase): Observable<RecipeDto> {
+    protected processRecipes_GetRecipe(response: HttpResponseBase): Observable<RecipeDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -441,21 +623,21 @@ export class RecipesClient implements IRecipesClient {
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = RecipeDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<RecipeDto>(<any>null);
+        return _observableOf(<any>null);
     }
 
-    getRandomRecipe(): Observable<RecipeDto> {
+    recipes_GetRandomRecipe(): Observable<RecipeDto> {
         let url_ = this.baseUrl + "/api/recips/Random";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -468,11 +650,11 @@ export class RecipesClient implements IRecipesClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetRandomRecipe(response_);
+            return this.processRecipes_GetRandomRecipe(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetRandomRecipe(<any>response_);
+                    return this.processRecipes_GetRandomRecipe(<any>response_);
                 } catch (e) {
                     return <Observable<RecipeDto>><any>_observableThrow(e);
                 }
@@ -481,7 +663,7 @@ export class RecipesClient implements IRecipesClient {
         }));
     }
 
-    protected processGetRandomRecipe(response: HttpResponseBase): Observable<RecipeDto> {
+    protected processRecipes_GetRandomRecipe(response: HttpResponseBase): Observable<RecipeDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -489,27 +671,29 @@ export class RecipesClient implements IRecipesClient {
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = RecipeDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<RecipeDto>(<any>null);
+        return _observableOf(<any>null);
     }
 }
 
 export interface IRecipesLogedClient {
-    createRecipe(token: string | null | undefined): Observable<FileResponse | null>;
-    deleteConfirmed(recipId: string | undefined, token: string | null | undefined): Observable<FileResponse | null>;
-    uploadMultiples(updateRecipe: UpdateRecipe | null | undefined, file: FileParameter[] | null | undefined): Observable<FileResponse | null>;
-    rateRecipe(token: string | null | undefined, userId: string | null | undefined, recipeId: string | undefined, rating: number | undefined): Observable<FileResponse | null>;
-    addToMyList(recipeId: string | undefined, token: string | null | undefined): Observable<FileResponse | null>;
+    recipesLoged_CreateRecipe(token?: string | null | undefined): Observable<FileResponse | null>;
+    recipesLoged_DeleteConfirmed(recipId?: string | undefined, token?: string | null | undefined): Observable<FileResponse | null>;
+    recipesLoged_UpdateData(token?: string | null | undefined, id?: string | undefined, recipeName?: string | null | undefined, instruction?: string | null | undefined, ifPublic?: boolean | undefined, ingredients2?: IngredientsDto[] | null | undefined, gLUTEN?: boolean | undefined, sHELLFISH?: boolean | undefined, eGGS?: boolean | undefined, fISH?: boolean | undefined, pEANUTS?: boolean | undefined, sOY?: boolean | undefined, lactose?: boolean | undefined, cELERY?: boolean | undefined, mUSTARD?: boolean | undefined, sESAME?: boolean | undefined, sULPHUR_DIOXIDE?: boolean | undefined, lUPINE?: boolean | undefined, mUSCLES?: boolean | undefined, vegan?: boolean | undefined, vege?: boolean | undefined): Observable<FileResponse | null>;
+    recipesLoged_UpdatePhoto(file?: FileParameter | null | undefined, token?: string | null | undefined, id?: string | undefined): Observable<FileResponse | null>;
+    recipesLoged_UploadMultiples(token?: string | null | undefined, id?: string | undefined, recipeName?: string | null | undefined, instruction?: string | null | undefined, ifPublic?: boolean | undefined, ingredients2?: IngredientsDto[] | null | undefined, gLUTEN?: boolean | undefined, sHELLFISH?: boolean | undefined, eGGS?: boolean | undefined, fISH?: boolean | undefined, pEANUTS?: boolean | undefined, sOY?: boolean | undefined, lactose?: boolean | undefined, cELERY?: boolean | undefined, mUSTARD?: boolean | undefined, sESAME?: boolean | undefined, sULPHUR_DIOXIDE?: boolean | undefined, lUPINE?: boolean | undefined, mUSCLES?: boolean | undefined, vegan?: boolean | undefined, vege?: boolean | undefined, file?: FileParameter[] | null | undefined): Observable<FileResponse | null>;
+    recipesLoged_RateRecipe(token?: string | null | undefined, recipeId?: string | undefined, rating?: number | undefined): Observable<FileResponse | null>;
+    recipesLoged_AddToMyList(recipeId?: string | undefined, token?: string | null | undefined): Observable<FileResponse | null>;
 }
 
 @Injectable({
@@ -525,7 +709,7 @@ export class RecipesLogedClient implements IRecipesLogedClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:5001";
     }
 
-    createRecipe(token: string | null | undefined): Observable<FileResponse | null> {
+    recipesLoged_CreateRecipe(token?: string | null | undefined): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/Add?";
         if (token !== undefined && token !== null)
             url_ += "token=" + encodeURIComponent("" + token) + "&";
@@ -540,11 +724,11 @@ export class RecipesLogedClient implements IRecipesLogedClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateRecipe(response_);
+            return this.processRecipesLoged_CreateRecipe(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCreateRecipe(<any>response_);
+                    return this.processRecipesLoged_CreateRecipe(<any>response_);
                 } catch (e) {
                     return <Observable<FileResponse | null>><any>_observableThrow(e);
                 }
@@ -553,7 +737,7 @@ export class RecipesLogedClient implements IRecipesLogedClient {
         }));
     }
 
-    protected processCreateRecipe(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processRecipesLoged_CreateRecipe(response: HttpResponseBase): Observable<FileResponse | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -566,14 +750,14 @@ export class RecipesLogedClient implements IRecipesLogedClient {
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse | null>(<any>null);
+        return _observableOf(<any>null);
     }
 
-    deleteConfirmed(recipId: string | undefined, token: string | null | undefined): Observable<FileResponse | null> {
+    recipesLoged_DeleteConfirmed(recipId?: string | undefined, token?: string | null | undefined): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/delete?";
         if (recipId === null)
             throw new Error("The parameter 'recipId' cannot be null.");
@@ -592,11 +776,11 @@ export class RecipesLogedClient implements IRecipesLogedClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDeleteConfirmed(response_);
+            return this.processRecipesLoged_DeleteConfirmed(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processDeleteConfirmed(<any>response_);
+                    return this.processRecipesLoged_DeleteConfirmed(<any>response_);
                 } catch (e) {
                     return <Observable<FileResponse | null>><any>_observableThrow(e);
                 }
@@ -605,7 +789,7 @@ export class RecipesLogedClient implements IRecipesLogedClient {
         }));
     }
 
-    protected processDeleteConfirmed(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processRecipesLoged_DeleteConfirmed(response: HttpResponseBase): Observable<FileResponse | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -618,17 +802,280 @@ export class RecipesLogedClient implements IRecipesLogedClient {
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse | null>(<any>null);
+        return _observableOf(<any>null);
     }
 
-    uploadMultiples(updateRecipe: UpdateRecipe | null | undefined, file: FileParameter[] | null | undefined): Observable<FileResponse | null> {
+    recipesLoged_UpdateData(token?: string | null | undefined, id?: string | undefined, recipeName?: string | null | undefined, instruction?: string | null | undefined, ifPublic?: boolean | undefined, ingredients2?: IngredientsDto[] | null | undefined, gLUTEN?: boolean | undefined, sHELLFISH?: boolean | undefined, eGGS?: boolean | undefined, fISH?: boolean | undefined, pEANUTS?: boolean | undefined, sOY?: boolean | undefined, lactose?: boolean | undefined, cELERY?: boolean | undefined, mUSTARD?: boolean | undefined, sESAME?: boolean | undefined, sULPHUR_DIOXIDE?: boolean | undefined, lUPINE?: boolean | undefined, mUSCLES?: boolean | undefined, vegan?: boolean | undefined, vege?: boolean | undefined): Observable<FileResponse | null> {
+        let url_ = this.baseUrl + "/updateData?";
+        if (token !== undefined && token !== null)
+            url_ += "token=" + encodeURIComponent("" + token) + "&";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        if (recipeName !== undefined && recipeName !== null)
+            url_ += "RecipeName=" + encodeURIComponent("" + recipeName) + "&";
+        if (instruction !== undefined && instruction !== null)
+            url_ += "Instruction=" + encodeURIComponent("" + instruction) + "&";
+        if (ifPublic === null)
+            throw new Error("The parameter 'ifPublic' cannot be null.");
+        else if (ifPublic !== undefined)
+            url_ += "IfPublic=" + encodeURIComponent("" + ifPublic) + "&";
+        if (ingredients2 !== undefined && ingredients2 !== null)
+            ingredients2 && ingredients2.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Ingredients2[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (gLUTEN === null)
+            throw new Error("The parameter 'gLUTEN' cannot be null.");
+        else if (gLUTEN !== undefined)
+            url_ += "GLUTEN=" + encodeURIComponent("" + gLUTEN) + "&";
+        if (sHELLFISH === null)
+            throw new Error("The parameter 'sHELLFISH' cannot be null.");
+        else if (sHELLFISH !== undefined)
+            url_ += "SHELLFISH=" + encodeURIComponent("" + sHELLFISH) + "&";
+        if (eGGS === null)
+            throw new Error("The parameter 'eGGS' cannot be null.");
+        else if (eGGS !== undefined)
+            url_ += "EGGS=" + encodeURIComponent("" + eGGS) + "&";
+        if (fISH === null)
+            throw new Error("The parameter 'fISH' cannot be null.");
+        else if (fISH !== undefined)
+            url_ += "FISH=" + encodeURIComponent("" + fISH) + "&";
+        if (pEANUTS === null)
+            throw new Error("The parameter 'pEANUTS' cannot be null.");
+        else if (pEANUTS !== undefined)
+            url_ += "PEANUTS=" + encodeURIComponent("" + pEANUTS) + "&";
+        if (sOY === null)
+            throw new Error("The parameter 'sOY' cannot be null.");
+        else if (sOY !== undefined)
+            url_ += "SOY=" + encodeURIComponent("" + sOY) + "&";
+        if (lactose === null)
+            throw new Error("The parameter 'lactose' cannot be null.");
+        else if (lactose !== undefined)
+            url_ += "Lactose=" + encodeURIComponent("" + lactose) + "&";
+        if (cELERY === null)
+            throw new Error("The parameter 'cELERY' cannot be null.");
+        else if (cELERY !== undefined)
+            url_ += "CELERY=" + encodeURIComponent("" + cELERY) + "&";
+        if (mUSTARD === null)
+            throw new Error("The parameter 'mUSTARD' cannot be null.");
+        else if (mUSTARD !== undefined)
+            url_ += "MUSTARD=" + encodeURIComponent("" + mUSTARD) + "&";
+        if (sESAME === null)
+            throw new Error("The parameter 'sESAME' cannot be null.");
+        else if (sESAME !== undefined)
+            url_ += "SESAME=" + encodeURIComponent("" + sESAME) + "&";
+        if (sULPHUR_DIOXIDE === null)
+            throw new Error("The parameter 'sULPHUR_DIOXIDE' cannot be null.");
+        else if (sULPHUR_DIOXIDE !== undefined)
+            url_ += "SULPHUR_DIOXIDE=" + encodeURIComponent("" + sULPHUR_DIOXIDE) + "&";
+        if (lUPINE === null)
+            throw new Error("The parameter 'lUPINE' cannot be null.");
+        else if (lUPINE !== undefined)
+            url_ += "LUPINE=" + encodeURIComponent("" + lUPINE) + "&";
+        if (mUSCLES === null)
+            throw new Error("The parameter 'mUSCLES' cannot be null.");
+        else if (mUSCLES !== undefined)
+            url_ += "MUSCLES=" + encodeURIComponent("" + mUSCLES) + "&";
+        if (vegan === null)
+            throw new Error("The parameter 'vegan' cannot be null.");
+        else if (vegan !== undefined)
+            url_ += "Vegan=" + encodeURIComponent("" + vegan) + "&";
+        if (vege === null)
+            throw new Error("The parameter 'vege' cannot be null.");
+        else if (vege !== undefined)
+            url_ += "Vege=" + encodeURIComponent("" + vege) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRecipesLoged_UpdateData(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRecipesLoged_UpdateData(<any>response_);
+                } catch (e) {
+                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processRecipesLoged_UpdateData(response: HttpResponseBase): Observable<FileResponse | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(<any>null);
+    }
+
+    recipesLoged_UpdatePhoto(file?: FileParameter | null | undefined, token?: string | null | undefined, id?: string | undefined): Observable<FileResponse | null> {
+        let url_ = this.baseUrl + "/UpdatePhoto?";
+        if (token !== undefined && token !== null)
+            url_ += "token=" + encodeURIComponent("" + token) + "&";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (file !== null && file !== undefined)
+            content_.append("file", file.data, file.fileName ? file.fileName : "file");
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRecipesLoged_UpdatePhoto(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRecipesLoged_UpdatePhoto(<any>response_);
+                } catch (e) {
+                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processRecipesLoged_UpdatePhoto(response: HttpResponseBase): Observable<FileResponse | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(<any>null);
+    }
+
+    recipesLoged_UploadMultiples(token?: string | null | undefined, id?: string | undefined, recipeName?: string | null | undefined, instruction?: string | null | undefined, ifPublic?: boolean | undefined, ingredients2?: IngredientsDto[] | null | undefined, gLUTEN?: boolean | undefined, sHELLFISH?: boolean | undefined, eGGS?: boolean | undefined, fISH?: boolean | undefined, pEANUTS?: boolean | undefined, sOY?: boolean | undefined, lactose?: boolean | undefined, cELERY?: boolean | undefined, mUSTARD?: boolean | undefined, sESAME?: boolean | undefined, sULPHUR_DIOXIDE?: boolean | undefined, lUPINE?: boolean | undefined, mUSCLES?: boolean | undefined, vegan?: boolean | undefined, vege?: boolean | undefined, file?: FileParameter[] | null | undefined): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/upload?";
-        if (updateRecipe !== undefined && updateRecipe !== null)
-            url_ += "updateRecipe=" + encodeURIComponent("" + updateRecipe) + "&";
+        if (token !== undefined && token !== null)
+            url_ += "token=" + encodeURIComponent("" + token) + "&";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        if (recipeName !== undefined && recipeName !== null)
+            url_ += "RecipeName=" + encodeURIComponent("" + recipeName) + "&";
+        if (instruction !== undefined && instruction !== null)
+            url_ += "Instruction=" + encodeURIComponent("" + instruction) + "&";
+        if (ifPublic === null)
+            throw new Error("The parameter 'ifPublic' cannot be null.");
+        else if (ifPublic !== undefined)
+            url_ += "IfPublic=" + encodeURIComponent("" + ifPublic) + "&";
+        if (ingredients2 !== undefined && ingredients2 !== null)
+            ingredients2 && ingredients2.forEach((item, index) => {
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Ingredients2[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (gLUTEN === null)
+            throw new Error("The parameter 'gLUTEN' cannot be null.");
+        else if (gLUTEN !== undefined)
+            url_ += "GLUTEN=" + encodeURIComponent("" + gLUTEN) + "&";
+        if (sHELLFISH === null)
+            throw new Error("The parameter 'sHELLFISH' cannot be null.");
+        else if (sHELLFISH !== undefined)
+            url_ += "SHELLFISH=" + encodeURIComponent("" + sHELLFISH) + "&";
+        if (eGGS === null)
+            throw new Error("The parameter 'eGGS' cannot be null.");
+        else if (eGGS !== undefined)
+            url_ += "EGGS=" + encodeURIComponent("" + eGGS) + "&";
+        if (fISH === null)
+            throw new Error("The parameter 'fISH' cannot be null.");
+        else if (fISH !== undefined)
+            url_ += "FISH=" + encodeURIComponent("" + fISH) + "&";
+        if (pEANUTS === null)
+            throw new Error("The parameter 'pEANUTS' cannot be null.");
+        else if (pEANUTS !== undefined)
+            url_ += "PEANUTS=" + encodeURIComponent("" + pEANUTS) + "&";
+        if (sOY === null)
+            throw new Error("The parameter 'sOY' cannot be null.");
+        else if (sOY !== undefined)
+            url_ += "SOY=" + encodeURIComponent("" + sOY) + "&";
+        if (lactose === null)
+            throw new Error("The parameter 'lactose' cannot be null.");
+        else if (lactose !== undefined)
+            url_ += "Lactose=" + encodeURIComponent("" + lactose) + "&";
+        if (cELERY === null)
+            throw new Error("The parameter 'cELERY' cannot be null.");
+        else if (cELERY !== undefined)
+            url_ += "CELERY=" + encodeURIComponent("" + cELERY) + "&";
+        if (mUSTARD === null)
+            throw new Error("The parameter 'mUSTARD' cannot be null.");
+        else if (mUSTARD !== undefined)
+            url_ += "MUSTARD=" + encodeURIComponent("" + mUSTARD) + "&";
+        if (sESAME === null)
+            throw new Error("The parameter 'sESAME' cannot be null.");
+        else if (sESAME !== undefined)
+            url_ += "SESAME=" + encodeURIComponent("" + sESAME) + "&";
+        if (sULPHUR_DIOXIDE === null)
+            throw new Error("The parameter 'sULPHUR_DIOXIDE' cannot be null.");
+        else if (sULPHUR_DIOXIDE !== undefined)
+            url_ += "SULPHUR_DIOXIDE=" + encodeURIComponent("" + sULPHUR_DIOXIDE) + "&";
+        if (lUPINE === null)
+            throw new Error("The parameter 'lUPINE' cannot be null.");
+        else if (lUPINE !== undefined)
+            url_ += "LUPINE=" + encodeURIComponent("" + lUPINE) + "&";
+        if (mUSCLES === null)
+            throw new Error("The parameter 'mUSCLES' cannot be null.");
+        else if (mUSCLES !== undefined)
+            url_ += "MUSCLES=" + encodeURIComponent("" + mUSCLES) + "&";
+        if (vegan === null)
+            throw new Error("The parameter 'vegan' cannot be null.");
+        else if (vegan !== undefined)
+            url_ += "Vegan=" + encodeURIComponent("" + vegan) + "&";
+        if (vege === null)
+            throw new Error("The parameter 'vege' cannot be null.");
+        else if (vege !== undefined)
+            url_ += "Vege=" + encodeURIComponent("" + vege) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = new FormData();
@@ -645,11 +1092,11 @@ export class RecipesLogedClient implements IRecipesLogedClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUploadMultiples(response_);
+            return this.processRecipesLoged_UploadMultiples(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processUploadMultiples(<any>response_);
+                    return this.processRecipesLoged_UploadMultiples(<any>response_);
                 } catch (e) {
                     return <Observable<FileResponse | null>><any>_observableThrow(e);
                 }
@@ -658,7 +1105,7 @@ export class RecipesLogedClient implements IRecipesLogedClient {
         }));
     }
 
-    protected processUploadMultiples(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processRecipesLoged_UploadMultiples(response: HttpResponseBase): Observable<FileResponse | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -671,19 +1118,17 @@ export class RecipesLogedClient implements IRecipesLogedClient {
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse | null>(<any>null);
+        return _observableOf(<any>null);
     }
 
-    rateRecipe(token: string | null | undefined, userId: string | null | undefined, recipeId: string | undefined, rating: number | undefined): Observable<FileResponse | null> {
+    recipesLoged_RateRecipe(token?: string | null | undefined, recipeId?: string | undefined, rating?: number | undefined): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/rate?";
         if (token !== undefined && token !== null)
             url_ += "token=" + encodeURIComponent("" + token) + "&";
-        if (userId !== undefined && userId !== null)
-            url_ += "UserId=" + encodeURIComponent("" + userId) + "&";
         if (recipeId === null)
             throw new Error("The parameter 'recipeId' cannot be null.");
         else if (recipeId !== undefined)
@@ -703,11 +1148,11 @@ export class RecipesLogedClient implements IRecipesLogedClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processRateRecipe(response_);
+            return this.processRecipesLoged_RateRecipe(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processRateRecipe(<any>response_);
+                    return this.processRecipesLoged_RateRecipe(<any>response_);
                 } catch (e) {
                     return <Observable<FileResponse | null>><any>_observableThrow(e);
                 }
@@ -716,7 +1161,7 @@ export class RecipesLogedClient implements IRecipesLogedClient {
         }));
     }
 
-    protected processRateRecipe(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processRecipesLoged_RateRecipe(response: HttpResponseBase): Observable<FileResponse | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -729,14 +1174,14 @@ export class RecipesLogedClient implements IRecipesLogedClient {
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse | null>(<any>null);
+        return _observableOf(<any>null);
     }
 
-    addToMyList(recipeId: string | undefined, token: string | null | undefined): Observable<FileResponse | null> {
+    recipesLoged_AddToMyList(recipeId?: string | undefined, token?: string | null | undefined): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/addToMyList?";
         if (recipeId === null)
             throw new Error("The parameter 'recipeId' cannot be null.");
@@ -755,11 +1200,11 @@ export class RecipesLogedClient implements IRecipesLogedClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processAddToMyList(response_);
+            return this.processRecipesLoged_AddToMyList(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processAddToMyList(<any>response_);
+                    return this.processRecipesLoged_AddToMyList(<any>response_);
                 } catch (e) {
                     return <Observable<FileResponse | null>><any>_observableThrow(e);
                 }
@@ -768,7 +1213,7 @@ export class RecipesLogedClient implements IRecipesLogedClient {
         }));
     }
 
-    protected processAddToMyList(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processRecipesLoged_AddToMyList(response: HttpResponseBase): Observable<FileResponse | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -781,16 +1226,16 @@ export class RecipesLogedClient implements IRecipesLogedClient {
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse | null>(<any>null);
+        return _observableOf(<any>null);
     }
 }
 
 export interface IWeatherForecastClient {
-    get(): Observable<string[]>;
+    weatherForecast_Get(): Observable<string[]>;
 }
 
 @Injectable({
@@ -806,7 +1251,7 @@ export class WeatherForecastClient implements IWeatherForecastClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:5001";
     }
 
-    get(): Observable<string[]> {
+    weatherForecast_Get(): Observable<string[]> {
         let url_ = this.baseUrl + "/WeatherForecast";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -819,11 +1264,11 @@ export class WeatherForecastClient implements IWeatherForecastClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processWeatherForecast_Get(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(<any>response_);
+                    return this.processWeatherForecast_Get(<any>response_);
                 } catch (e) {
                     return <Observable<string[]>><any>_observableThrow(e);
                 }
@@ -832,7 +1277,7 @@ export class WeatherForecastClient implements IWeatherForecastClient {
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<string[]> {
+    protected processWeatherForecast_Get(response: HttpResponseBase): Observable<string[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -840,7 +1285,7 @@ export class WeatherForecastClient implements IWeatherForecastClient {
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             if (Array.isArray(resultData200)) {
@@ -854,11 +1299,11 @@ export class WeatherForecastClient implements IWeatherForecastClient {
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<string[]>(<any>null);
+        return _observableOf(<any>null);
     }
 }
 
@@ -1015,6 +1460,7 @@ export class RecipeDto implements IRecipeDto {
     recipeName?: string | undefined;
     instruction?: string | undefined;
     userId?: string | undefined;
+    ifPublic!: boolean;
     date!: Date;
     rating!: number;
     gluten!: boolean;
@@ -1050,6 +1496,7 @@ export class RecipeDto implements IRecipeDto {
             this.recipeName = _data["recipeName"];
             this.instruction = _data["instruction"];
             this.userId = _data["userId"];
+            this.ifPublic = _data["ifPublic"];
             this.date = _data["date"] ? new Date(_data["date"].toString()) : <any>undefined;
             this.rating = _data["rating"];
             this.gluten = _data["gluten"];
@@ -1089,6 +1536,7 @@ export class RecipeDto implements IRecipeDto {
         data["recipeName"] = this.recipeName;
         data["instruction"] = this.instruction;
         data["userId"] = this.userId;
+        data["ifPublic"] = this.ifPublic;
         data["date"] = this.date ? this.date.toISOString() : <any>undefined;
         data["rating"] = this.rating;
         data["gluten"] = this.gluten;
@@ -1121,6 +1569,7 @@ export interface IRecipeDto {
     recipeName?: string | undefined;
     instruction?: string | undefined;
     userId?: string | undefined;
+    ifPublic: boolean;
     date: Date;
     rating: number;
     gluten: boolean;
@@ -1180,130 +1629,6 @@ export class IndigrentsForRecipeDto implements IIndigrentsForRecipeDto {
 export interface IIndigrentsForRecipeDto {
     recipeId: string;
     ingredient?: string | undefined;
-}
-
-export class UpdateRecipe implements IUpdateRecipe {
-    token?: string | undefined;
-    id!: string;
-    recipeName?: string | undefined;
-    instruction?: string | undefined;
-    ifPublic!: boolean;
-    ingredients2?: IngredientsDto[] | undefined;
-    gluten!: boolean;
-    shellfish!: boolean;
-    eggs!: boolean;
-    fish!: boolean;
-    peanuts!: boolean;
-    soy!: boolean;
-    lactose!: boolean;
-    celery!: boolean;
-    mustard!: boolean;
-    sesame!: boolean;
-    sulphuR_DIOXIDE!: boolean;
-    lupine!: boolean;
-    muscles!: boolean;
-    vegan!: boolean;
-    vege!: boolean;
-
-    constructor(data?: IUpdateRecipe) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.token = _data["token"];
-            this.id = _data["id"];
-            this.recipeName = _data["recipeName"];
-            this.instruction = _data["instruction"];
-            this.ifPublic = _data["ifPublic"];
-            if (Array.isArray(_data["ingredients2"])) {
-                this.ingredients2 = [] as any;
-                for (let item of _data["ingredients2"])
-                    this.ingredients2!.push(IngredientsDto.fromJS(item));
-            }
-            this.gluten = _data["gluten"];
-            this.shellfish = _data["shellfish"];
-            this.eggs = _data["eggs"];
-            this.fish = _data["fish"];
-            this.peanuts = _data["peanuts"];
-            this.soy = _data["soy"];
-            this.lactose = _data["lactose"];
-            this.celery = _data["celery"];
-            this.mustard = _data["mustard"];
-            this.sesame = _data["sesame"];
-            this.sulphuR_DIOXIDE = _data["sulphuR_DIOXIDE"];
-            this.lupine = _data["lupine"];
-            this.muscles = _data["muscles"];
-            this.vegan = _data["vegan"];
-            this.vege = _data["vege"];
-        }
-    }
-
-    static fromJS(data: any): UpdateRecipe {
-        data = typeof data === 'object' ? data : {};
-        let result = new UpdateRecipe();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["token"] = this.token;
-        data["id"] = this.id;
-        data["recipeName"] = this.recipeName;
-        data["instruction"] = this.instruction;
-        data["ifPublic"] = this.ifPublic;
-        if (Array.isArray(this.ingredients2)) {
-            data["ingredients2"] = [];
-            for (let item of this.ingredients2)
-                data["ingredients2"].push(item.toJSON());
-        }
-        data["gluten"] = this.gluten;
-        data["shellfish"] = this.shellfish;
-        data["eggs"] = this.eggs;
-        data["fish"] = this.fish;
-        data["peanuts"] = this.peanuts;
-        data["soy"] = this.soy;
-        data["lactose"] = this.lactose;
-        data["celery"] = this.celery;
-        data["mustard"] = this.mustard;
-        data["sesame"] = this.sesame;
-        data["sulphuR_DIOXIDE"] = this.sulphuR_DIOXIDE;
-        data["lupine"] = this.lupine;
-        data["muscles"] = this.muscles;
-        data["vegan"] = this.vegan;
-        data["vege"] = this.vege;
-        return data;
-    }
-}
-
-export interface IUpdateRecipe {
-    token?: string | undefined;
-    id: string;
-    recipeName?: string | undefined;
-    instruction?: string | undefined;
-    ifPublic: boolean;
-    ingredients2?: IngredientsDto[] | undefined;
-    gluten: boolean;
-    shellfish: boolean;
-    eggs: boolean;
-    fish: boolean;
-    peanuts: boolean;
-    soy: boolean;
-    lactose: boolean;
-    celery: boolean;
-    mustard: boolean;
-    sesame: boolean;
-    sulphuR_DIOXIDE: boolean;
-    lupine: boolean;
-    muscles: boolean;
-    vegan: boolean;
-    vege: boolean;
 }
 
 export class IngredientsDto implements IIngredientsDto {
