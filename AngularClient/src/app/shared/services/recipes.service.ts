@@ -14,7 +14,7 @@ import {  RecipesClient } from "src/app/api/ApiClient";
         return this.recipesClientService.recipes_GetRecipe(id);
       }
       getRandomRecipes(){ 
-          return this.recipesClientService.recipes_GetRandomRecipe();
+        return this.recipesClientService.recipes_GetRandomRecipe();
       }
       getRecipes( gluten: boolean,
          shellfish: boolean,

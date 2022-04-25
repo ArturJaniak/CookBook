@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class RegisterUserComponent implements OnInit {
   public registerForm: FormGroup;
 
-  constructor(private _authService: AuthenticationService, 
+  constructor(private _authService: AuthenticationService,
     // private _passConfValidator: PasswordConfirmationValidatorService,
     private _router: Router) { }
 
@@ -44,13 +44,13 @@ export class RegisterUserComponent implements OnInit {
       password: formValues.password,
       confirmPassword: formValues.confirm
     };
-    this._router.navigate(["/authentication/login"]);
+    this._router.navigate(["/login"]);
     this._authService.registerUser("api/accounts/registration", user)
-    .subscribe(_ => {
-      console.log("Successful registration");
-    },
-    error => {
-      console.log(error.error.errors);
-    })
+      .subscribe(_ => {
+        console.log("Successful registration");
+      },
+        error => {
+          console.log(error.error.errors);
+        })
   }
 }
