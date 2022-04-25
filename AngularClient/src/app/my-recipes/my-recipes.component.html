@@ -1,39 +1,41 @@
 <p>my-recipes works!</p>
 <mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Filtry
-      </mat-panel-title>
-      <mat-panel-description>
-        Kliknij by wyświetlić filtry
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <mat-selection-list #shoes>
-        <mat-list-option *ngFor="let shoe of typesOfShoes">
-          {{shoe}}
-        </mat-list-option>
-      </mat-selection-list>
-      
-      <p>
-        Options selected: {{shoes.selectedOptions.selected.length}}
-      </p>
-      
-  </mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Filtry
+    </mat-panel-title>
+    <mat-panel-description>
+      Kliknij by wyświetlić filtry
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <mat-selection-list #shoes>
+    <mat-list-option *ngFor="let shoe of typesOfShoes">
+      {{shoe}}
+    </mat-list-option>
+  </mat-selection-list>
 
-<mat-grid-list cols="2" rowHeight="3:1" >
+  <p>
+    Options selected: {{shoes.selectedOptions.selected.length}}
+  </p>
+
+</mat-expansion-panel>
+
+<mat-grid-list cols="2" rowHeight="3:1">
   <ng-container>
-    <mat-grid-tile *ngFor ="let recipe of recipes">
+    <mat-grid-tile *ngFor="let recipe of recipes">
       <!-- <div>{{recipe.id}}</div> -->
       <div> <img src="../../assets/img_girl.jpg" alt="Girl in a jacket" style="width:48px;height:48px;"> </div>
       <div>{{recipe.recipeName}}</div>
       <!-- <div>{{recipe.date}}</div> -->
-      <div><p>{{recipe.rating}}</p></div>
-      
-      <div>{{recipe.userId}}</div> 
-      <button type="button" (click)="viewRecipeDetail(recipe.id)">Details</button> 
-      <button type="button" (click)="deleteRecipe(recipe.id)">Delete Me!</button> 
+      <div>
+        <p>{{recipe.rating}}</p>
+      </div>
+
+
+      <div>{{recipe.userId}}</div>
+      <button type="button" (click)="viewRecipeDetail(recipe.id)">Details</button>
+      <button type="button" (click)="deleteRecipe(recipe.id)">Delete Me!</button>
     </mat-grid-tile>
   </ng-container>
 </mat-grid-list>
 <button type="button" (click)="createRecipe()">Click Me!</button>
-    
