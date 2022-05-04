@@ -55,11 +55,7 @@ namespace CompanyEmployees.Controllers
                 #region TWOZENIE LISTY
                 var query = (from objRecipe in _db.Recipes
                              join objRecipeList in _db.RecipeList on
-                             objRecipe.Id equals objRecipeList.RecipeId
-                             //join objImageList in _db.ImageList on
-                             //objRecipe.Id equals objImageList.RecipeId
-                             //join objImage in _db.Image on
-                             //objImageList.ImageId equals objImage.Id
+                             objRecipe.Id equals objRecipeList.RecipeId                           
                              join objAllergens in _db.Allergens on
                              objRecipe.AllergenId equals objAllergens.Id
                              join objTags in _db.Tags on
@@ -71,8 +67,7 @@ namespace CompanyEmployees.Controllers
                                  RecipeName = objRecipe.RecipeName,
                                  Date = objRecipe.Date,
                                  Rating = objRecipeList.Rating,
-                                 Photo = objRecipe.Photo,
-                                 //Photo = objImage.ImageName,
+                                 Photo = objRecipe.Photo,                               
                                  GLUTEN = objAllergens.GLUTEN,
                                  SHELLFISH = objAllergens.SHELLFISH,
                                  EGGS = objAllergens.EGGS,
@@ -206,10 +201,6 @@ namespace CompanyEmployees.Controllers
             var query = (from objRecipe in _db.Recipes
                          join objRecipeList in _db.RecipeList on
                          objRecipe.Id equals objRecipeList.RecipeId
-                         //join objImageList in _db.ImageList on
-                         //objRecipe.Id equals objImageList.RecipeId
-                         //join objImage in _db.Image on
-                         //objImageList.ImageId equals objImage.Id
                          join objAllergens in _db.Allergens on
                          objRecipe.AllergenId equals objAllergens.Id
                          join objTags in _db.Tags on
@@ -222,7 +213,6 @@ namespace CompanyEmployees.Controllers
                              Date = objRecipe.Date,
                              Rating = objRecipeList.Rating,
                              Photo = objRecipe.Photo,
-                             //Photo = objImage.ImageName,
                              GLUTEN = objAllergens.GLUTEN,
                              SHELLFISH = objAllergens.SHELLFISH,
                              EGGS = objAllergens.EGGS,
