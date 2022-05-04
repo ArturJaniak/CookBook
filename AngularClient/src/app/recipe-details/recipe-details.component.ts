@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { RecipesClient, RecipesLogedClient } from '../api/ApiClient';
 import { SharingService } from '../shared/sharing.service';
@@ -44,10 +44,11 @@ export class RecipeDetailsComponent implements OnInit {
     this.recipesClient.recipes_GetRecipe(this.id, localStorage.getItem("token")).subscribe(res => (this.recipe = res));
   }
   editRecipeDetail(recipe_id: any) {
-    let url: string = "/editDetailsRecipe/" + recipe_id
+
+    let url: string = "/editDetailsRecipe/" + this.id;
     this.router.navigateByUrl(url);
     //console.log(recipe_id);
-    this.sharingService.setData(recipe_id);
+    this.sharingService.setData(this.id);
   }
 
 }

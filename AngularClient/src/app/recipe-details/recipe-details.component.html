@@ -1,11 +1,12 @@
 <p>recipe-details works!</p>
+<div> <img src="images/{{recipe.photo}}" alt="{{recipe.photo}}" style="width:48px;height:48px;"> </div>
 <!-- <div *ngFor ="let recip of recipe"> -->
 <div>{{recipe.id}}</div>
 <div>{{recipe.recipeName}}</div>
- <div>{{recipe.date}}</div> 
+<div>{{recipe.date}}</div>
 <div>{{recipe.rating}}</div>
 
-<div>Instruction?: {{recipe.instruction}}</div>  
+<div>Instruction?: {{recipe.instruction}}</div>
 <div>Gluten?: {{recipe.gluten}}</div>
 <div>Shellfish?: {{recipe.shellfish}}</div>
 <div>Eggs?: {{recipe.eggs}}</div>
@@ -26,6 +27,6 @@
 </li>
 
 <!-- </div> -->
-<p><input type="number" #rateValue> Rate me!</p>  
-<button type="button" (click)="editRecipeDetail(recipe.id)">Edit</button> 
+<p><input type="number" #rateValue> Rate me!</p>
+<button type="button" (click)="editRecipeDetail(recipe.id)">Edit</button>
 <button type="submit" (click)="rateRecipe(rateValue.value)">Save Rating</button>

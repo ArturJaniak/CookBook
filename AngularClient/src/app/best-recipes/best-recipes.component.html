@@ -9,38 +9,42 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
   <mat-selection-list #shoes>
-      <!-- <mat-list-option *ngFor="let shoe of typesOfShoes"> -->
-        <!-- {{shoe}} -->
-      <!-- </mat-list-option> -->
-     <input type="checkbox" name="alergen1" value="false" #gluten> gluten
-      <input type="checkbox" name="alergen2" value="false" #shellfish> shellfish
-      <input type="checkbox" name="alergen2" value="false" #eggs> eggs
-      <input type="checkbox" name="alergen2" value="false" #fish> fish
-      <input type="checkbox" name="alergen2" value="false" #peanuts> peanuts
-      <input type="checkbox" name="alergen2" value="false" #soy> soy
-      <input type="checkbox" name="alergen2" value="false" #lactose> lactose
-      <input type="checkbox" name="alergen2" value="false" #celery> celery
-      <input type="checkbox" name="alergen2" value="false" #mustard> mustard
-      <input type="checkbox" name="alergen2" value="false" #sezame> sezame
-      <input type="checkbox" name="alergen2" value="false" #sulphur_dioxide> sulphur_dioxide
-      <input type="checkbox" name="alergen2" value="false" #lupine> lupine
-      <input type="checkbox" name="alergen2" value="false" #muscles> muscles
-    </mat-selection-list>
-    
-  
-    <button type="button" (click)="filter(gluten.checked,shellfish.checked,eggs.checked,fish.checked,peanuts.checked,soy.checked,lactose.checked,celery.checked,mustard.checked,sezame.checked,sulphur_dioxide.checked,lupine.checked,muscles.checked)">filtruj</button> 
+    <!-- <mat-list-option *ngFor="let shoe of typesOfShoes"> -->
+    <!-- {{shoe}} -->
+    <!-- </mat-list-option> -->
+    <input type="checkbox" name="alergen1" value="false" #gluten> gluten
+    <input type="checkbox" name="alergen2" value="false" #shellfish> shellfish
+    <input type="checkbox" name="alergen2" value="false" #eggs> eggs
+    <input type="checkbox" name="alergen2" value="false" #fish> fish
+    <input type="checkbox" name="alergen2" value="false" #peanuts> peanuts
+    <input type="checkbox" name="alergen2" value="false" #soy> soy
+    <input type="checkbox" name="alergen2" value="false" #lactose> lactose
+    <input type="checkbox" name="alergen2" value="false" #celery> celery
+    <input type="checkbox" name="alergen2" value="false" #mustard> mustard
+    <input type="checkbox" name="alergen2" value="false" #sezame> sezame
+    <input type="checkbox" name="alergen2" value="false" #sulphur_dioxide> sulphur_dioxide
+    <input type="checkbox" name="alergen2" value="false" #lupine> lupine
+    <input type="checkbox" name="alergen2" value="false" #muscles> muscles
+  </mat-selection-list>
+
+
+  <button type="button"
+    (click)="filter(gluten.checked,shellfish.checked,eggs.checked,fish.checked,peanuts.checked,soy.checked,lactose.checked,celery.checked,mustard.checked,sezame.checked,sulphur_dioxide.checked,lupine.checked,muscles.checked)">filtruj</button>
 </mat-expansion-panel>
 
-  <mat-grid-list cols="4" rowHeight="3:1" >
-    <ng-container>
-      <mat-grid-tile *ngFor ="let recipe of recipes">
-        <!-- <div>{{recipe.id}}</div> -->
-        <div> <img src="../../assets/img_girl.jpg" alt="Girl in a jacket" style="width:48px;height:48px;"> </div>
-        <div>{{recipe.recipeName}}</div>
-        <!-- <div>{{recipe.date}}</div> -->
-        <div>{{recipe.rating}}</div>
-        <div>{{recipe.userId}}</div>  
-        <button type="button" (click)="viewRecipeDetail(recipe.id)">Details</button> 
-      </mat-grid-tile>
-    </ng-container>
-  </mat-grid-list>
+<mat-grid-list cols="4" rowHeight="3:1">
+  <ng-container>
+    <mat-grid-tile *ngFor="let recipe of recipes">
+      <!-- <div>{{recipe.id}}</div> -->
+      <div> <img src="../../assets/{{recipe.photo}}" alt="Tu powinno być zdjęcie" width="128px" height="128px">
+      </div>
+      <div>
+        <p>{{recipe.recipeName}}</p>
+      </div>
+      <!-- <div>{{recipe.date}}</div> -->
+      <div>Rating: {{recipe.rating}}</div>
+      <div>{{recipe.userId}}</div>
+      <button type=" button" (click)="viewRecipeDetail(recipe.id)">Details</button>
+    </mat-grid-tile>
+  </ng-container>
+</mat-grid-list>

@@ -1,28 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
-em{
+em {
     color: #e71515;
     font-weight: bold;
 }
 
-.ng-invalid.ng-touched{
+.ng-invalid.ng-touched {
     border-color: red;
 }
 
-.card{
+.card {
     margin-top: 10px;
     background-color: #fff;
     box-shadow: 1px 1px 1px #cabcbc;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 @font-face {
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
     src: url(https://fonts.gstatic.com/s/materialicons/v121/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
-  }
-  
-  .material-icons {
+}
+
+.material-icons {
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
@@ -36,4 +45,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     direction: ltr;
     -moz-font-feature-settings: 'liga';
     -moz-osx-font-smoothing: grayscale;
-  }
+}
+
+div,
+p {
+    font-size: 20px;
+}
+
+img {
+    width: 256px;
+    height: 256px;
+}
