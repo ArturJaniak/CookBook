@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Repository;
+//using Repository;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -249,7 +249,13 @@ namespace CompanyEmployees.Controllers
                     ratingSum += item2.Rating;
                 }
             //przypisanie obliczonego ratingu
-            recipe.Rating = ratingSum/counter;
+            if (counter != 0)
+            {
+                recipe.Rating = ratingSum / counter;
+            }
+            else {
+                recipe.Rating = 0;
+            }
 
             //przypisanie listy składników do recepty
             recipe.Ingredients = indigrientsList;
@@ -354,7 +360,16 @@ namespace CompanyEmployees.Controllers
                 ratingSum += item2.Rating;
             }
             //przypisanie obliczonego ratingu
-            randomRecipe.Rating = ratingSum / counter;
+
+            if (counter != 0)
+            {
+                randomRecipe.Rating = ratingSum / counter;
+            }
+            else
+            {
+                randomRecipe.Rating = 0;
+            }
+            
 
             //przypisanie listy składników do recepty
             randomRecipe.Ingredients = indigrientsList;

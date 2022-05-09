@@ -1,4 +1,4 @@
-﻿using Entities.Configuration;
+﻿//using Entities.Configuration;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -18,15 +18,15 @@ namespace Entities
             base.OnModelCreating(modelBuilder);
            
             
-            modelBuilder.ApplyConfiguration(new CompanyConfiguration());
-            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            //modelBuilder.ApplyConfiguration(new CompanyConfiguration());
+            //modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
         }
 
         
 
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Subs> Subs { get; set; }
+        //public DbSet<Company> Companies { get; set; }
+        //public DbSet<Employee> Employees { get; set; }
+        //public DbSet<Subs> Subs { get; set; }
 
         public DbSet<Allergens> Allergens { get; set; }
 

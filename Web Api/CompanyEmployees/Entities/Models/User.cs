@@ -14,7 +14,7 @@ namespace Entities.Models
 
         public ICollection<Recipes> Recipes { get; set; }
 
-        public ICollection<Subs> Subs { get; set; }
+        //public ICollection<Subs> Subs { get; set; }
 
 
 

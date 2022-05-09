@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using NLog;
-using Repository;
+//using Repository;
 using System.IO;
 using System.Text;
 
@@ -47,7 +47,7 @@ namespace CompanyEmployees
             services.ConfigureIISIntegration();
             services.ConfigureLoggerService();
             services.ConfigureSqlContext(Configuration);
-            services.ConfigureRepositoryManager();
+            //services.ConfigureRepositoryManager();
             services.AddAutoMapper(typeof(Startup));
 
             services.AddIdentity<User, IdentityRole>()

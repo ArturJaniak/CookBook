@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Repository;
+//using Repository;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -310,7 +310,7 @@ namespace CompanyEmployees.Controllers
                     {
 
                         string uniqueFileName = null;                    
-                        #region STOWENIE ZDJĘĆ
+                        #region STWOŻENIE ZDJĘĆ
                         
                             //pobranie pełnej ścieżki
                             string path = @"AngularClient\src\assets";
