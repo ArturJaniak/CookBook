@@ -407,3 +407,21 @@ Web Api/CompanyEmployees/CompanyEmployees/obj/Debug/netcoreapp6.0/CompanyEmploye
 Web Api/CompanyEmployees/CompanyEmployees/obj/project.assets.json
 Web Api/CompanyEmployees/CompanyEmployees/obj/project.nuget.cache
 Web Api/CompanyEmployees/Entities/obj/Debug/netcoreapp6.0/Entities.csproj.FileListAbsolute.txt
+AngularClient/src/app/best-recipes/best-recipes.component.html
+AngularClient/src/app/recipe-details/edit-recipe-details/edit-recipe-details.component.html
+Web Api/CompanyEmployees/CompanyEmployees/appsettings.json
+Web Api/CompanyEmployees/CompanyEmployees/bin/Debug/netcoreapp6.0/appsettings.json
+Web Api/CompanyEmployees/CompanyEmployees/obj/Debug/netcoreapp6.0/CompanyEmployees.AssemblyInfo.cs
+Web Api/CompanyEmployees/CompanyEmployees/obj/Debug/netcoreapp6.0/CompanyEmployees.GeneratedMSBuildEditorConfig.editorconfig
+Web Api/CompanyEmployees/Contracts/bin/Debug/netcoreapp6.0/ref/Contracts.dll
+Web Api/CompanyEmployees/Contracts/obj/Debug/netcoreapp6.0/Contracts.AssemblyInfo.cs
+Web Api/CompanyEmployees/Contracts/obj/Debug/netcoreapp6.0/Contracts.GeneratedMSBuildEditorConfig.editorconfig
+Web Api/CompanyEmployees/Contracts/obj/Debug/netcoreapp6.0/ref/Contracts.dll
+Web Api/CompanyEmployees/Entities/obj/Debug/netcoreapp6.0/Entities.AssemblyInfo.cs
+Web Api/CompanyEmployees/Entities/obj/Debug/netcoreapp6.0/Entities.GeneratedMSBuildEditorConfig.editorconfig
+Web Api/CompanyEmployees/LoggerService/obj/Debug/netcoreapp6.0/LoggerService.AssemblyInfo.cs
+Web Api/CompanyEmployees/LoggerService/obj/Debug/netcoreapp6.0/LoggerService.GeneratedMSBuildEditorConfig.editorconfig
+Web Api/CompanyEmployees/Repository/obj/Debug/netcoreapp6.0/ref/Repository.dll
+Web Api/CompanyEmployees/Repository/obj/Debug/netcoreapp6.0/Repository.AssemblyInfo.cs
+Web Api/CompanyEmployees/Repository/obj/Debug/netcoreapp6.0/Repository.GeneratedMSBuildEditorConfig.editorconfig
+*.dll

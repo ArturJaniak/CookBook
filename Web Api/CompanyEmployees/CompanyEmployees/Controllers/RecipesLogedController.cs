@@ -315,18 +315,21 @@ namespace CompanyEmployees.Controllers
                             //pobranie pełnej ścieżki
                             string path = @"AngularClient\src\assets";
                             string newPath = Path.GetFullPath(Path.Combine(@"..\..\..\", path));
-                            //------------------------------------------
-                            //przypisanie unikalnej nazwy
-                            uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName.ToString();
+                            //localhost:4200/assets/nazwaobrazu
+                        //------------------------------------------
+                        //przypisanie unikalnej nazwy
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName.ToString();
                             //------------------------------------------
                             //stwożenie pełnej ścieżki do zdjęcia
                             string filePath = Path.Combine(newPath, uniqueFileName);
-                            //------------------------------------------
-                            //stwożenie zdjęcia w danym fold
-                            file.CopyTo(new FileStream(filePath, FileMode.Create));
+                        string filePath2 = @"localhost:4200/assets/nazwaobrazu";
+                        //------------------------------------------
+                        //stwożenie zdjęcia w danym fold
+                        file.CopyTo(new FileStream(filePath, FileMode.Create));
+                        file.CopyTo(new FileStream(filePath2, FileMode.Create));
                         //------------------------------------------             
 
-                        
+
                         Recipes recipe = _db.Recipes.Find(id);
                         recipe.Photo = uniqueFileName;
                         _db.Recipes.Update(recipe);
