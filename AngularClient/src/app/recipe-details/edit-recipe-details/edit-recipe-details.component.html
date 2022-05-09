@@ -17,8 +17,8 @@
 <p><input type="checkbox" #muscles> Muscles</p>
 <p><input type="checkbox" #vegan> Vegan</p>
 <p><input type="checkbox" #vege> vege</p>
-<input type="file" id="file" name="file" #file><br><br>
+<input type="file" id="file" (change)="handleFileInput($event.target.files)"><br><br>
 
 <button type="button" (click)="editRecipe(recipeName.value,instruction.value,ifPublic.checked,gluten.checked,shellfish.checked,eggs.checked,
                                 fish.checked,peanuts.checked,soy.checked,lactose.checked,celery.checked,mustard.checked,sesame.checked,sulphurdioxide.checked,
-                                lupine.checked,muscles.checked,vegan.checked,vege.checked, file.value)">Edit</button>
+                                lupine.checked,muscles.checked,vegan.checked,vege.checked)">Edit</button>
