@@ -326,10 +326,16 @@ namespace CompanyEmployees.Controllers
                         //------------------------------------------
                         //stwożenie zdjęcia w danym fold
                         file.CopyTo(new FileStream(filePath, FileMode.Create));
-                        //------------------------------------------             
-
-
+                        //------------------------------------------
                         Recipes recipe = _db.Recipes.Find(id);
+
+                        var oldPhoto = recipe.Photo;
+                        if (oldPhoto != null)
+                        {
+                            string filePath2 = Path.Combine(newPath, oldPhoto);
+                            System.IO.File.Delete(filePath2);
+                        }
+
                         recipe.Photo = uniqueFileName;
                         _db.Recipes.Update(recipe);
                         #endregion
@@ -423,6 +429,12 @@ namespace CompanyEmployees.Controllers
                 //wyszukanie odpowiedniego usera
                 var user = _db.Users.Single(model => model.UserName == userMail);
 
+                //sprawdzenie czy user nie jest twórcą recepty
+                Recipes recipe = _db.Recipes.Find(recipeId);
+                if (user.Id== recipe.UserId)
+                {
+                    return BadRequest();
+                }
                 //zliczenie ilości list gdzie jest taki sam UserId i RecipeId
                 var recipeList2 = _db.RecipeList.Where(model => model.UserId == user.Id && model.RecipeId == recipeId).ToList().Count;
 

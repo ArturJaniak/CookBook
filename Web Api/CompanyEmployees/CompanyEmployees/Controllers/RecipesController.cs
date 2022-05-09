@@ -261,13 +261,13 @@ namespace CompanyEmployees.Controllers
             recipe.Ingredients = indigrientsList;
 
 
-            if (token==null)
+            if (token == null)
             {
-                if (recipe.ifPublic==true)
+                if (recipe.ifPublic == true)
                 {
                     return recipe;
-
                 }
+                else
                 return null;//zmienić na null
             }
             else
@@ -287,9 +287,13 @@ namespace CompanyEmployees.Controllers
                     return recipe;
 
                 }
+                if (recipe.ifPublic == true)
+                {
+                    return recipe;
+                }
                 return null;//zmienić na null
             }
- 
+            
         }
         //------------------------------------------------------------------------------------------------------------------------------------
         [HttpGet("Random")]
