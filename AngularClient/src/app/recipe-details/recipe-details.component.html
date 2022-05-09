@@ -1,10 +1,11 @@
 <p>recipe-details works!</p>
-<div> <img src="assets/{{recipe.photo}}" alt="{{recipe.photo}}" style="width:48px;height:48px;"> </div>
+<div> <img src="assets/{{recipe.photo}}" alt="{{recipe.photo}}" style="width:96px;height:96px;"> </div>
 <!-- <div *ngFor ="let recip of recipe"> -->
-<div>{{recipe.id}}</div>
-<div>{{recipe.recipeName}}</div>
-<div>{{recipe.date}}</div>
-<div>{{recipe.rating}}</div>
+<div>ID: {{recipe.id}}</div>
+<div>RECIPE NAME: {{recipe.recipeName}}</div>
+<div>Recipe Creation Date: {{recipe.date}}</div>
+<div>Recipe Rating: {{recipe.rating}}</div>
+
 
 <div>Instruction?: {{recipe.instruction}}</div>
 <div>Gluten?: {{recipe.gluten}}</div>
@@ -20,7 +21,6 @@
 <div>Sulphur_dioxide?: {{recipe.sulphuR_DIOXIDE}}</div>
 <div>Lupine?: {{recipe.lupine}}</div>
 <div>Muscles?: {{recipe.muscles}}</div>
-<p>nope</p>
 <!-- {{recipe.ingredients[0].ingredient}} -->
 <li *ngFor="let ingredient of recipe.ingredients">
     {{ingredient.ingredient}}

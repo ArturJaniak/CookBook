@@ -1,8 +1,24 @@
-<p>random-recipe works!</p>
-<div> <img src="images/{{recipe.photo}}" alt="Girl in a jacket" style="width:48px;height:48px;"> </div>
-<div>{{recipe.id}}</div>
-<div>{{recipe.recipeName}}</div>
-<div>{{recipe.date}}</div>
-<div>{{recipe.rating}}</div>
+<h1>RANDOM RECIPE</h1>
+<img src="assets/{{recipe.photo}}" alt="{{recipe.photo}}" style="width:128px;height:128px;">
+<!-- <div *ngFor ="let recip of recipe"> -->
+<div>ID: {{recipe.id}}</div>
+<div>RECIPE NAME: {{recipe.recipeName}}</div>
+<div>Recipe Creation Date: {{recipe.date}}</div>
+<div>Recipe Rating: {{recipe.rating}}</div>
+
+<div>Instruction?: {{recipe.instruction}}</div>
+<div>Gluten?: {{recipe.gluten}}</div>
+<div>Shellfish?: {{recipe.shellfish}}</div>
+<div>Eggs?: {{recipe.eggs}}</div>
+<div>Fish?: {{recipe.fish}}</div>
+<div>Peanuts?: {{recipe.peanuts}}</div>
+<div>Soy?: {{recipe.soy}}</div>
+<div>Lactose?: {{recipe.lactose}}</div>
+<div>Celery?: {{recipe.celery}}</div>
+<div>Mustard?: {{recipe.mustard}}</div>
+<div>Sesame?: {{recipe.sesame}}</div>
+<div>Sulphur_dioxide?: {{recipe.sulphuR_DIOXIDE}}</div>
+<div>Lupine?: {{recipe.lupine}}</div>
+<div>Muscles?: {{recipe.muscles}}</div>
 
 <div>{{recipe.userId}}</div>

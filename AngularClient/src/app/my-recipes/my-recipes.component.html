@@ -22,20 +22,24 @@
 
 <mat-grid-list cols="2" rowHeight="3:1">
   <ng-container>
+    <button type="button" (click)="createRecipe()">Create recipe</button>
     <mat-grid-tile *ngFor="let recipe of recipes">
       <!-- <div>{{recipe.id}}</div> -->
-      <div> <img src="../../assets/{{recipe.photo}}" alt="Food1" style="width:48px;height:48px;"> </div>
-      <div>{{recipe.recipeName}}</div>
-      <!-- <div>{{recipe.date}}</div> -->
+      <img src="../../assets/{{recipe.photo}}" alt="Food1" style="width:96px;height:96px;">
       <div>
-        <p>{{recipe.rating}}</p>
+        <dl>
+          <dt>{{recipe.recipeName}}</dt>
+
+          <dt>{{recipe.userId}}</dt>
+          <dt><button type="button" (click)="viewRecipeDetail(recipe.id)">View details</button></dt>
+          <dt><button type="button" (click)="deleteRecipe(recipe.id)">Delete recipe!</button></dt>
+          <dt>{{recipe.rating}}</dt>
+        </dl>
       </div>
+      <!-- <div>{{recipe.date}}</div> -->
 
+      <!-- <button type="button" (click)="viewRecipeDetail(recipe.id)">View details</button> -->
 
-      <div>{{recipe.userId}}</div>
-      <button type="button" (click)="viewRecipeDetail(recipe.id)">View details</button>
-      <button type="button" (click)="deleteRecipe(recipe.id)">Delete recipe!</button>
     </mat-grid-tile>
   </ng-container>
 </mat-grid-list>
-<button type="button" (click)="createRecipe()">Create recipe</button>
