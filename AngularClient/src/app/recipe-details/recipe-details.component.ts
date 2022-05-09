@@ -47,7 +47,6 @@ export class RecipeDetailsComponent implements OnInit {
 
     let url: string = "/editDetailsRecipe/" + this.id;
     this.router.navigateByUrl(url);
-    //console.log(recipe_id);
     this.sharingService.setData(this.id);
   }
 

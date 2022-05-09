@@ -313,20 +313,19 @@ namespace CompanyEmployees.Controllers
                         #region STWOŻENIE ZDJĘĆ
                         
                             //pobranie pełnej ścieżki
-                            string path = @"AngularClient\src\assets";
-                            string newPath = Path.GetFullPath(Path.Combine(@"..\..\..\", path));
-                            //localhost:4200/assets/nazwaobrazu
+                        string path = @"AngularClient\src\assets";
+                        string newPath = Path.GetFullPath(Path.Combine(@"..\..\..\", path));
+
+                        //localhost:4200/assets/nazwaobrazu
                         //------------------------------------------
                         //przypisanie unikalnej nazwy
                         uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName.ToString();
                             //------------------------------------------
                             //stwożenie pełnej ścieżki do zdjęcia
                             string filePath = Path.Combine(newPath, uniqueFileName);
-                        string filePath2 = @"localhost:4200/assets/nazwaobrazu";
                         //------------------------------------------
                         //stwożenie zdjęcia w danym fold
                         file.CopyTo(new FileStream(filePath, FileMode.Create));
-                        file.CopyTo(new FileStream(filePath2, FileMode.Create));
                         //------------------------------------------             
 
 

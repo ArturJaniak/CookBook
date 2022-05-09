@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -12,7 +13,9 @@ import { SharingService } from 'src/app/shared/sharing.service';
 export class EditRecipeDetailsComponent implements OnInit {
 
   constructor(private sharingService: SharingService,
-    private recipesLogged: RecipesLogedClient, private router: Router) { }
+    private recipesLogged: RecipesLogedClient,
+    private router: Router,
+    private http: HttpClient) { }
   id: any;
   editableRecipe: any = [];
   recipeName: string;
@@ -55,6 +58,9 @@ export class EditRecipeDetailsComponent implements OnInit {
       celery, mustard, sesame, sulphur_dioxide, lupine, muscles, vegan, vege).subscribe(res => (this.recipe = res))
 
     this.recipesLogged.recipesLoged_UpdatePhoto(this.fileParameter, localStorage.getItem("token"), this.id).subscribe(res => (this.recipe = res))
+    // const fd = new FormData();
+    // fd.append('image', this.fileToUpload, this.fileToUpload.name);
+    // this.http.post('localhost:4200/assets/', fd).subscribe(res => { console.log(res) });
 
     let url: string = "/detailsRecipe/" + this.id;
 
