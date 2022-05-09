@@ -32,27 +32,32 @@ export class EditRecipeDetailsComponent implements OnInit {
   muscles: boolean;
   vegan: boolean;
   vege: boolean;
-  file: FileParameter;
+  fileToUpload: File | null = null;
   files: any;
   recipe: any;
+  fileParameter: FileParameter;
 
 
   ngOnInit(): void {
     this.id = this.sharingService.getData();
-    //this.route.params.subscribe(params => {
-    //this.getThatRecipe();
   }
-  //getThatRecipe(){
-  //this.recipesClient.recipes_GetRecipe(this.id).subscribe(res=>(this.recipe = res));
-  //}
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+    this.fileParameter = { data: this.fileToUpload, fileName: this.fileToUpload.name };
+  }
+
   editRecipe(recipeName, instruction, ifPublic, gluten, shellfish, eggs, fish, peanuts, soy, lactose,
-    celery, mustard, sesame, sulphur_dioxide, lupine, muscles, vegan, vege, file) {
+    celery, mustard, sesame, sulphur_dioxide, lupine, muscles, vegan, vege) {
 
     this.recipesLogged.recipesLoged_UpdateData(localStorage.getItem("token"), this.id, recipeName, instruction, ifPublic, null, gluten,
       shellfish, eggs, fish, peanuts, soy, lactose,
       celery, mustard, sesame, sulphur_dioxide, lupine, muscles, vegan, vege).subscribe(res => (this.recipe = res))
-    this.recipesLogged.recipesLoged_UpdatePhoto(file, localStorage.getItem("token"), this.id).subscribe(res => (this.recipe = res))
+
+    this.recipesLogged.recipesLoged_UpdatePhoto(this.fileParameter, localStorage.getItem("token"), this.id).subscribe(res => (this.recipe = res))
+
     let url: string = "/detailsRecipe/" + this.id;
+
     this.router.navigateByUrl(url);
 
   }
