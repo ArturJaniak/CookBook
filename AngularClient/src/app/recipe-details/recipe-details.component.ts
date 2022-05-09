@@ -22,6 +22,7 @@ export class RecipeDetailsComponent implements OnInit {
   id: any;
   recipe: any = [];
   token = localStorage.getItem("token");
+  recipe_id: any;
 
 
 
@@ -52,7 +53,9 @@ export class RecipeDetailsComponent implements OnInit {
     this.sharingService.setData(this.id);
   }
   addToMyList() {
-    this.recipeService.addToMyList(this.id, this.token);
+    this.recipesLogged.recipesLoged_AddToMyList(this.id, this.token).subscribe(res => (this.recipe = res));
+    //this.recipeService.addToMyList(this.id, this.token);
   }
+
 
 }
