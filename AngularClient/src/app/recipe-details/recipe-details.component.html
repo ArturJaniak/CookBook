@@ -25,8 +25,20 @@
 <li *ngFor="let ingredient of recipe.ingredients">
     {{ingredient.ingredient}}
 </li>
+<div>przerwa</div>
+<div>{{token}}</div>
+<div>przerwa</div>
+<div>{{recipe.UserId}}</div>
+<div>przerwa</div>
 
 <!-- </div> -->
 <p><input type="number" #rateValue> Rate me!</p>
 <button type="button" (click)="editRecipeDetail(recipe.id)">Edit</button>
 <button type="submit" (click)="rateRecipe(rateValue.value)">Save Rating</button>
+
+<!-- <ng-container *ngIf="token===recipe.userId"> -->
+
+<button type="button" (click)="addToMyList()">Dodaj do książki</button>
+
+<!-- </ng-container> -->
+<!-- do ukrycia button  -->

@@ -1,7 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { RecipePublicListDto } from '../api/ApiClient';
+import { MyRecipesService } from '../shared/services/my-recipes.service';
 import { RecipesService } from '../shared/services/recipes.service';
+import { SharingService } from '../shared/sharing.service';
 
 @Component({
   selector: 'app-best-recipes',
@@ -10,7 +14,7 @@ import { RecipesService } from '../shared/services/recipes.service';
 })
 export class BestRecipesComponent implements OnInit {
 
-  constructor(private recipesClientService: RecipesService, private router: Router) { }
+  constructor(private recipesService: MyRecipesService, private route: ActivatedRoute, private recipesClientService: RecipesService, private router: Router, private sharingService: SharingService) { }
   recipes: RecipePublicListDto[]
   gluten: boolean
   shellfish: boolean
@@ -25,17 +29,19 @@ export class BestRecipesComponent implements OnInit {
   sulphur_dioxide: boolean
   lupine: boolean
   muscles: boolean
-  typesOfShoes: string[] = ['Gluten','Shellfish'];
+  typesOfShoes: string[] = ['Gluten', 'Shellfish'];
+  recipes$: Observable<any>;
+  selectedId: any;
 
   ngOnInit() {
-    // this.recipesClientService.getRecipes( 
-    //   this.gluten = boolean
-    //   // this.shellfish,
-
-    //   ).subscribe(res=>(this.recipes = res));
-      this.filter(this.gluten,this.shellfish,this.eggs,this.fish,this.peanuts,this.soy,this.lactose,this.celery,this.mustard,this.sesame,this.sulphur_dioxide,this.lupine,this.muscles);
+    this.recipes$ = this.route.paramMap.pipe(switchMap(params => {
+      this.selectedId = Number(params.get('id'));
+      return this.recipesService.getRecipes();
+    }))
+    this.filter(this.gluten, this.shellfish, this.eggs, this.fish, this.peanuts, this.soy, this.lactose, this.celery, this.mustard, this.sesame, this.sulphur_dioxide, this.lupine, this.muscles);
   }
-  filter(gluten:boolean, shellfish:boolean,eggs: boolean,
+
+  filter(gluten: boolean, shellfish: boolean, eggs: boolean,
     fish: boolean,
     peanuts: boolean,
     soy: boolean,
@@ -45,7 +51,7 @@ export class BestRecipesComponent implements OnInit {
     sesame: boolean,
     sulphur_dioxide: boolean,
     lupine: boolean,
-    muscles: boolean){
+    muscles: boolean) {
     this.recipesClientService.getRecipes(
       this.gluten = gluten,
       this.shellfish = shellfish,
@@ -60,11 +66,13 @@ export class BestRecipesComponent implements OnInit {
       this.sulphur_dioxide = sulphur_dioxide,
       this.lupine = lupine,
       this.muscles = muscles
-    ).subscribe(res=>(this.recipes = res))
+    ).subscribe(res => (this.recipes = res))
   }
-  viewRecipeDetail(recipe_id : any){
+  viewRecipeDetail(recipe_id: any) {
     let url: string = "/detailsRecipe/" + recipe_id
-         this.router.navigateByUrl(url);
-      }
+    this.router.navigateByUrl(url);
+    //console.log(recipe_id);
+    this.sharingService.setData(recipe_id);
+  }
 }
 

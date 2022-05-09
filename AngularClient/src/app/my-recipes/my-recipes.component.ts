@@ -17,41 +17,41 @@ export class MyRecipesComponent implements OnInit {
   constructor(private router: Router,
     private recipesService: MyRecipesService,
     private recipeLogged: RecipesLogedClient,
-    private route:ActivatedRoute,
-    private sharingService: SharingService) {}
+    private route: ActivatedRoute,
+    private sharingService: SharingService) { }
   recipes$: Observable<any>;
   selectedId: any;
-  recipes : RecipePublicListDto[];
+  recipes: RecipePublicListDto[];
 
   token: string;
   typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
-  respones:any;
+  respones: any;
 
   ngOnInit() {
     this.recipes$ = this.route.paramMap.pipe(switchMap(params => {
       this.selectedId = Number(params.get('id'));
       return this.recipesService.getRecipes();
     }))
-    this.recipesService.getRecipes().subscribe(res=>(this.recipes = res));
+    this.recipesService.getRecipes().subscribe(res => (this.recipes = res));
 
   }
-  viewRecipeDetail(recipe_id : any){
-   let url: string = "/detailsRecipe/" + recipe_id
-        this.router.navigateByUrl(url);
-        //console.log(recipe_id);
-        this.sharingService.setData(recipe_id);
-     }
-  createRecipe(){
-    alert("dziala");
-    this.recipeLogged.recipesLoged_CreateRecipe(localStorage.getItem("token")).subscribe(res=>(this.respones = res));
+  viewRecipeDetail(recipe_id: any) {
+    let url: string = "/detailsRecipe/" + recipe_id
+    this.router.navigateByUrl(url);
+    //console.log(recipe_id);
+    this.sharingService.setData(recipe_id);
   }
-  deleteRecipe(id : any){
-    this.recipeLogged.recipesLoged_DeleteConfirmed(id, localStorage.getItem("token")).subscribe(res=>(this.respones=res));
+  createRecipe() {
+    alert("dziala");
+    this.recipeLogged.recipesLoged_CreateRecipe(localStorage.getItem("token")).subscribe(res => (this.respones = res));
+  }
+  deleteRecipe(id: any) {
+    this.recipeLogged.recipesLoged_DeleteConfirmed(id, localStorage.getItem("token")).subscribe(res => (this.respones = res));
   }
   // createRecipe(){
   //   this.recipesService.createRecipe();
   //   //alert("dziala");
-   
+
   // }
 
 }

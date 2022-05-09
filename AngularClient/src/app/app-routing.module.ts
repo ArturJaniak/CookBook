@@ -12,31 +12,40 @@ import { EditRecipeDetailsComponent } from './recipe-details/edit-recipe-details
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 
 const routes: Routes = [
-    { path: '', component: HomeComponent,
-children: [
-    { path: 'company', loadChildren: () => import('./company/company.module').then(m => m.CompanyModule) },
-    
-]},
-    { path: '404', component : NotFoundComponent},
-    { path: 'login', component: LoginComponent},
-    { path: 'home', component: HomeComponent},
-    { path: 'about', component: AboutComponent},
-    { path: 'myRecipes', component: MyRecipesComponent},
-    { path: 'detailsRecipe', component: RecipeDetailsComponent, children:[
-        { path: ':id', component: RecipeDetailsComponent},
-    ]},
-    { path: 'editDetailsRecipe', component: EditRecipeDetailsComponent, children:[
-        { path: ':id', component: EditRecipeDetailsComponent},
-    ]},
-    { path: 'randomRecipe', component: RandomRecipeComponent},
-    { path: 'bestRecipes', component: BestRecipesComponent},
-    
-    { path: 'authentication/register', component: RegisterUserComponent},
-    { path: '**', redirectTo: '/404', pathMatch: 'full'},
+    {
+        path: '', component: HomeComponent,
+        children: [
+            { path: 'company', loadChildren: () => import('./company/company.module').then(m => m.CompanyModule) },
+
+        ]
+    },
+    { path: '404', component: NotFoundComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'home', component: HomeComponent },
+    { path: 'about', component: AboutComponent },
+    { path: 'myRecipes', component: MyRecipesComponent },
+    {
+        path: 'detailsRecipe', component: RecipeDetailsComponent, children: [
+            { path: ':id', component: RecipeDetailsComponent },
+        ]
+    },
+    {
+        path: 'editDetailsRecipe', component: EditRecipeDetailsComponent, children: [
+            { path: ':id', component: EditRecipeDetailsComponent },
+        ]
+    },
+    { path: 'randomRecipe', component: RandomRecipeComponent },
+    {
+        path: 'bestRecipes', component: BestRecipesComponent, children: [
+            { path: ':id', component: RecipeDetailsComponent },
+        ]
+    },
+    { path: 'authentication/register', component: RegisterUserComponent },
+    { path: '**', redirectTo: '/404', pathMatch: 'full' },
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
-export class AppRoutingModule{}
-    
+export class AppRoutingModule { }
+

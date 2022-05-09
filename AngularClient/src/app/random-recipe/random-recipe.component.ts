@@ -10,9 +10,10 @@ import { RecipesService } from '../shared/services/recipes.service';
 export class RandomRecipeComponent implements OnInit {
 
   constructor(private recipesClientService: RecipesService) { }
-  recipe : RecipeDto;
+  recipe: RecipeDto;
 
   ngOnInit() {
-    this.recipesClientService.getRandomRecipes().subscribe(res=>(this.recipe = res));
+    this.recipesClientService.getRandomRecipes().subscribe(res => (this.recipe = res));
+    // this.recipesClientService.
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { RecipesClient, RecipesLogedClient } from '../api/ApiClient';
+import { RecipesService } from '../shared/services/recipes.service';
 import { SharingService } from '../shared/sharing.service';
 
 @Component({
@@ -15,11 +16,12 @@ export class RecipeDetailsComponent implements OnInit {
     private sharingService: SharingService,
     private recipesLogged: RecipesLogedClient,
     private router: Router,
+    private recipeService: RecipesService,
   ) { }
   recipe$: Observable<any>;
   id: any;
   recipe: any = [];
-
+  token = localStorage.getItem("token");
 
 
 
@@ -37,17 +39,20 @@ export class RecipeDetailsComponent implements OnInit {
   rateRecipe(rateValue) {
     this.rateValue = rateValue;
 
-    this.recipesLogged.recipesLoged_RateRecipe(localStorage.getItem("token"), this.id, rateValue).subscribe(res => (this.recipe.rating) = res);
+    this.recipesLogged.recipesLoged_RateRecipe(this.token, this.id, rateValue).subscribe(res => (this.recipe.rating) = res);
 
   }
   getThatRecipe() {
-    this.recipesClient.recipes_GetRecipe(this.id, localStorage.getItem("token")).subscribe(res => (this.recipe = res));
+    this.recipesClient.recipes_GetRecipe(this.id, this.token).subscribe(res => (this.recipe = res));
   }
   editRecipeDetail(recipe_id: any) {
 
     let url: string = "/editDetailsRecipe/" + this.id;
     this.router.navigateByUrl(url);
     this.sharingService.setData(this.id);
+  }
+  addToMyList() {
+    this.recipeService.addToMyList(this.id, this.token);
   }
 
 }

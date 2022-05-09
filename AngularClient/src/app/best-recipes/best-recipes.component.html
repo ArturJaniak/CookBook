@@ -32,7 +32,7 @@
     (click)="filter(gluten.checked,shellfish.checked,eggs.checked,fish.checked,peanuts.checked,soy.checked,lactose.checked,celery.checked,mustard.checked,sezame.checked,sulphur_dioxide.checked,lupine.checked,muscles.checked)">filtruj</button>
 </mat-expansion-panel>
 
-<mat-grid-list cols="4" rowHeight="3:1">
+<mat-grid-list cols="2" rowHeight="3:1">
   <ng-container>
     <mat-grid-tile *ngFor="let recipe of recipes">
       <!-- <div>{{recipe.id}}</div> -->
@@ -41,10 +41,11 @@
       <div>
         <p>{{recipe.recipeName}}</p>
       </div>
+      <button type="button" (click)="viewRecipeDetail(recipe.id)">View details</button>
       <!-- <div>{{recipe.date}}</div> -->
       <div>Rating: {{recipe.rating}}</div>
       <div>{{recipe.userId}}</div>
-      <button type=" button" (click)="viewRecipeDetail(recipe.id)">Details</button>
+      {{recipe.id}}
     </mat-grid-tile>
   </ng-container>
 </mat-grid-list>
