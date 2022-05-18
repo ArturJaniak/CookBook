@@ -260,18 +260,16 @@ namespace CompanyEmployees.Controllers
             //przypisanie listy składników do recepty
             recipe.Ingredients = indigrientsList;
 
-
-            if (token == null)
+            if(recipe.ifPublic == true)
             {
-                if (recipe.ifPublic == true)
-                {
-                    return recipe;
-                }
-                else
-                return null;//zmienić na null
+                return recipe;
             }
             else
             {
+                if (token ==null)
+                {
+                    return null;
+                }
                 #region DEKODOWANIE TOKENA
                 var stream = token;
                 var handler = new JwtSecurityTokenHandler();
@@ -281,66 +279,64 @@ namespace CompanyEmployees.Controllers
                 #endregion
                 //znalezienie usera na podstawie emaila z dekodera
                 var userToken = _db.Users.Single(model => model.UserName == x);
+                //znalezienie odpowiedniej recepty
                 var r = _db.Recipes.Single(model => model.Id == id);
+                //sprawdzenie czy recepta należy do usera
                 if (r.UserId == userToken.Id)
                 {
                     return recipe;
 
                 }
-                if (recipe.ifPublic == true)
-                {
-                    return recipe;
-                }
-                return null;//zmienić na null
+                return null;
             }
             
+           
+
         }
         //------------------------------------------------------------------------------------------------------------------------------------
+              
         [HttpGet("Random")]
         public ActionResult<RecipeDto> GetRandomRecipe()
         {
-            //stwożenie listy
-            #region TWOZENIE LISTY
-            var listaRecept = (from objRecipe in _db.Recipes
-                               join objRecipeList in _db.RecipeList on
-                               objRecipe.Id equals objRecipeList.RecipeId
-                               join objIngredients in _db.Ingredients on
-                               objRecipe.Id equals objIngredients.RecipeId
-                               join objAllergens in _db.Allergens on
-                               objRecipe.AllergenId equals objAllergens.Id
-                               join objTags in _db.Tags on
-                               objRecipe.TagId equals objTags.Id
-                               select new RecipeDto
-                               {
-                                   Id = objRecipeList.RecipeId,
-                                   RecipeName = objRecipe.RecipeName,
-                                   Instruction = objRecipe.Instruction,
-                                   Date = objRecipe.Date,
-                                   Rating = objRecipeList.Rating,
-                                   Photo = objRecipe.Photo,
-                                   GLUTEN = objAllergens.GLUTEN,
-                                   SHELLFISH = objAllergens.SHELLFISH,
-                                   EGGS = objAllergens.EGGS,
-                                   FISH = objAllergens.FISH,
-                                   PEANUTS = objAllergens.PEANUTS,
-                                   SOY = objAllergens.SOY,
-                                   Lactose = objAllergens.Lactose,
-                                   CELERY = objAllergens.CELERY,
-                                   MUSTARD = objAllergens.MUSTARD,
-                                   SESAME = objAllergens.SESAME,
-                                   SULPHUR_DIOXIDE = objAllergens.SULPHUR_DIOXIDE,
-                                   LUPINE = objAllergens.LUPINE,
-                                   MUSCLES = objAllergens.MUSCLES,
-                                   Vegan = objTags.Vegan,
-                                   Vege = objTags.Vege,
 
-                               }
-                               ).ToList();
-            #endregion
+            var listaRecept = _db.Recipes.ToList();
+
             //Pobranie randomowego ele z listy
             Random r = new Random();
             int rInt = r.Next(0, listaRecept.Count);
             var randomRecipe = listaRecept.ElementAt(rInt);
+
+            RecipeDto recipe = new RecipeDto();
+
+            recipe.RecipeName = randomRecipe.RecipeName;
+            recipe.Id = randomRecipe.Id;
+            recipe.ifPublic = randomRecipe.IfPublic;
+            recipe.Instruction = randomRecipe.Instruction;
+            recipe.Photo = randomRecipe.Photo;
+            recipe.Date = randomRecipe.Date;    
+            recipe.UserId = randomRecipe.UserId;
+            //var Ingredients = _db.Ingredients.ToList().Where(x => x.RecipeId == randomRecipe.Id);
+
+            var Allergens = _db.Allergens.Find(randomRecipe.Id);
+            recipe.GLUTEN = Allergens.GLUTEN;
+            recipe.SHELLFISH = Allergens.SHELLFISH;
+            recipe.EGGS = Allergens.EGGS;
+            recipe.FISH = Allergens.FISH;
+            recipe.PEANUTS = Allergens.PEANUTS;
+            recipe.SOY = Allergens.SOY;
+            recipe.Lactose = Allergens.Lactose;
+            recipe.CELERY = Allergens.CELERY;
+            recipe.MUSTARD = Allergens.MUSTARD;
+            recipe.SESAME = Allergens.SESAME;
+            recipe.SULPHUR_DIOXIDE = Allergens.PEANUTS;
+            recipe.LUPINE = Allergens.LUPINE;
+            recipe.MUSCLES = Allergens.MUSCLES;
+
+            var Tags = _db.Tags.Find(randomRecipe.Id);
+            recipe.Vegan = Tags.Vegan;
+            recipe.Vege = Tags.Vege;
+            
+
             //Stwożenie listy składników dla wylosowanej recepty
             #region LISTA SKŁADNIKÓW
             var indigrientsList = (from objRecipe in _db.Recipes
@@ -353,10 +349,11 @@ namespace CompanyEmployees.Controllers
                                    }).Where(x => x.RecipeId == randomRecipe.Id).ToList();
             #endregion
 
+            var RecipeList = _db.RecipeList.ToList().Where(x => x.RecipeId == randomRecipe.Id);
             //obliczenie ratingu recepty
             int counter = 0;
             int ratingSum = 0;
-            foreach (var item2 in listaRecept)
+            foreach (var item2 in RecipeList)
             {
 
                 if (item2.Rating != 0)
@@ -367,20 +364,18 @@ namespace CompanyEmployees.Controllers
 
             if (counter != 0)
             {
-                randomRecipe.Rating = ratingSum / counter;
+                recipe.Rating = ratingSum / counter;
             }
             else
             {
-                randomRecipe.Rating = 0;
+                recipe.Rating = 0;
             }
-            
+
 
             //przypisanie listy składników do recepty
-            randomRecipe.Ingredients = indigrientsList;
-            return randomRecipe;
+            recipe.Ingredients = indigrientsList;
+            return recipe;
 
         }
-
-
     }
 }

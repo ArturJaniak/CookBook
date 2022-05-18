@@ -464,5 +464,55 @@ namespace CompanyEmployees.Controllers
             return BadRequest();
         }
         //------------------------------------------------------------------------------------------------------------------------------------
+
+        [HttpPost("DeleteFromMyList")]
+        public ActionResult DeleteFromMyList(Guid recipeId, string token)
+        {
+
+            if (token != null)
+            {
+                //dekoder tokena
+                #region DEKODER TOKENA
+                var stream = token;
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(stream);
+                var tokenS = jsonToken as JwtSecurityToken;
+                #endregion
+
+                //znalezienie elem mail
+                var userMail = tokenS.Claims.ElementAt(0).Value;
+
+                //wyszukanie odpowiedniego usera
+                var user = _db.Users.Single(model => model.UserName == userMail);
+
+                //sprawdzenie czy user nie jest twórcą recepty
+                Recipes recipe = _db.Recipes.Find(recipeId);
+                if (user.Id == recipe.UserId)
+                {
+                    return BadRequest();
+                }
+                //zliczenie ilości list gdzie jest taki sam UserId i RecipeId
+                var recipeToRemove = _db.RecipeList.Single(model => model.UserId == user.Id && model.RecipeId == recipeId);
+
+                if (recipeToRemove == null)
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    
+                    _db.RecipeList.Remove(recipeToRemove);
+                    _db.SaveChanges();
+
+                }
+
+                
+
+                _db.SaveChanges();
+                return Ok();
+            }
+            return BadRequest();
+        }
+        //------------------------------------------------------------------------------------------------------------------------------------
     }
 }
