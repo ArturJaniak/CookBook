@@ -494,6 +494,13 @@ namespace CompanyEmployees.Controllers
                 //zliczenie ilości list gdzie jest taki sam UserId i RecipeId
                 var recipeToRemove = _db.RecipeList.Single(model => model.UserId == user.Id && model.RecipeId == recipeId);
 
+                //sprawdzenie czy recepta należy do ciebie if yes error
+                var recipeCheck = _db.Recipes.Find(recipeId);
+                if (user.Id== recipeCheck.UserId)
+                {
+                    return BadRequest();
+                }
+
                 if (recipeToRemove == null)
                 {
                     return BadRequest();
