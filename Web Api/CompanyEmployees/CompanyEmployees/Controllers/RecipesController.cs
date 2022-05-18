@@ -299,12 +299,14 @@ namespace CompanyEmployees.Controllers
         public ActionResult<RecipeDto> GetRandomRecipe()
         {
 
-            var listaRecept = _db.Recipes.ToList();
+            var listaRecept = _db.Recipes.ToList().Where(x=>x.IfPublic==true);
 
             //Pobranie randomowego ele z listy
             Random r = new Random();
-            int rInt = r.Next(0, listaRecept.Count);
+            int rInt = r.Next(0, listaRecept.Count());
             var randomRecipe = listaRecept.ElementAt(rInt);
+
+
 
             RecipeDto recipe = new RecipeDto();
 

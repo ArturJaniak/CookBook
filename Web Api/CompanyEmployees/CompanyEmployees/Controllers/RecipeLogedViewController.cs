@@ -210,6 +210,7 @@ namespace CompanyEmployees.Controllers
                          {
                              Id = objRecipeList.RecipeId,
                              UserId = objRecipe.UserId,
+                             IfPublic = objRecipe.IfPublic,
                              RecipeName = objRecipe.RecipeName,
                              Date = objRecipe.Date,
                              Rating = objRecipeList.Rating,
@@ -229,7 +230,7 @@ namespace CompanyEmployees.Controllers
                              MUSCLES = objAllergens.MUSCLES,
                              Vegan = objTags.Vegan,
                              Vege = objTags.Vege
-                         }).Where(x => x.UserId == id).ToList();
+                         }).Where(x => x.UserId == id && x.IfPublic==true).ToList();
             #endregion
             //Filtry
             #region FILTRY
