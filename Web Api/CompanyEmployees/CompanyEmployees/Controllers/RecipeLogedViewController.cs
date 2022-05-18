@@ -64,6 +64,7 @@ namespace CompanyEmployees.Controllers
                              {
                                  Id = objRecipeList.RecipeId,
                                  UserId = objRecipe.UserId,
+                                 UserIdInList = objRecipeList.UserId,
                                  RecipeName = objRecipe.RecipeName,
                                  Date = objRecipe.Date,
                                  Rating = objRecipeList.Rating,
@@ -83,7 +84,7 @@ namespace CompanyEmployees.Controllers
                                  MUSCLES = objAllergens.MUSCLES,
                                  Vegan = objTags.Vegan,
                                  Vege = objTags.Vege
-                             }).Where(x=>x.UserId==user.Id).ToList();//.Where(model=>model.IfPublic==true)
+                             }).Where(x=>x.UserIdInList == user.Id).ToList();//.Where(model=>model.IfPublic==true)
                 #endregion
                 //Filtry
                 #region FILTRY

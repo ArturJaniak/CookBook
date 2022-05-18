@@ -13,7 +13,7 @@ namespace Entities.DTO
         public string Instruction { get; set; }
         public string UserId { get; set; }
         public bool IfPublic { get; set; }
-
+        public string UserIdInList { get; set; }
         public DateTime Date { get; set; }
         public int Rating { get; set; }
         //Alergeny
