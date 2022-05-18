@@ -431,7 +431,7 @@ namespace CompanyEmployees.Controllers
 
                 //sprawdzenie czy user nie jest twórcą recepty
                 Recipes recipe = _db.Recipes.Find(recipeId);
-                if (user.Id== recipe.UserId)
+                if (user.Id== recipe.UserId || recipe.IfPublic==false)
                 {
                     return BadRequest();
                 }
