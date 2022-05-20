@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { RecipesClient, RecipesLogedClient } from '../api/ApiClient';
+import { RecipeLogedViewClient, RecipesClient, RecipesLogedClient } from '../api/ApiClient';
 import { RecipesService } from '../shared/services/recipes.service';
 import { SharingService } from '../shared/sharing.service';
 
@@ -12,17 +12,20 @@ import { SharingService } from '../shared/sharing.service';
 })
 export class RecipeDetailsComponent implements OnInit {
 
-  constructor(private recipesClient: RecipesClient,
+  constructor(
+    private recipesClient: RecipesClient,
     private sharingService: SharingService,
     private recipesLogged: RecipesLogedClient,
     private router: Router,
-    private recipeService: RecipesService,
+    private recipeLoggedViewClient: RecipeLogedViewClient
   ) { }
   recipe$: Observable<any>;
   id: any;
   recipe: any = [];
   token = localStorage.getItem("token");
   recipe_id: any;
+  user_id: any;
+
 
 
 
@@ -55,6 +58,12 @@ export class RecipeDetailsComponent implements OnInit {
   addToMyList() {
     this.recipesLogged.recipesLoged_AddToMyList(this.id, this.token).subscribe(res => (this.recipe = res));
     //this.recipeService.addToMyList(this.id, this.token);
+  }
+  viewPersonList(user_id: any) {
+    let url: string = "/someonesRecipe/" + user_id
+    this.router.navigateByUrl(url);
+    this.sharingService.setData(user_id);
+    this.recipeLoggedViewClient.recipeLogedView_GetSomeoneList(this.id)
   }
 
 

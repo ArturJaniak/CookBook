@@ -3,12 +3,15 @@ import { RecipeLogedViewClient, RecipesClient, RecipesLogedClient } from "src/ap
 
 @Injectable({
     providedIn: 'root'
-  })
-  export class MyRecipesService {
+})
+export class MyRecipesService {
 
-      constructor(private recipeLogedViewClient: RecipeLogedViewClient, private recipeLogged: RecipesLogedClient){}
-      
-      getRecipes(){ 
-          return this.recipeLogedViewClient.recipeLogedView_GetMyList(localStorage.getItem("token"));
-      }
-  }
+    constructor(private recipeLogedViewClient: RecipeLogedViewClient) { }
+
+    getRecipes() {
+        return this.recipeLogedViewClient.recipeLogedView_GetMyList(localStorage.getItem("token"));
+    }
+    someonesRecipe(user_id: any) {
+        return this.recipeLogedViewClient.recipeLogedView_GetSomeoneList(user_id);
+    }
+}

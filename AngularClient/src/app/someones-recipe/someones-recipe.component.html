@@ -1,0 +1,29 @@
+<p>someones-recipe works!</p>
+<mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Filtry
+        </mat-panel-title>
+        <mat-panel-description>
+            Kliknij by wyświetlić filtry
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+
+
+</mat-expansion-panel>
+
+<mat-grid-list cols="2" rowHeight="3:1">
+    <ng-container>
+        <mat-grid-tile *ngFor="let recipe of recipes">
+            <img src="../../assets/{{recipe.photo}}" alt="Food1" style="width:96px;height:96px;">
+            <div>
+                <dl>
+                    <dt>{{recipe.recipeName}}</dt>
+                    <dt>{{recipe.userId}}</dt>
+                    <dt><button type="button" (click)="viewRecipeDetail(recipe.userId)">View details</button></dt>
+                    <dt>{{recipe.rating}}</dt>
+                </dl>
+            </div>
+        </mat-grid-tile>
+    </ng-container>
+</mat-grid-list>

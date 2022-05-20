@@ -39,6 +39,8 @@
 <!-- <ng-container *ngIf="token===recipe.userId"> -->
 
 <button type="button" (click)="addToMyList()" [routerLink]="['/myrecipes']">Dodaj do książki</button>
+<button type="button" (click)="viewPersonList(recipe.userId)">Zobacz przepisy
+    autora</button>
 
 <!-- </ng-container> -->
 <!-- do ukrycia button  -->

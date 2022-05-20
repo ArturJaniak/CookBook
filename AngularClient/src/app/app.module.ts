@@ -24,6 +24,7 @@ import {MatListModule} from '@angular/material/list';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component'; 
 import { SharingService } from './shared/sharing.service';
 import { EditRecipeDetailsComponent } from './recipe-details/edit-recipe-details/edit-recipe-details.component';
+import { SomeonesRecipeComponent } from './someones-recipe/someones-recipe.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { EditRecipeDetailsComponent } from './recipe-details/edit-recipe-details
     BestRecipesComponent,
     RecipeDetailsComponent,
     EditRecipeDetailsComponent,
+    SomeonesRecipeComponent,
     
   ],
   imports: [
