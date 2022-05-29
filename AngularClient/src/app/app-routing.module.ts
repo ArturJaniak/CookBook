@@ -14,11 +14,11 @@ import { SomeonesRecipeComponent } from './someones-recipe/someones-recipe.compo
 
 const routes: Routes = [
     {
-        path: '', component: HomeComponent,
-        children: [
-            { path: 'company', loadChildren: () => import('./company/company.module').then(m => m.CompanyModule) },
+        path: '', component: MyRecipesComponent,
+        // children: [
+        //     { path: 'company', loadChildren: () => import('./company/company.module').then(m => m.CompanyModule) },
 
-        ]
+        // ]
     },
     { path: '404', component: NotFoundComponent },
     { path: 'login', component: LoginComponent },

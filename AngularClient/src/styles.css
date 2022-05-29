@@ -1,4 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+img {
+    width: 140px;
+    height: 140px;
+}
+
 em {
     color: #e71515;
     font-weight: bold;
@@ -20,14 +25,17 @@ body {
 }
 
 body {
+    background-image: url("https://cdn.pixabay.com/photo/2016/10/22/01/54/wood-1759566_1280.jpg");
+    /* background-color: rgb(218, 104, 11); */
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    color: rgb(230, 225, 222)
 }
 
 @font-face {
     font-family: 'Material Icons';
-    font-style: normal;
-    font-weight: 400;
+    /* font-style: normal; */
+    /* font-weight: 400; */
     src: url(https://fonts.gstatic.com/s/materialicons/v121/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
 }
 
@@ -35,14 +43,14 @@ body {
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
+    /* letter-spacing: normal; */
+    /* text-transform: none; */
     display: inline-block;
     white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
+    /* word-wrap: normal; */
+    /* direction: ltr; */
     -moz-font-feature-settings: 'liga';
     -moz-osx-font-smoothing: grayscale;
 }
@@ -52,7 +60,111 @@ p {
     font-size: 20px;
 }
 
-img {
-    width: 128px;
-    height: 128px;
+/* <!-- HTML !-->
+<button class="button-62" role="button">Button 62</button> */
+
+/* CSS */
+.button-create {
+    background: linear-gradient(to bottom right, #0cc042, #78f182);
+    /* border: 0; */
+    border-radius: 12px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 2;
+    outline: transparent;
+    padding: 0 1rem 0;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+
+}
+
+.button-create:not([disabled]):focus {
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.button-create:not([disabled]):hover {
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.button-details {
+    background: linear-gradient(to bottom right, #325fda, #1bd1f1);
+    /* border: 0; */
+    border-radius: 12px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 2;
+    outline: transparent;
+    padding: 0 1rem 0;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+
+}
+
+.button-details:not([disabled]):focus {
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.button-details:not([disabled]):hover {
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+
+.button-delete {
+    background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
+    /* border: 0; */
+    border-radius: 12px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 2;
+    outline: transparent;
+    padding: 0 1rem 0;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+
+}
+
+.button-delete:not([disabled]):focus {
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.button-delete:not([disabled]):hover {
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.tile {
+    background-image: url("https://get.pxhere.com/photo/background-tree-wood-boards-texture-wooden-background-old-brown-wood-texture-gray-wood-old-tree-old-fence-the-texture-of-the-wood-rustik-rustic-rural-wood-background-old-boards-fence-1370487.jpg");
+    background-size: cover;
+}
+
+.space {
+    width: 4px;
+    height: auto;
+    display: inline-block;
 }
