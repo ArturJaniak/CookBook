@@ -1,6 +1,6 @@
-<div class="card">
-    <div class="card-body">
-        <h1 class="card-title">Login</h1>
+<div>
+    <div>
+        <h1>Login</h1>
         <div *ngIf="showError" class="alert alert-danger" role="alert">
             {{errorMessage}}
         </div>
@@ -11,7 +11,8 @@
                     <input type="text" id="username" formControlName="username" class="form-control" />
                 </div>
                 <div class="col-md-5">
-                    <em *ngIf="validateControl('username') && hasError('username', 'required')">Username is required</em>
+                    <em *ngIf="validateControl('username') && hasError('username', 'required')">Username is
+                        required</em>
                 </div>
             </div>
             <div class="form-group row">
@@ -20,7 +21,8 @@
                     <input type="password" id="password" formControlName="password" class="form-control" />
                 </div>
                 <div class="col-md-5">
-                    <em *ngIf="validateControl('password') && hasError('password', 'required')">Password is required</em>
+                    <em *ngIf="validateControl('password') && hasError('password', 'required')">Password is
+                        required</em>
                 </div>
             </div>
             <br>
@@ -31,9 +33,9 @@
             </div>
             <ul *ngIf='isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                  <button class="btn btn-link" style="color: #ffffff80;" (click)="logout()">Logout</button>
+                    <button class="btn btn-link" style="color: #ffffff80;" (click)="logout()">Logout</button>
                 </li>
-              </ul>
+            </ul>
         </form>
     </div>
 </div>

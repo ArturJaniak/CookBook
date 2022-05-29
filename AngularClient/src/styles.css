@@ -15,8 +15,8 @@ em {
 
 .card {
     margin-top: 10px;
-    background-color: #fff;
-    box-shadow: 1px 1px 1px #cabcbc;
+    /* background-color: rgb(43, 37, 37); */
+    /* box-shadow: 1px 1px 1px #cabcbc; */
 }
 
 html,
@@ -103,7 +103,7 @@ p {
     cursor: pointer;
     display: inline-block;
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 500;
     line-height: 2;
     outline: transparent;
@@ -135,7 +135,7 @@ p {
     cursor: pointer;
     display: inline-block;
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 500;
     line-height: 2;
     outline: transparent;
@@ -164,7 +164,18 @@ p {
 }
 
 .space {
-    width: 4px;
+    width: 40px;
     height: auto;
     display: inline-block;
+}
+
+.mat-grid-tile-footer div {
+    margin: auto;
+}
+
+.mat-grid-tile .mat-grid-tile-header>*,
+.mat-grid-tile .mat-grid-tile-footer>* {
+    padding: 0;
+    font-weight: normal;
+    font-size: inherit;
 }

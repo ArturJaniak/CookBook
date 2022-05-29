@@ -8,15 +8,27 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
   <mat-selection-list #shoes>
-    <mat-list-option *ngFor="let shoe of typesOfShoes">
-      {{shoe}}
-    </mat-list-option>
+    <!-- <mat-list-option *ngFor="let shoe of typesOfShoes"> -->
+    <!-- {{shoe}} -->
+    <!-- </mat-list-option> -->
+    <input type="checkbox" name="alergen1" value="false" #gluten> gluten
+    <input type="checkbox" name="alergen2" value="false" #shellfish> shellfish
+    <input type="checkbox" name="alergen2" value="false" #eggs> eggs
+    <input type="checkbox" name="alergen2" value="false" #fish> fish
+    <input type="checkbox" name="alergen2" value="false" #peanuts> peanuts
+    <input type="checkbox" name="alergen2" value="false" #soy> soy
+    <input type="checkbox" name="alergen2" value="false" #lactose> lactose
+    <input type="checkbox" name="alergen2" value="false" #celery> celery
+    <input type="checkbox" name="alergen2" value="false" #mustard> mustard
+    <input type="checkbox" name="alergen2" value="false" #sezame> sezame
+    <input type="checkbox" name="alergen2" value="false" #sulphur_dioxide> sulphur_dioxide
+    <input type="checkbox" name="alergen2" value="false" #lupine> lupine
+    <input type="checkbox" name="alergen2" value="false" #muscles> muscles
   </mat-selection-list>
 
-  <p>
-    Options selected: {{shoes.selectedOptions.selected.length}}
-  </p>
 
+  <button type="button"
+    (click)="filter(gluten.checked,shellfish.checked,eggs.checked,fish.checked,peanuts.checked,soy.checked,lactose.checked,celery.checked,mustard.checked,sezame.checked,sulphur_dioxide.checked,lupine.checked,muscles.checked)">filtruj</button>
 </mat-expansion-panel>
 
 <mat-grid-list cols="3" rows="3" rowHeight="3:2" gutterSize="15px">
@@ -44,19 +56,24 @@
  -->
 
       <mat-grid-tile-header>
-        <dt> {{recipe.recipeName}}</dt>
-        <!-- <dt> {{recipe.userId}}</dt> -->
-        <dt> {{recipe.rating}}</dt>
+        <div style="width:90% ;text-align: center">
+          <h3> {{recipe.recipeName}}</h3>
+        </div>
+        <div style="width: 10%; text-align: center;">
+          <h3>{{recipe.rating}}</h3>
+        </div>
+
       </mat-grid-tile-header>
 
-      <mat-grid-tile-footer style="alig">
-        <dl> <button mat-button class="button-details" role="button" (click)="viewRecipeDetail(recipe.id)">
+      <mat-grid-tile-footer style="margin:auto">
+        <dl><button mat-button class=" button-details" role="button" (click)="viewRecipeDetail(recipe.id)">
             View details <mat-icon>search</mat-icon></button></dl>
         <div class="space"> </div>
         <dl><button mat-button class="button-delete" role="button" (click)="deleteRecipe(recipe.id)">
             Delete recipe <mat-icon>delete</mat-icon>
-       
-        </button> </dl>
+
+          </button> </dl>
+
       </mat-grid-tile-footer>
 
 

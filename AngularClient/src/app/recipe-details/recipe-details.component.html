@@ -11,19 +11,19 @@
 <p></p>
 Allergens:
 <p></p>
-<div>Gluten: {{recipe.gluten}}</div>
-<div>Shellfish: {{recipe.shellfish}}</div>
-<div>Eggs: {{recipe.eggs}}</div>
-<div>Fish: {{recipe.fish}}</div>
-<div>Peanuts: {{recipe.peanuts}}</div>
-<div>Soy: {{recipe.soy}}</div>
-<div>Lactose: {{recipe.lactose}}</div>
-<div>Celery: {{recipe.celery}}</div>
-<div>Mustard: {{recipe.mustard}}</div>
-<div>Sesame: {{recipe.sesame}}</div>
-<div>Sulphur_dioxide: {{recipe.sulphuR_DIOXIDE}}</div>
-<div>Lupine: {{recipe.lupine}}</div>
-<div>Muscles: {{recipe.muscles}}</div>
+<div *ngIf="recipe.gluten">Gluten: {{recipe.gluten}}</div>
+<div *ngIf="recipe.shellfish">Shellfish: {{recipe.shellfish}}</div>
+<div *ngIf="recipe.eggs">Eggs: {{recipe.eggs}}</div>
+<div *ngIf="recipe.fish">Fish: {{recipe.fish}}</div>
+<div *ngIf="recipe.peanuts">Peanuts: {{recipe.peanuts}}</div>
+<div *ngIf="recipe.soy">Soy: {{recipe.soy}}</div>
+<div *ngIf="recipe.lactose">Lactose: {{recipe.lactose}}</div>
+<div *ngIf="recipe.celery">Celery: {{recipe.celery}}</div>
+<div *ngIf="recipe.mustard">Mustard: {{recipe.mustard}}</div>
+<div *ngIf="recipe.sesame">Sesame: {{recipe.sesame}}</div>
+<div *ngIf="recipe.sulphuR_DIOXIDE">Sulphur_dioxide: {{recipe.sulphuR_DIOXIDE}}</div>
+<div *ngIf="recipe.lupine">Lupine: {{recipe.lupine}}</div>
+<div *ngIf="recipe.muscles">Muscles: {{recipe.muscles}}</div>
 <!-- {{recipe.ingredients[0].ingredient}} -->
 <li *ngFor="let ingredient of recipe.ingredients">
     {{ingredient.ingredient}}

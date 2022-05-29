@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { RecipePublicListDto, RecipesLogedClient } from '../api/ApiClient';
 import { MyRecipesService } from '../shared/services/my-recipes.service';
+import { RecipesService } from '../shared/services/recipes.service';
 import { SharingService } from '../shared/sharing.service';
 
 @Component({
@@ -18,10 +19,24 @@ export class MyRecipesComponent implements OnInit {
     private recipesService: MyRecipesService,
     private recipeLogged: RecipesLogedClient,
     private route: ActivatedRoute,
-    private sharingService: SharingService) { }
+    private sharingService: SharingService,
+    private recipesClientService: RecipesService) { }
   recipes$: Observable<any>;
   selectedId: any;
   recipes: RecipePublicListDto[];
+  gluten: boolean
+  shellfish: boolean
+  eggs: boolean
+  fish: boolean
+  peanuts: boolean
+  soy: boolean
+  lactose: boolean
+  celery: boolean
+  mustard: boolean
+  sesame: boolean
+  sulphur_dioxide: boolean
+  lupine: boolean
+  muscles: boolean
 
   token: string;
   typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
@@ -32,8 +47,37 @@ export class MyRecipesComponent implements OnInit {
       this.selectedId = Number(params.get('id'));
       return this.recipesService.getRecipes();
     }))
+    this.filter(this.gluten, this.shellfish, this.eggs, this.fish, this.peanuts, this.soy, this.lactose, this.celery, this.mustard, this.sesame, this.sulphur_dioxide, this.lupine, this.muscles);
+
     this.recipesService.getRecipes().subscribe(res => (this.recipes = res));
 
+  }
+  filter(gluten: boolean, shellfish: boolean, eggs: boolean,
+    fish: boolean,
+    peanuts: boolean,
+    soy: boolean,
+    lactose: boolean,
+    celery: boolean,
+    mustard: boolean,
+    sesame: boolean,
+    sulphur_dioxide: boolean,
+    lupine: boolean,
+    muscles: boolean) {
+    this.recipesClientService.getRecipes(
+      this.gluten = gluten,
+      this.shellfish = shellfish,
+      this.eggs = eggs,
+      this.fish = fish,
+      this.peanuts = peanuts,
+      this.soy = soy,
+      this.lactose = lactose,
+      this.celery = celery,
+      this.mustard = mustard,
+      this.sesame = sesame,
+      this.sulphur_dioxide = sulphur_dioxide,
+      this.lupine = lupine,
+      this.muscles = muscles
+    ).subscribe(res => (this.recipes = res))
   }
   viewRecipeDetail(recipe_id: any) {
     let url: string = "/detailsRecipe/" + recipe_id
