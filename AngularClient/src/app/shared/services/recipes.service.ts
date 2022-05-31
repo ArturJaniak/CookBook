@@ -1,15 +1,18 @@
 import { Injectable } from "@angular/core";
-import { RecipesClient, RecipesLogedClient } from "src/app/api/ApiClient";
+import { RecipeLogedViewClient, RecipesClient, RecipesLogedClient } from "src/app/api/ApiClient";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipesService {
 
-  constructor(private recipesClientService: RecipesClient, private recipesLogedClientService: RecipesLogedClient) { }
+  constructor(
+    private recipesClientService: RecipesClient,
+    private recipesLogedClientService: RecipesLogedClient,
+    private recipesLogedView: RecipeLogedViewClient) { }
 
   id: any;
-  token: string;
+  token = localStorage.getItem("token");
 
   recipeDetails(id) {
     return this.recipesClientService.recipes_GetRecipe(id);
@@ -31,8 +34,8 @@ export class RecipesService {
     lupine: boolean,
     muscles: boolean
   ) {
-    return this.recipesClientService.recipes_GetRecipes(
-      gluten, shellfish,
+    return this.recipesLogedView.recipeLogedView_GetMyList(
+      this.token, gluten, shellfish,
       eggs, fish, peanuts,
       soy, lactose, celery, mustard, sesame,
       sulphur_dioxide, lupine, muscles

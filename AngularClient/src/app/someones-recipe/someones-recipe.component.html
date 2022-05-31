@@ -20,7 +20,8 @@
                 <dl>
                     <dt>{{recipe.recipeName}}</dt>
                     <dt>{{recipe.userId}}</dt>
-                    <dt><button type="button" (click)="viewRecipeDetail(recipe.userId)">View details</button></dt>
+                    <dt><button mat-button class=" button-details" role="button"
+                            (click)="viewRecipeDetail(recipe.userId)">View details</button></dt>
                     <dt>{{recipe.rating}}</dt>
                 </dl>
             </div>

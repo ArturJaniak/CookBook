@@ -38,7 +38,7 @@ export class MyRecipesComponent implements OnInit {
   lupine: boolean
   muscles: boolean
 
-  token: string;
+  token = localStorage.getItem("token");
   typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
   respones: any;
 

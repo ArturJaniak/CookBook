@@ -31,20 +31,31 @@
     (click)="filter(gluten.checked,shellfish.checked,eggs.checked,fish.checked,peanuts.checked,soy.checked,lactose.checked,celery.checked,mustard.checked,sezame.checked,sulphur_dioxide.checked,lupine.checked,muscles.checked)">filtruj</button>
 </mat-expansion-panel>
 
-<mat-grid-list cols="2" rowHeight="3:1">
+<mat-grid-list cols="3" rows="3" rowHeight="3:2" gutterSize="15px">
   <ng-container>
     <mat-grid-tile *ngFor="let recipe of recipes">
-      <!-- <div>{{recipe.id}}</div> -->
-      <div> <img src="../../assets/{{recipe.photo}}" alt="Tu powinno być zdjęcie" width="128px" height="128px">
-      </div>
-      <div>
-        <p>{{recipe.recipeName}}</p>
-      </div>
-      <button type="button" (click)="viewRecipeDetail(recipe.id)">View details</button>
-      <!-- <div>{{recipe.date}}</div> -->
-      <div>Rating: {{recipe.rating}}</div>
-      <div>{{recipe.userId}}</div>
-      {{recipe.id}}
+
+      <img src="../../assets/{{recipe.photo}}" alt="Food1" width="128px" height="128px">
+
+
+
+
+
+      <mat-grid-tile-header>
+        <div style="width:90% ;text-align: center">
+          <h3> {{recipe.recipeName}}</h3>
+        </div>
+        <div style="width: 10%; text-align: center;">
+          <h3>{{recipe.rating}}</h3>
+        </div>
+
+      </mat-grid-tile-header>
+      <mat-grid-tile-footer style="margin:auto; display:grid ">
+        <!-- <div class="vertical-center"> -->
+        <dl><button mat-button class=" button-details" role="button" (click)="viewRecipeDetail(recipe.id)">
+            View details <mat-icon>search</mat-icon></button></dl>
+        <!-- </div> -->
+      </mat-grid-tile-footer>
     </mat-grid-tile>
   </ng-container>
 </mat-grid-list>

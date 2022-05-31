@@ -36,13 +36,17 @@ Allergens:
 
 <!-- </div> -->
 <p><input type="number" #rateValue> Rate me!</p>
-<button type="button" (click)="editRecipeDetail(recipe.id)">Edit</button>
-<button type="submit" (click)="rateRecipe(rateValue.value)">Save Rating</button>
+<button mat-button class="button-edit" role="button" (click)="editRecipeDetail(recipe.id)">Edit</button>
+<div class="space"> </div>
+<button may-button class="button-saveR" role="button" (click)="rateRecipe(rateValue.value)">Save Rating</button>
+<div class="space"> </div>
 
 <!-- <ng-container *ngIf="token===recipe.userId"> -->
 
-<button type="button" (click)="addToMyList()" [routerLink]="['/myrecipes']">Dodaj do książki</button>
-<button type="button" (click)="viewPersonList(recipe.userId)">Zobacz przepisy
+<button mat-button class="button-add" role="button" (click)="addToMyList()" [routerLink]="['/myrecipes']">Dodaj do
+    książki</button>
+<div class="space"> </div>
+<button mat-button class="button-view" role="button" (click)="viewPersonList(recipe.userId)">Zobacz przepisy
     autora</button>
 
 <!-- </ng-container> -->
