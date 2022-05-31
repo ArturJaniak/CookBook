@@ -57,7 +57,7 @@ export class RecipeDetailsComponent implements OnInit {
   }
   addToMyList() {
     this.recipesLogged.recipesLoged_AddToMyList(this.id, this.token).subscribe(res => (this.recipe = res));
-    //this.recipeService.addToMyList(this.id, this.token);
+
   }
   viewPersonList(user_id: any) {
     let url: string = "/someonesRecipe/" + user_id

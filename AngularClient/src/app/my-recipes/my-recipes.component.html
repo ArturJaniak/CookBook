@@ -8,9 +8,7 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
   <mat-selection-list #shoes>
-    <!-- <mat-list-option *ngFor="let shoe of typesOfShoes"> -->
-    <!-- {{shoe}} -->
-    <!-- </mat-list-option> -->
+
     <input type="checkbox" name="alergen1" value="false" #gluten> gluten
     <input type="checkbox" name="alergen2" value="false" #shellfish> shellfish
     <input type="checkbox" name="alergen2" value="false" #eggs> eggs
@@ -36,24 +34,7 @@
     <button mat-button class="button-create" role="button" (click)="createRecipe()">Create recipe <mat-icon>add
       </mat-icon></button>
     <mat-grid-tile class="tile" *ngFor="let recipe of recipes">
-      <!-- <div>{{recipe.id}}</div> -->
       <img src="../../assets/{{recipe.photo}}" alt="Food1">
-      <!-- <div>
-        <dl>
-          <p></p>
-          <dt> Recipe name: {{recipe.recipeName}}</dt>
-       
-          <dt> Rating: {{recipe.rating}}</dt>
-          <p></p>
-          <dt><button mat-button class="button-details" role="button" (click)="viewRecipeDetail(recipe.id)">
-              View details <mat-icon>search</mat-icon></button></dt>
-          <p></p>
-          <dt><button mat-button class="button-delete" role="button" (click)="deleteRecipe(recipe.id)">
-              Delete recipe <mat-icon>delete</mat-icon>
-            </button></dt>
-        </dl>
-      </div>
- -->
 
       <mat-grid-tile-header>
         <div style="width:90% ;text-align: center">

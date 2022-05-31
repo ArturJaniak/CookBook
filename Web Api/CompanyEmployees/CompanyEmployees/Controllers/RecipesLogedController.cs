@@ -330,11 +330,11 @@ namespace CompanyEmployees.Controllers
                         Recipes recipe = _db.Recipes.Find(id);
 
                         var oldPhoto = recipe.Photo;
-                        if (oldPhoto != null)
-                        {
-                            string filePath2 = Path.Combine(newPath, oldPhoto);
-                            System.IO.File.Delete(filePath2);
-                        }
+                        //if (oldPhoto != null)
+                        //{
+                        //    string filePath2 = Path.Combine(newPath, oldPhoto);
+                        //    System.IO.File.Delete(filePath2);
+                        //}
 
                         recipe.Photo = uniqueFileName;
                         _db.Recipes.Update(recipe);

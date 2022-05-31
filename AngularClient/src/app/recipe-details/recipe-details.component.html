@@ -1,10 +1,15 @@
-<p>recipe-details works!</p>
-<div> <img src="assets/{{recipe.photo}}" alt="{{recipe.photo}}" style="width:96px;height:96px;"> </div>
+<div>
+    <div style="width: 90%;"> <img src="assets/{{recipe.photo}}" alt="{{recipe.photo}}" style="width:96px;height:96px;">
+    </div>
+    <div style="width: 10%; text-align: right;"><button mat-button class="button-view" role="button"
+            (click)="viewPersonList(recipe.userId)">See what this person cooked</button>
+    </div>
+</div>
 <!-- <div *ngFor ="let recip of recipe"> -->
 <!-- <div>ID: {{recipe.id}}</div> -->
-<div>Recipe Name: {{recipe.recipeName}}</div>
+<div>{{recipe.recipeName}}</div>
 <!-- <div>Recipe Creation Date: {{recipe.date}}</div> -->
-<div>Recipe Rating: {{recipe.rating}}</div>
+<div>Rating: {{recipe.rating}}</div>
 
 
 <div>Instruction: {{recipe.instruction}}</div>
@@ -38,16 +43,14 @@ Allergens:
 <p><input type="number" #rateValue> Rate me!</p>
 <button mat-button class="button-edit" role="button" (click)="editRecipeDetail(recipe.id)">Edit</button>
 <div class="space"> </div>
-<button may-button class="button-saveR" role="button" (click)="rateRecipe(rateValue.value)">Save Rating</button>
+<button mat-button class="button-saveR" role="button" (click)="rateRecipe(rateValue.value)">Save Rating</button>
 <div class="space"> </div>
 
 <!-- <ng-container *ngIf="token===recipe.userId"> -->
 
-<button mat-button class="button-add" role="button" (click)="addToMyList()" [routerLink]="['/myrecipes']">Dodaj do
+<button mat-button class="button-add" role="button" (click)="addToMyList()" [routerLink]="['']">Dodaj do
     książki</button>
 <div class="space"> </div>
-<button mat-button class="button-view" role="button" (click)="viewPersonList(recipe.userId)">Zobacz przepisy
-    autora</button>
 
 <!-- </ng-container> -->
 <!-- do ukrycia button  -->

@@ -12,7 +12,7 @@ export class RecipesService {
     private recipesLogedView: RecipeLogedViewClient) { }
 
   id: any;
-  token = localStorage.getItem("token");
+  token: string;
 
   recipeDetails(id) {
     return this.recipesClientService.recipes_GetRecipe(id);
@@ -34,8 +34,8 @@ export class RecipesService {
     lupine: boolean,
     muscles: boolean
   ) {
-    return this.recipesLogedView.recipeLogedView_GetMyList(
-      this.token, gluten, shellfish,
+    return this.recipesClientService.recipes_GetRecipes(
+      gluten, shellfish,
       eggs, fish, peanuts,
       soy, lactose, celery, mustard, sesame,
       sulphur_dioxide, lupine, muscles

@@ -33,7 +33,7 @@
 
 <mat-grid-list cols="3" rows="3" rowHeight="3:2" gutterSize="15px">
   <ng-container>
-    <mat-grid-tile *ngFor="let recipe of recipes">
+    <mat-grid-tile class="tile" *ngFor="let recipe of recipes">
 
       <img src="../../assets/{{recipe.photo}}" alt="Food1" width="128px" height="128px">
 
@@ -48,13 +48,13 @@
         <div style="width: 10%; text-align: center;">
           <h3>{{recipe.rating}}</h3>
         </div>
-
+        <!-- class="vertical-center" style="margin:auto;" -->
       </mat-grid-tile-header>
-      <mat-grid-tile-footer style="margin:auto; display:grid ">
-        <!-- <div class="vertical-center"> -->
-        <dl><button mat-button class=" button-details" role="button" (click)="viewRecipeDetail(recipe.id)">
-            View details <mat-icon>search</mat-icon></button></dl>
-        <!-- </div> -->
+      <mat-grid-tile-footer>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <button mat-button class="button-details" (click)="viewRecipeDetail(recipe.id)">
+            View details <mat-icon>search</mat-icon></button>
+        </div>
       </mat-grid-tile-footer>
     </mat-grid-tile>
   </ng-container>
