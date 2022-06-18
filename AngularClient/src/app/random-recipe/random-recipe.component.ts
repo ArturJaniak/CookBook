@@ -18,7 +18,6 @@ export class RandomRecipeComponent implements OnInit {
     private router: Router,
     private recipeLoggedViewClient: RecipeLogedViewClient,
     private recipesClient: RecipesClient,) { }
-  //recipe: RecipeDto;
   recipe$: Observable<any>;
   id: any;
   recipe: any = [];

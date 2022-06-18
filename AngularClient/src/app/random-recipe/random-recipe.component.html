@@ -1,10 +1,10 @@
-<h1>RANDOM RECIPE</h1>
+<h2>Random recipe</h2>
 <img src="assets/{{recipe.photo}}" alt="{{recipe.photo}}" style="width:128px;height:128px;">
 <!-- <div *ngFor ="let recip of recipe"> -->
-<div>RECIPE NAME: {{recipe.recipeName}}</div>
+<div>Recipe name: {{recipe.recipeName}}</div>
 <div>Recipe Rating: {{recipe.rating}}</div>
 
-<div>Instruction?: {{recipe.instruction}}</div>
+<div>Instruction: {{recipe.instruction}}</div>
 <div *ngIf="recipe.gluten">Gluten: {{recipe.gluten}}</div>
 <div *ngIf="recipe.shellfish">Shellfish: {{recipe.shellfish}}</div>
 <div *ngIf="recipe.eggs">Eggs: {{recipe.eggs}}</div>
@@ -21,6 +21,6 @@
 
 <button mat-button class="button-view" role="button" (click)="viewPersonList(recipe.userId)">See what this person
     cooked</button>
+<div class="space"> </div>
 <button mat-button class="button-add" role="button" (click)="addToMyList(recipe.id)" [routerLink]="['']">Add to book
     cookbook</button>
-<div class="space"> </div>
