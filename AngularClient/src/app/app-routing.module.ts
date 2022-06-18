@@ -15,10 +15,6 @@ import { SomeonesRecipeComponent } from './someones-recipe/someones-recipe.compo
 const routes: Routes = [
     {
         path: '', component: MyRecipesComponent,
-        // children: [
-        //     { path: 'company', loadChildren: () => import('./company/company.module').then(m => m.CompanyModule) },
-
-        // ]
     },
     { path: '404', component: NotFoundComponent },
     { path: 'login', component: LoginComponent },
@@ -28,29 +24,24 @@ const routes: Routes = [
     {
         path: 'detailsRecipe', component: RecipeDetailsComponent, children: [
             { path: ':id', component: RecipeDetailsComponent },
-            { path: ':user_id', component: SomeonesRecipeComponent },
-        ]
+            { path: ':user_id', component: SomeonesRecipeComponent }]
     },
     {
         path: 'editDetailsRecipe', component: EditRecipeDetailsComponent, children: [
-            { path: ':id', component: EditRecipeDetailsComponent },
-        ]
+            { path: ':id', component: EditRecipeDetailsComponent }]
     },
     { path: 'randomRecipe', component: RandomRecipeComponent },
     {
         path: 'bestRecipes', component: BestRecipesComponent, children: [
             {
                 path: ':id', component: RecipeDetailsComponent, children: [
-                    { path: ':userId', component: SomeonesRecipeComponent },
-                ]
-            },
-        ]
+                    { path: ':userId', component: SomeonesRecipeComponent },]
+            },]
     },
     { path: 'authentication/register', component: RegisterUserComponent },
     {
         path: 'someonesRecipe', component: SomeonesRecipeComponent, children: [
-            { path: ':userId', component: SomeonesRecipeComponent },
-        ]
+            { path: ':userId', component: SomeonesRecipeComponent },]
     },
     { path: '**', redirectTo: '/404', pathMatch: 'full' },
 ];

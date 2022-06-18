@@ -1,6 +1,8 @@
+<div class="space"> </div>
 <div>
     <div style="width: 90%;"> <img src="assets/{{recipe.photo}}" alt="{{recipe.photo}}" style="width:96px;height:96px;">
     </div>
+    <div class="space"> </div>
     <div style="width: 10%; text-align: right;"><button mat-button class="button-view" role="button"
             (click)="viewPersonList(recipe.userId)">See what this person cooked</button>
     </div>
@@ -48,8 +50,8 @@ Allergens:
 
 <!-- <ng-container *ngIf="token===recipe.userId"> -->
 
-<button mat-button class="button-add" role="button" (click)="addToMyList()" [routerLink]="['']">Dodaj do
-    książki</button>
+<button mat-button class="button-add" role="button" (click)="addToMyList()" [routerLink]="['']">Add to my
+    cookbook</button>
 <div class="space"> </div>
 
 <!-- </ng-container> -->
