@@ -29,7 +29,6 @@ export class BestRecipesComponent implements OnInit {
   sulphur_dioxide: boolean
   lupine: boolean
   muscles: boolean
-  typesOfShoes: string[] = ['Gluten', 'Shellfish'];
   recipes$: Observable<any>;
   selectedId: any;
 

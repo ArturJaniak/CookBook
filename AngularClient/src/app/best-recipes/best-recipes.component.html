@@ -1,16 +1,14 @@
 <mat-expansion-panel hideToggle>
   <mat-expansion-panel-header>
     <mat-panel-title>
-      Filtry
+      Filters
     </mat-panel-title>
     <mat-panel-description>
-      Kliknij by wyświetlić filtry
+      Click to see filters
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <mat-selection-list #shoes>
-    <!-- <mat-list-option *ngFor="let shoe of typesOfShoes"> -->
-    <!-- {{shoe}} -->
-    <!-- </mat-list-option> -->
+  <mat-selection-list #allergens>
+
     <input type="checkbox" name="alergen1" value="false" #gluten> gluten
     <input type="checkbox" name="alergen2" value="false" #shellfish> shellfish
     <input type="checkbox" name="alergen2" value="false" #eggs> eggs

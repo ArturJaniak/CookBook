@@ -39,7 +39,6 @@ export class MyRecipesComponent implements OnInit {
   muscles: boolean
 
   token = localStorage.getItem("token");
-  typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
   respones: any;
 
   ngOnInit() {
@@ -92,11 +91,7 @@ export class MyRecipesComponent implements OnInit {
   deleteRecipe(id: any) {
     this.recipeLogged.recipesLoged_DeleteConfirmed(id, localStorage.getItem("token")).subscribe(res => (this.respones = res));
   }
-  // createRecipe(){
-  //   this.recipesService.createRecipe();
-  //   //alert("dziala");
 
-  // }
 
 }
 

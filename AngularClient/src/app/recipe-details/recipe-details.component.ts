@@ -25,20 +25,13 @@ export class RecipeDetailsComponent implements OnInit {
   token = localStorage.getItem("token");
   recipe_id: any;
   user_id: any;
-
-
-
-
   rateValue: number;
   rating: number;
   rate: any
   newRecipe: any = [];
   ngOnInit(): void {
     this.id = this.sharingService.getData();
-    //this.route.params.subscribe(params => {
     this.getThatRecipe();
-    //})
-
   }
   rateRecipe(rateValue) {
     this.rateValue = rateValue;
