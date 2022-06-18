@@ -1,10 +1,10 @@
 {
-  "name": "companyemployees-client",
+  "name": "cauldron-client",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "importapi": "copy ..\\\"Web Api\"\\CompanyEmployees\\CompanyEmployees\\ApiClient.ts src\\app\\api\\ApiClient.ts",
+    "importapi": "copy ..\\\"Web Api\"\\Cauldron\\Cauldron\\ApiClient.ts src\\app\\api\\ApiClient.ts",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
