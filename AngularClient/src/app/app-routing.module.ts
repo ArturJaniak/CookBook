@@ -4,7 +4,6 @@ import { AboutComponent } from './about/about.component';
 import { RegisterUserComponent } from './authentication/register-user/register-user.component';
 import { BestRecipesComponent } from './best-recipes/best-recipes.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component'
-import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './login/login.component';
 import { MyRecipesComponent } from './my-recipes/my-recipes.component';
 import { RandomRecipeComponent } from './random-recipe/random-recipe.component';
@@ -18,7 +17,6 @@ const routes: Routes = [
     },
     { path: '404', component: NotFoundComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'home', component: HomeComponent },
     { path: 'about', component: AboutComponent },
     { path: 'myRecipes', component: MyRecipesComponent },
     {

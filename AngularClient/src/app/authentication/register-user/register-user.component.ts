@@ -13,7 +13,6 @@ export class RegisterUserComponent implements OnInit {
   public registerForm: FormGroup;
 
   constructor(private _authService: AuthenticationService,
-    // private _passConfValidator: PasswordConfirmationValidatorService,
     private _router: Router) { }
 
   ngOnInit(): void {
@@ -22,7 +21,7 @@ export class RegisterUserComponent implements OnInit {
       lastName: new FormControl(''),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
-      confirm: new FormControl('')
+      confirm: new FormControl('', [Validators.required])
     });
   }
 

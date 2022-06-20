@@ -3,25 +3,24 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RegisterUserComponent } from './authentication/register-user/register-user.component';
-import { MatMenuModule} from '@angular/material/menu';
-import { MatButtonModule} from '@angular/material/button' 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { AboutComponent } from './about/about.component';
 import { MyRecipesComponent } from './my-recipes/my-recipes.component';
 import { RandomRecipeComponent } from './random-recipe/random-recipe.component';
 import { BestRecipesComponent } from './best-recipes/best-recipes.component';
-import { MatGridListModule } from '@angular/material/grid-list'; 
-import {MatExpansionModule} from '@angular/material/expansion'; 
-import {MatListModule} from '@angular/material/list';
-import { RecipeDetailsComponent } from './recipe-details/recipe-details.component'; 
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
+import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 import { SharingService } from './shared/sharing.service';
 import { EditRecipeDetailsComponent } from './recipe-details/edit-recipe-details/edit-recipe-details.component';
 import { SomeonesRecipeComponent } from './someones-recipe/someones-recipe.component';
@@ -29,7 +28,6 @@ import { SomeonesRecipeComponent } from './someones-recipe/someones-recipe.compo
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     MenuComponent,
     NotFoundComponent,
     LoginComponent,
@@ -41,7 +39,7 @@ import { SomeonesRecipeComponent } from './someones-recipe/someones-recipe.compo
     RecipeDetailsComponent,
     EditRecipeDetailsComponent,
     SomeonesRecipeComponent,
-    
+
   ],
   imports: [
     ReactiveFormsModule,
@@ -57,11 +55,11 @@ import { SomeonesRecipeComponent } from './someones-recipe/someones-recipe.compo
     MatGridListModule,
     MatExpansionModule,
     MatListModule,
-    
-    
 
-    
-   
+
+
+
+
   ],
   exports: [],
   providers: [SharingService],

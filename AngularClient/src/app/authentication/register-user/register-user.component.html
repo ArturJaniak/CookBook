@@ -40,6 +40,10 @@
                 <div class="col-md-5">
                     <input type="password" id="confirm" formControlName="confirm" class="form-control" />
                 </div>
+                <div class="col-md-5">
+                    <em *ngIf="validateControl('confirm') && hasError('confirm', 'required')">Confirmed password is
+                        required</em>
+                </div>
             </div>
             <br>
             <div class="form-group row">
